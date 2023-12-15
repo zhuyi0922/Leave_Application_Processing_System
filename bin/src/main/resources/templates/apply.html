@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Application Form</title>
+</head>
+<body>
+
+<h2>Leave Application Form</h2>
+
+<form th:action="@{/employee/processapply}" method="post" th:object="${leaveApplicationDTO}">
+
+    <label for="start_date">Start Date:</label>
+    <input type="date" id="start_date" name="start_date" th:field="*{start_date}" required>
+    <br>
+
+    <label for="end_date">End Date:</label>
+    <input type="date" id="end_date" name="end_date" th:field="*{end_date}" required>
+    <br>
+
+    <label for="category">Category:</label>
+    <select id="category" name="category" th:field="*{category}" required>
+        <option value="ANNUAL_LEAVE">Annual Leave</option>
+        <option value="MEDICAL_LEAVE">Medical Leave</option>
+    </select>
+    <br>
+
+    <label for="reasons">Reasons:</label>
+    <textarea id="reasons" name="reasons" th:field="*{reasons}" required></textarea>
+    <br>
+
+    <label for="workDissemination">Work Dissemination:</label>
+    <textarea id="workDissemination" name="workDissemination" th:field="*{workDissemination}" ></textarea>
+    <br>
+
+    <label for="contactDetails">Contact Details:</label>
+    <input type="text" id="contactDetails" name="contactDetails" th:field="*{contactDetails}">
+    <br>
+
+    <button type="submit">Submit</button>
+
+</form>
+
+</body>
+</html>
