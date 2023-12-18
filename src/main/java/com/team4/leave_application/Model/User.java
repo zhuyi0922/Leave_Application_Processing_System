@@ -15,7 +15,7 @@ import lombok.*;
 public class User {
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "username", nullable = false)
@@ -26,7 +26,10 @@ public class User {
 
     @Column(name = "isAdmin", nullable = false)
     private boolean isAdmin;
-    
+
+    @Column(name = "isManager", nullable = false)
+    private boolean isManager;
+
     @OneToOne
     @JoinColumn(name = "staff_id", referencedColumnName = "id", nullable = true)
     private Staff staff;

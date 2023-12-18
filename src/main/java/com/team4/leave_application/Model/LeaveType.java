@@ -19,4 +19,5 @@ public class LeaveType {
     
     @Column(name = "type_name", unique = true, nullable = false)
     private String typeName;
+    // comfirm something with Yk
 }

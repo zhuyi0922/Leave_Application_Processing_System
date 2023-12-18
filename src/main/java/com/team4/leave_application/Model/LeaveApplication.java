@@ -17,11 +17,12 @@ import java.util.Date;
 public class LeaveApplication {
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "state", nullable = false)
-    private String state;
+    @Column(name="application_status", columnDefinition="ENUM('APPLIED', 'UPDATED', 'DELETED', 'CANCELLED', 'APPROVED', 'REJECTED')")
+    @Enumerated(EnumType.STRING)
+    private LeaveApplicationEventEnum application_status;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "start_date", nullable = false)
@@ -33,8 +34,14 @@ public class LeaveApplication {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date end_date;
 
-    @Column(name = "category", nullable = false)
-    private String category;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "create_date", nullable = false)
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date create_date;
+
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn(name = "application_leavetype")
+    private LeaveType leaveType;
 
     @Column(name = "reasons", nullable = false)
     private String Reasons;
@@ -45,8 +52,16 @@ public class LeaveApplication {
     @Column(name = "contact_details")
     private String contactDetails;
 
+    @Column(name="response_comment")
+    private String responseComment;
+
+    @Column(name="response_date")
+    private Date responseDate;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "employees_id", nullable = false)
     private Staff staff;
+
+
 
 }

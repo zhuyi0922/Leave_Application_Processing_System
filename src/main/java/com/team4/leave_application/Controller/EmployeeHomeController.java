@@ -12,6 +12,5 @@ public class EmployeeHomeController {
     public  String Index(){
         return "index";
     }
-
 }
 

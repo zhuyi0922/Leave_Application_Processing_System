@@ -11,6 +11,11 @@ import lombok.*;
 @Entity
 @Table(name = "holiday")
 public class Holiday {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "holiday_id")
+	private int id;
+
 	@Column(name = "name", nullable = false)
 	private String name;
 	@Column(name = "date", nullable = false)

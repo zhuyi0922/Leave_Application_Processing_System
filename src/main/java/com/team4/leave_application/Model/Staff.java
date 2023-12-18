@@ -19,7 +19,7 @@ import java.time.*;
 @Table(name = "staff")
 public class Staff {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
 
@@ -41,15 +41,6 @@ public class Staff {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "remaining_annual_leaves", nullable = false)
-    private int remainingAnnualLeaves;
-    
-    @Column(name = "remaining_medical_leaves", nullable = false)
-    private int remainingMedicalLeaves;
-    
-    @Column(name = "remaining_compensation_leaves", nullable = false)
-    private int remainingCompensationLeaves;
-
     @Column(name = "manager_id", nullable = false)
     private int managerId;
 
@@ -57,4 +48,6 @@ public class Staff {
     @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LeaveApplication> leaveApplications = new ArrayList<>();
 
+    @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RemainLeave> remainLeaves = new ArrayList<>();
 }

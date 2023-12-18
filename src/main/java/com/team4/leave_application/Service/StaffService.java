@@ -5,13 +5,11 @@ import com.team4.leave_application.Repository.StaffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class StaffService {
-    @Autowired
-    private StaffRepository repo;
-
-    public Staff findStaff(String username){
-        return repo.findByUsername(username);
-    }
-
+public interface StaffService {
+    Staff findStaff(String username);
+    Staff findStaffById(int id);
+    List<Staff> findSubordinates(int managerid);
 }

@@ -1,9 +1,11 @@
 package com.team4.leave_application.Model;
 
 import java.io.Serializable;
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.*;
-
+import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
@@ -18,4 +20,5 @@ public class Role implements Serializable {
 	  
 	 @Column(name = "description")
 	 private String description;
+	 // professional administrative
 }
