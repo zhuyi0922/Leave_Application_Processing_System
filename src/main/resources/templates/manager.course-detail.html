@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwww.thymeleaf.org">
+	<head>
+	<!--Insert header here-->
+	</head>
+	
+	<body>
+		<h3>Application Detail</h3>
+		<table>
+			<tr>
+				<th><span th:text="#fieldLabel.id">Application ID</span></th>
+				<td colspan="3" th:text="${application.id">Id</td>
+			</tr>
+		</table>
+		<form>
+			<table>
+				<tr>
+					<td>
+						<fieldset>
+							
+						</fieldset>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<fieldset>
+							<input type="text" placeholder="Insert comment if any">
+						</fieldset>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<fieldset>
+							<input th:type="submit" th:value="Update">
+						</fieldset>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</body>
+</html>
