@@ -10,6 +10,8 @@ import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "leave_application")
 public class LeaveApplication {
@@ -47,75 +49,4 @@ public class LeaveApplication {
     @JoinColumn(name = "employees_id", nullable = false)
     private Staff staff;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public Date getStart_date() {
-        return start_date;
-    }
-
-    public void setStart_date(Date start_date) {
-        this.start_date = start_date;
-    }
-
-    public Date getEnd_date() {
-        return end_date;
-    }
-
-    public void setEnd_date(Date end_date) {
-        this.end_date = end_date;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getReasons() {
-        return Reasons;
-    }
-
-    public void setReasons(String reasons) {
-        Reasons = reasons;
-    }
-
-    public String getWorkDissemination() {
-        return workDissemination;
-    }
-
-    public void setWorkDissemination(String workDissemination) {
-        this.workDissemination = workDissemination;
-    }
-
-    public String getContactDetails() {
-        return contactDetails;
-    }
-
-    public void setContactDetails(String contactDetails) {
-        this.contactDetails = contactDetails;
-    }
-
-    public Staff getStaff() {
-        return staff;
-    }
-
-    public void setStaff(Staff staff) {
-        this.staff = staff;
-    }
 }
