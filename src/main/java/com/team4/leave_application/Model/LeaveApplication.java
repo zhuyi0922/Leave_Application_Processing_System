@@ -16,6 +16,8 @@ public class LeaveApplication {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Getter
+    @Setter
     private int id;
 
     @Column(name = "state", nullable = false)
@@ -46,14 +48,13 @@ public class LeaveApplication {
     @ManyToOne(optional = false)
     @JoinColumn(name = "employees_id", nullable = false)
     private Staff staff;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    
+    @Column(name="application_status", columnDefinition="ENUM('APPLIED', 'UPDATED', 'DELETED', 'CANCELLED', 'APPROVED', 'REJECTED')")
+    @Enumerated(EnumType.STRING)
+    private LeaveApplicationEventEnum application_status;
+    
+    @Column(name="approval_comment")
+    private String approvalComment;
 
     public String getState() {
         return state;
