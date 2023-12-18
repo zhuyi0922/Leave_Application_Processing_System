@@ -1,11 +1,11 @@
 package com.team4.leave_application.Repository;
 
-import com.team4.leave_application.Model.Administrator;
+import com.team4.leave_application.Model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface AdministratorsRepository extends JpaRepository<Administrator, Integer> {
+public interface AdministratorsRepository extends JpaRepository<User, Integer> {
 
-    Administrator findByUsername(String username);
+    User findByUsername(String username);
 
     boolean existsByUsername(String username);
 }

@@ -9,55 +9,55 @@ import lombok.ToString;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.time.*;
+
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
 @Entity
+@Table(name = "staff")
 public class Staff {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     private int id;
 
-    @Column(name = "username", nullable = false)
-    private String username;
+    @Column(name = "first_name")
+    private String firstName;
 
-    @Column(name = "password", nullable = false)
-    private String password;
+    @Column(name = "middle_name")
+    private String middleName;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
+    
+    @Column(name = "gender", nullable = false)
+    private String gender;
+    
+    @Column(name = "birthday")
+    private LocalDate birtday;
+    
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "title", nullable = false)
-    private String title;
-
-    @Column(name = "left_annual_days", nullable = false)
-    private int leftAnnualDays;
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    @Column
-    private int remainingMedicalLeave;
+    @Column(name = "remaining_annual_leaves", nullable = false)
+    private int remainingAnnualLeaves;
+    
+    @Column(name = "remaining_medical_leaves", nullable = false)
+    private int remainingMedicalLeaves;
+    
+    @Column(name = "remaining_compensation_leaves", nullable = false)
+    private int remainingCompensationLeaves;
 
     @Column(name = "manager_id", nullable = false)
     private int managerId;
 
-
-    @Column(name = "is_manager", nullable = false)
-    private Boolean isManager = false;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LeaveApplication> leaveApplications = new ArrayList<>();
 
 
-    public Staff(String username, String password, String email, int leftAnnualDays, String title, Boolean isManager, Integer managerId) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.title = title;
-        this.leftAnnualDays = leftAnnualDays;
-        this.managerId = managerId;
-        this.isManager = isManager;
-    }
 
 }
