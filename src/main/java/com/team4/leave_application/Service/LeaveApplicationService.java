@@ -55,4 +55,8 @@ public class LeaveApplicationService {
         return true;
     }
 
+	public List<LeaveApplication> findPendingApplicationByStaffID(int staffId) {
+		return leaveAppRepo.findPendingApplicationByStaffId(staffId);
+	}
+
 }
