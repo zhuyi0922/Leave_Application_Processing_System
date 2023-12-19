@@ -16,9 +16,9 @@ import java.util.Date;
 @Table(name = "leave_application")
 public class LeaveApplication {
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "leave_application_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int leaveApplicationId;
 
     @Column(name="application_status", columnDefinition="ENUM('APPLIED', 'UPDATED', 'DELETED', 'CANCELLED', 'APPROVED', 'REJECTED')")
     @Enumerated(EnumType.STRING)
@@ -59,9 +59,7 @@ public class LeaveApplication {
     private Date responseDate;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "employees_id", nullable = false)
+    @JoinColumn(name = "staff_id", nullable = false)
     private Staff staff;
-
-
 
 }

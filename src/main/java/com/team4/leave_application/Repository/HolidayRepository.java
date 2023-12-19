@@ -7,5 +7,6 @@ import java.util.Date;
 import java.util.List;
 
 public interface HolidayRepository extends JpaRepository<Holiday, Integer> {
-    List<Date> findByHolidayDateBetween(Date startDate, Date endDate);
+    List<Date> findAllByDateBetween(Date startDate, Date endDate);
+
 }

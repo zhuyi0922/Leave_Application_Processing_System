@@ -14,7 +14,7 @@ public class Holiday {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "holiday_id")
-	private int id;
+	private int holidayId;
 
 	@Column(name = "name", nullable = false)
 	private String name;

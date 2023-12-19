@@ -9,7 +9,6 @@ import java.util.List;
 
 @Service
 public interface StaffService {
-    Staff findStaff(String username);
     Staff findStaffById(int id);
     List<Staff> findSubordinates(int managerid);
 }

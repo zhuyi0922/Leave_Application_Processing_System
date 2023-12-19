@@ -7,10 +7,5 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class LeaveApplicationTests {
 
-	@Autowired
-	public AdministratorsRepository adminRepo;
-	@Autowired
-	public StaffRepository staffRepo;
-
 }
 

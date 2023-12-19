@@ -14,9 +14,9 @@ import lombok.*;
 @Table(name = "user")
 public class User {
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "user_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int userId;
 
     @Column(name = "username", nullable = false)
     private String username;
@@ -24,20 +24,14 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "isAdmin", nullable = false)
-    private boolean isAdmin;
-
-    @Column(name = "isManager", nullable = false)
-    private boolean isManager;
-
     @OneToOne
     @JoinColumn(name = "staff_id", referencedColumnName = "id", nullable = true)
     private Staff staff;
     
     @ManyToMany(targetEntity = Role.class, cascade = {CascadeType.ALL, CascadeType.PERSIST}, fetch=FetchType.EAGER)
-    @JoinTable(name = "userrole", joinColumns = {
-        @JoinColumn(name = "userid", referencedColumnName = "userid") }, inverseJoinColumns = {
-            @JoinColumn(name = "roleid", referencedColumnName = "roleid") }
+    @JoinTable(name = "user_role", joinColumns = {
+        @JoinColumn(name = "user_id", referencedColumnName = "user_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "role_id", referencedColumnName = "role_id") }
     )
     private List<Role> roleSet;
 }

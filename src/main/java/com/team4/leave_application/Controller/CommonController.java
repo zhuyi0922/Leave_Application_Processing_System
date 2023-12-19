@@ -48,7 +48,7 @@ public class CommonController {
         UserSession userSession = new UserSession();
         userSession.setUser(u);
         userSession.setStaff(staffService.findStaffById(u.getStaff().getId()));
-        List<Staff> subordinates = staffService.findSubordinates(u.getId());
+        List<Staff> subordinates = staffService.findSubordinates(u.getUserId());
         if (subordinates != null) {
             userSession.setSubordinates(subordinates);
         }

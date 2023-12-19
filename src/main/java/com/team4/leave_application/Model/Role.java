@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 public class Role implements Serializable {
 	 @Id
-	 @Column(name = "roleid")
+	 @Column(name = "role_id")
 	 private String roleId;
 	  
 	 @Column(name = "name")

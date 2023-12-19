@@ -11,10 +11,11 @@ import lombok.*;
 public class RemainLeave {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name = "remain_leave_id", nullable = false)
+    private int remainLeaveId;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "type_name")
+    @JoinColumn(name = "leave_type_id")
     private LeaveType leaveType;
 
     @Column(name = "remain_leave")

@@ -44,6 +44,9 @@ public class Staff {
     @Column(name = "manager_id", nullable = false)
     private int managerId;
 
+    @Column(name = "title", nullable = false)
+    private String title;
+
     @ToString.Exclude
     @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LeaveApplication> leaveApplications = new ArrayList<>();

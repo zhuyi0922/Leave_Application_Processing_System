@@ -17,7 +17,14 @@ public class LeaveType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int leaveTypeId;
     
-    @Column(name = "type_name", unique = true, nullable = false)
-    private String typeName;
+    @Column(name = "leave_type_name", unique = true, nullable = false)
+    private String leaveTypeName;
     // comfirm something with Yk
+
+    @Column(name = "staff_title", nullable = false)
+    private String staffTitle;
+
+    @Column(name = "max_leave_day", nullable = false)
+    private int maxLeaveDay;
+
 }

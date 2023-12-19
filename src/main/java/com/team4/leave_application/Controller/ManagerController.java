@@ -24,6 +24,8 @@ public class ManagerController {
 
     }
 
+
+
     @RequestMapping(value="/view_pending")
     public String pendingApplicationApproval(HttpSession session, Model model) {
 
