@@ -47,6 +47,17 @@
           </div>
         </div>
         
+        <div th:if="${role.roleId == 'manager'}">
+			<div class="subnav">
+				<button class="subnavbtn">Manager Menu<i class="fa fa-caret-down"></i></button>
+				<div class="subnav-content">
+					<a th:href="@{/manager/view_pending}">View Pending Application</a>
+					<a th:href="@{/manager/application-history}">Application History</a>
+					<a th:href="@{/manager/compensation}">Compensation Leave</a>
+				</div>
+			</div>
+		</div>
+        
         <a th:href="@{/logout}">Logout</a>
         
       </div>

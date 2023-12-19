@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.team4.leave_application.Service.LeaveApplicationService;
 import com.team4.leave_application.Model.*;
@@ -24,8 +26,6 @@ public class ManagerController {
 
     }
 
-
-
     @RequestMapping(value="/view_pending")
     public String pendingApplicationApproval(HttpSession session, Model model) {
 
@@ -40,5 +40,43 @@ public class ManagerController {
 
         model.addAttribute("pendingapplist", subordinatePendingApplication);
         return "manager-pending-application";
+    }
+    
+    
+    // View subordinates history
+    @RequestMapping(value="/application-history")
+    public String subordinatesApplicationHistory(HttpSession session, Model model) {
+    	UserSession userSession = (UserSession) session.getAttribute("usersession");
+    	
+    	// New staff-application hashmap
+    	Map <Staff, List<LeaveApplication>> subordinateHistory = new HashMap<>();
+    	for (Staff subordinate : userSession.getSubordinates()) {
+    		subordinateHistory.put(subordinate, laService.findPendingApplicationByStaffID(subordinate.getId()));
+    	}
+    	model.addAttribute("subordinatemap", subordinateHistory);
+    	return "manager-subordinate-application-history";
+    }
+    
+    // Manager Use
+    // View details of chosen pending id
+    @RequestMapping(value="/application/details/{id}")
+    public String viewPendingApplicationDetailManager (@PathVariable int id, Model model) {
+    	LeaveApplication leaveApplication = laService.findById(id);
+    	model.addAttribute("leaveapplication", leaveApplication);
+    	return "manager-application-detail";
+    }
+    
+    @PostMapping(value="application/edit/{id}")
+    public String approveOrRejectApplication(@PathVariable int id) {
+    	
+    	return "redirect:/manager/view_pending";
+    }
+    
+    // Compensation leave management (TBA)
+    @RequestMapping(value="/compensation")
+    public String viewCompensationRequest (HttpSession session, Model model) {
+    	Object compensationList; // to be updated
+    	model.addAttribute("compensationrequestlist", compensationList);
+    	return "manager-pending-compensation-request";
     }
 }

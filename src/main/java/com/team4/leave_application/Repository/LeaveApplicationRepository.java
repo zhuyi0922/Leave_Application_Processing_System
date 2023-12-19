@@ -11,9 +11,15 @@ import java.util.List;
 public interface LeaveApplicationRepository extends JpaRepository<LeaveApplication, Integer> {
 
     List<LeaveApplication> findAllByStaff(Staff staff);
+    
     LeaveApplication findById(int id);
 
     @Query("SELECT a FROM LeaveApplication a JOIN a.staff s WHERE s.id = :eid AND (a.application_status = 'APPLIED' OR a.application_status = 'UPDATED')")
     List<LeaveApplication> findPendingApplicationByStaffId(@Param("eid") int staffId);
+
+	@Query("SELECT a FROM LeaveApplication a WHERE a.staffId = :staffId")
+    List<LeaveApplication> findApplicationsByStaffId(int staffId);
+    
+    
 
 }
