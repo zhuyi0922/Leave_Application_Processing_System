@@ -60,7 +60,7 @@ public class CommonController {
 
         // Done, let's redirect to respective page
         if (roles.contains("admin")) {
-            return "redirect:/admin/employee/list";
+            return "redirect:/admin/users";
         }
 
         if (roles.contains("manager")) {

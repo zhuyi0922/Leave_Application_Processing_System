@@ -75,7 +75,7 @@ public class ManagerController {
     // Compensation leave management (TBA)
     @RequestMapping(value="/compensation")
     public String viewCompensationRequest (HttpSession session, Model model) {
-    	Object compensationList; // to be updated
+    	Object compensationList = null; // to be updated
     	model.addAttribute("compensationrequestlist", compensationList);
     	return "manager-pending-compensation-request";
     }

@@ -8,4 +8,6 @@ public interface LeaveApplicationService {
     public LeaveApplication save(LeaveApplication leaveApplication);
     public LeaveApplication findById(int id);
     public List<LeaveApplication> findPendingApplicationByStaffID(int staffId);
+
+    public List<LeaveApplication> findApplicationsByStaffId(int staffId);
 }
