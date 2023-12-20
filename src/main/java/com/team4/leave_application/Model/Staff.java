@@ -48,7 +48,7 @@ public class Staff {
     private String title;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
     private List<LeaveApplication> leaveApplications = new ArrayList<>();
 
     @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, orphanRemoval = true)

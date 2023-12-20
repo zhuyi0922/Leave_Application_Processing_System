@@ -12,7 +12,7 @@ public class HolidayServiceimpl implements HolidayService{
     @Autowired
     private HolidayRepository holidayRepository;
     public List<Date> findHolidayBetween(Date startDate, Date endDate){
-        return holidayRepository.findAllByDateBetween(startDate, endDate);
+        return holidayRepository.findAllByDateBetween(startDate, endDate).stream().map(holiday -> holiday.getDate()).toList();
     }
 
     public int calLeaveDays(Date start_date, Date end_date){

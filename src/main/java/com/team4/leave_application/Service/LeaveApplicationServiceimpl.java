@@ -16,7 +16,7 @@ public class LeaveApplicationServiceimpl implements LeaveApplicationService {
     }
 
     public LeaveApplication findById(int id){
-        return leaveApplicationRepository.findById(id);
+        return leaveApplicationRepository.findByLeaveApplicationId(id);
     }
     
     public List<LeaveApplication> findApplicationsByStaffId(int staffId){

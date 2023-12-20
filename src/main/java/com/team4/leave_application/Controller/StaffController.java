@@ -6,6 +6,7 @@ import com.team4.leave_application.Model.Staff;
 import com.team4.leave_application.Model.UserSession;
 import com.team4.leave_application.Service.HolidayService;
 import com.team4.leave_application.Service.LeaveApplicationService;
+import com.team4.leave_application.Service.LeaveTypeService;
 import com.team4.leave_application.Service.RemainLeaveService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -25,6 +26,9 @@ public class StaffController {
     private HolidayService holidayService;
     @Autowired
     private LeaveApplicationService leaveApplicationService;
+    @Autowired
+    private LeaveTypeService leaveTypeService;
+
     @GetMapping("/application/history")
     public String History(HttpSession session, Model model){
         var usession = (UserSession) session.getAttribute("usession");
@@ -35,16 +39,22 @@ public class StaffController {
 
     @GetMapping("/application/apply")
     public String Apply(Model model){
+        var typelist = leaveTypeService.findAllLeaveType();
+        model.addAttribute("typelist",typelist);
+        model.addAttribute("chooseType",new String());
         model.addAttribute("leaveApplication", new LeaveApplication());
         return "apply";
     }
     @PostMapping("/application/apply")
-    public String ApplyPost(HttpSession session,Model model,@ModelAttribute @Valid LeaveApplication application){
+    public String ApplyPost(HttpSession session,Model model,@ModelAttribute @Valid LeaveApplication application,@RequestParam(name = "chooseType") String chooseType){
+        var LeaveType = leaveTypeService.findLeaveTypeByName(chooseType);
+        application.setLeaveType(LeaveType);
+        //first set the leave type
         var usession = (UserSession) session.getAttribute("usession");
         var staff = (Staff) usession.getStaff();
+        // get the staff
         var days = holidayService.calLeaveDays(application.getStart_date(),application.getEnd_date());
-        var leavetype = application.getLeaveType();
-        if (remainLeaveService.findRemainLeave(staff,leavetype)>=days){
+        if (remainLeaveService.findRemainLeave(staff,LeaveType)>=days){
             // enough leave
             // create application
             application.setStaff(staff);
@@ -103,16 +113,23 @@ public class StaffController {
     @GetMapping("/application/edit/{id}")
     public String Edit(Model model,@PathVariable int id){
         var application = leaveApplicationService.findById(id);
+        var typelist = leaveTypeService.findAllLeaveType();
+        model.addAttribute("typelist",typelist);
+        model.addAttribute("chooseType",new String());
         model.addAttribute("leaveApplication",application);
         return "application-edit";
     }
+
     @PostMapping("/application/edit/{id}")
-    public String Edit(@ModelAttribute @Valid LeaveApplication application, @PathVariable int id, BindingResult result, HttpSession session){
+    public String Edit(@ModelAttribute("leaveApplication") @Valid LeaveApplication application, @PathVariable int id, BindingResult result,@RequestParam(name = "chooseType") String chooseType){
         if (result.hasErrors()){
             return "application-edit";
         }
+        var LeaveType = leaveTypeService.findLeaveTypeByName(chooseType);
+        application.setLeaveType(LeaveType);
         application.setApplication_status(LeaveApplicationEventEnum.UPDATED);
         leaveApplicationService.save(application);
         return "redirect:/staff/application/history";
+
     }
 }

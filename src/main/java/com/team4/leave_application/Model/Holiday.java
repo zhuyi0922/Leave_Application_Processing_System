@@ -2,7 +2,10 @@ package com.team4.leave_application.Model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
+
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @NoArgsConstructor
 @Getter
@@ -18,6 +21,9 @@ public class Holiday {
 
 	@Column(name = "name", nullable = false)
 	private String name;
+
+	@Temporal(TemporalType.DATE)
 	@Column(name = "date", nullable = false)
-	private LocalDate date;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date date;
 }

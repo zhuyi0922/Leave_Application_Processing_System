@@ -12,7 +12,7 @@ public interface LeaveApplicationRepository extends JpaRepository<LeaveApplicati
 
     List<LeaveApplication> findAllByStaff(Staff staff);
     
-    LeaveApplication findById(int id);
+    LeaveApplication findByLeaveApplicationId(int id);
 
     @Query("SELECT a FROM LeaveApplication a JOIN a.staff s WHERE s.id = :eid AND (a.application_status = 'APPLIED' OR a.application_status = 'UPDATED')")
     List<LeaveApplication> findPendingApplicationByStaffId(@Param("eid") int staffId);
