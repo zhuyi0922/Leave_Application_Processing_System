@@ -32,7 +32,9 @@ public class StaffController {
     @GetMapping("/application/history")
     public String History(HttpSession session, Model model){
         var usession = (UserSession) session.getAttribute("usession");
-        var applications = usession.getStaff().getLeaveApplications();
+        var staff = (Staff) usession.getStaff();
+        // do not use the getLeaveApplications(), it does not work!!!!!
+        var applications = leaveApplicationService.findApplicationsByStaff(staff);
         model.addAttribute("applications", applications);
         return "history";
     }
@@ -42,7 +44,7 @@ public class StaffController {
         var typelist = leaveTypeService.findAllLeaveType();
         model.addAttribute("typelist",typelist);
         model.addAttribute("chooseType",new String());
-        model.addAttribute("leaveApplication", new LeaveApplication());
+        model.addAttribute("leaveApplication",new LeaveApplication());
         return "apply";
     }
     @PostMapping("/application/apply")
@@ -79,7 +81,7 @@ public class StaffController {
             // can cancel
             if (application.getApplication_status() == LeaveApplicationEventEnum.APPROVED){
                 application.setApplication_status(LeaveApplicationEventEnum.CANCELLED);
-                leaveApplicationService.save(application);
+                leaveApplicationService.update(application);
                 return "redirect:/staff/application/history";
             }
             model.addAttribute("error","only approved application can be cancelled");
@@ -99,7 +101,7 @@ public class StaffController {
         if (application.getStaff().getId() == staff.getId()){
             if (application.getApplication_status() == LeaveApplicationEventEnum.APPLIED || application.getApplication_status() == LeaveApplicationEventEnum.UPDATED){
                 application.setApplication_status(LeaveApplicationEventEnum.DELETED);
-                leaveApplicationService.save(application);
+                leaveApplicationService.update(application);
                 return "redirect:/staff/application/history";
             }
                 model.addAttribute("error","only applied or updated application cannot be deleted");
@@ -121,14 +123,14 @@ public class StaffController {
     }
 
     @PostMapping("/application/edit/{id}")
-    public String Edit(@ModelAttribute("leaveApplication") @Valid LeaveApplication application, @PathVariable int id, BindingResult result,@RequestParam(name = "chooseType") String chooseType){
+    public String Edit(@ModelAttribute("leaveApplication") @Valid LeaveApplication application, @PathVariable int id, BindingResult result,@RequestParam(name = "chooseType") String chooseType,Model model){
         if (result.hasErrors()){
             return "application-edit";
         }
         var LeaveType = leaveTypeService.findLeaveTypeByName(chooseType);
         application.setLeaveType(LeaveType);
         application.setApplication_status(LeaveApplicationEventEnum.UPDATED);
-        leaveApplicationService.save(application);
+        leaveApplicationService.update(application);
         return "redirect:/staff/application/history";
 
     }

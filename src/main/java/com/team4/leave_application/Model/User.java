@@ -1,5 +1,6 @@
 package com.team4.leave_application.Model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -12,7 +13,8 @@ import lombok.*;
 @ToString
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements Serializable {
+    private static final long serialVersionUID = 6529685098267757670L;
     @Id
     @Column(name = "user_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +26,7 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "staff_id", referencedColumnName = "id", nullable = true)
     private Staff staff;
     

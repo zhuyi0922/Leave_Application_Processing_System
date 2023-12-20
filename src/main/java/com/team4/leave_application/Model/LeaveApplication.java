@@ -9,7 +9,6 @@ import java.util.Date;
 
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -58,8 +57,10 @@ public class LeaveApplication {
     @Column(name="response_date")
     private Date responseDate;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "staff_id", nullable = false)
     private Staff staff;
 
+    public LeaveApplication() {
+    }
 }

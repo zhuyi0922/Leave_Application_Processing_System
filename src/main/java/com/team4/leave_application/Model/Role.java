@@ -11,6 +11,7 @@ import java.util.List;
 @Setter
 @Entity
 public class Role implements Serializable {
+	 private static final long serialVersionUID = 6529685098267757690L;
 	 @Id
 	 @Column(name = "role_id")
 	 private String roleId;

@@ -9,14 +9,14 @@
 
 <h2>Leave Application Form</h2>
 
-<form th:action="@{/staff/application/edit/{id}(id=${leaveApplication.leaveApplicationId})}" method="post">
+<form th:action="@{/staff/application/edit/{id}(id=${leaveApplication.leaveApplicationId})}" method="post" th:object="${leaveApplication}">
 
     <label for="start_date">Start Date:</label>
-    <input type="date" id="start_date" name="start_date" th:field="${leaveApplication.start_date}" th:value="${leaveApplication.start_date}" required>
+    <input type="date" id="start_date" name="start_date" th:field="*{start_date}" th:value="${leaveApplication.start_date}" required>
     <br>
 
     <label for="end_date">End Date:</label>
-    <input type="date" id="end_date" name="end_date" th:field="${leaveApplication.end_date}" th:value="${leaveApplication.end_date}" required>
+    <input type="date" id="end_date" name="end_date" th:field="*{end_date}" th:value="${leaveApplication.end_date}" required>
     <br>
 
     <label for="typeSelect">Choose a type:</label>
@@ -26,15 +26,15 @@
     <br>
 
     <label for="reasons">Reasons:</label>
-    <textarea id="reasons" name="reasons" th:field="${leaveApplication.reasons}" th:value="${leaveApplication.reasons}" required></textarea>
+    <textarea id="reasons" name="reasons" th:field="*{reasons}" th:value="${leaveApplication.reasons}" required></textarea>
     <br>
 
     <label for="workDissemination">Work Dissemination:</label>
-    <textarea id="workDissemination" name="workDissemination" th:field="${leaveApplication.workDissemination}" th:value="${leaveApplication.start_date}"></textarea>
+    <textarea id="workDissemination" name="workDissemination" th:field="*{workDissemination}" th:value="${leaveApplication.start_date}"></textarea>
     <br>
 
     <label for="contactDetails">Contact Details:</label>
-    <input type="text" id="contactDetails" name="contactDetails" th:field="${leaveApplication.contactDetails}" th:value="${leaveApplication.start_date}">
+    <input type="text" id="contactDetails" name="contactDetails" th:field="*{contactDetails}" th:value="${leaveApplication.start_date}">
     <br>
 
     <button type="submit">Update</button>

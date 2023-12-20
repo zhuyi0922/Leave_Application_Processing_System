@@ -1,6 +1,7 @@
 package com.team4.leave_application.Service;
 
 import com.team4.leave_application.Repository.HolidayRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +12,11 @@ import java.util.List;
 public class HolidayServiceimpl implements HolidayService{
     @Autowired
     private HolidayRepository holidayRepository;
+    @Transactional
     public List<Date> findHolidayBetween(Date startDate, Date endDate){
         return holidayRepository.findAllByDateBetween(startDate, endDate).stream().map(holiday -> holiday.getDate()).toList();
     }
-
+    @Transactional
     public int calLeaveDays(Date start_date, Date end_date){
         var days = (int) (start_date.getTime() - end_date.getTime())/(1000*60*60*24);
         if (days > 14){
