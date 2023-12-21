@@ -19,6 +19,7 @@ public interface LeaveApplicationRepository extends JpaRepository<LeaveApplicati
 
 	@Query("SELECT a FROM LeaveApplication a WHERE a.staff = :staffId")
     List<LeaveApplication> findApplicationsByStaffId(int staffId);
+
     
     
 

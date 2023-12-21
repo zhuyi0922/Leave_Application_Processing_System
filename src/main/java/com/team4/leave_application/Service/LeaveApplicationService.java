@@ -8,9 +8,15 @@ import java.util.List;
 public interface LeaveApplicationService {
     public LeaveApplication save(LeaveApplication leaveApplication);
     public LeaveApplication findById(int id);
-    public List<LeaveApplication> findPendingApplicationByStaffID(int staffId);
+   
 
     public List<LeaveApplication> findApplicationsByStaff(Staff staff);
 
     public LeaveApplication update(LeaveApplication leaveApplication);
+    
+	public List<LeaveApplication> findApplicationsByStaffId(int staffid);
+	
+	public List<LeaveApplication> findPendingApplicationByStaffID(int staffId);
+	
+	public LeaveApplication changeLeaveApplication(LeaveApplication leaveApplication);
 }

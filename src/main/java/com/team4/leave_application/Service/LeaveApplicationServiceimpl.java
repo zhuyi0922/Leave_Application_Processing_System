@@ -14,20 +14,25 @@ import java.util.List;
 
 @Service
 public class LeaveApplicationServiceimpl implements LeaveApplicationService {
+	
     @Autowired
     private LeaveApplicationRepository leaveApplicationRepository;
+    
     @Transactional
     public LeaveApplication save(LeaveApplication leaveApplication){
         return leaveApplicationRepository.saveAndFlush(leaveApplication);
     }
+    
     @Transactional
     public LeaveApplication findById(int id){
         return leaveApplicationRepository.findByLeaveApplicationId(id);
     }
+    
     @Transactional
     public List<LeaveApplication> findApplicationsByStaff(Staff staff){
         return leaveApplicationRepository.findAllByStaff(staff);
     }
+    
     @Transactional
     public List<LeaveApplication> findPendingApplicationByStaffID(int staffId) {
         return leaveApplicationRepository.findPendingApplicationByStaffId(staffId);
@@ -36,4 +41,15 @@ public class LeaveApplicationServiceimpl implements LeaveApplicationService {
     public LeaveApplication update(LeaveApplication leaveApplication) {
         return leaveApplicationRepository.saveAndFlush(leaveApplication);
     }
+
+	@Transactional
+	public List<LeaveApplication> findApplicationsByStaffId(int staffid) {
+		return leaveApplicationRepository.findApplicationsByStaffId(staffid);
+	}
+
+	@Transactional
+	public LeaveApplication changeLeaveApplication(LeaveApplication leaveApplication) {
+		return leaveApplicationRepository.saveAndFlush(leaveApplication);
+		
+	}
 }
