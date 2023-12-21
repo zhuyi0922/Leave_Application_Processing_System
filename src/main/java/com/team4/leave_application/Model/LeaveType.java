@@ -17,7 +17,7 @@ public class LeaveType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int leaveTypeId;
     
-    @Column(name = "leave_type_name", unique = true, nullable = false)
+    @Column(name = "leave_type_name", nullable = false)
     private String leaveTypeName;
     // comfirm something with Yk
 

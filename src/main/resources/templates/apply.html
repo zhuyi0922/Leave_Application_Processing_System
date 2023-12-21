@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leave Application Form</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
 
@@ -13,16 +14,19 @@
 
     <label for="start_date">Start Date:</label>
     <input type="date" id="start_date" name="start_date" th:field="${leaveApplication.start_date}" required>
+    <span id="start_date_error" style="color: red;"></span>
     <br>
 
     <label for="end_date">End Date:</label>
     <input type="date" id="end_date" name="end_date" th:field="${leaveApplication.end_date}" required>
+    <span id="end_date_error" style="color: red;"></span>
     <br>
 
     <label for="typeSelect">Choose a type:</label>
-    <select id="typeSelect" name="chooseType" th:object="${chooseType}">
-        <option th:each="t : ${typelist}" th:value="${t}" th:text="${t}"></option>
+    <select id="typeSelect" name="chooseType" th:field="${leaveApplication.leaveType.leaveTypeName}">
+        <option th:each="t : ${typelist}" th:value="${t.leaveTypeName}" th:text="${t.leaveTypeName}"></option>
     </select>
+    <span id="validationResult"></span>
     <br>
 
     <label for="reasons">Reasons:</label>
@@ -41,5 +45,57 @@
 
 </form>
 
+<script>
+    $(document).ready(function () {
+        // 监听输入框变化
+        $('#start_date, #end_date, #typeSelect').on('change', function () {
+            // 获取输入值
+            var startDate = $('#start_date').val();
+            var endDate = $('#end_date').val();
+            var leaveType = $('#typeSelect').val();
+
+            var currentDate = new Date().toISOString().split('T')[0];
+
+            // 检查start-date是否小于当前时间
+            if (startDate < currentDate) {
+                $('#start_date_error').text("Start date cannot be less than the current date.");
+                disableSubmitButton();
+                return;
+            } else {
+                $('#start_date_error').text(""); // 清空错误消息
+            }
+
+            // 检查end-date是否小于start-date
+            if (endDate && endDate < startDate) {
+                $('#end_date_error').text("End date cannot be less than start date.");
+                disableSubmitButton();
+                return;
+            } else {
+                $('#end_date_error').text(""); // 清空错误消息
+            }
+
+            // 启用submit按钮
+            enableSubmitButton();
+            // 发送Ajax请求
+            $.get('/staff/application/validate', {
+                start_date: startDate,
+                end_date: endDate,
+                leave_type: leaveType
+            }, function (data) {
+                // 处理响应，data为服务器返回的JSON数据
+                document.getElementById("validationResult").innerHTML = data;
+            });
+        });
+        function disableSubmitButton() {
+            $('button[type="submit"]').prop('disabled', true);
+        }
+
+        function enableSubmitButton() {
+            $('button[type="submit"]').prop('disabled', false);
+        }
+    });
+
+
+</script>
 </body>
 </html>

@@ -16,6 +16,9 @@
             <th><span>reasons</span></th>
             <th><span>work dissemination</span></th>
             <th><span>contact details</span></th>
+            <th><span>cost leave days</span></th>
+            <th><span>manager comment</span></th>
+            <th><span>response date</span></th>
             <th><span>status</span></th>
             <th><span>operation</span></th>
         </tr>
@@ -27,6 +30,9 @@
             <td align="left" th:text="${leaveapplication.reasons}"></td>
             <td align="left" th:text="${leaveapplication.workDissemination}"></td>
             <td align="left" th:text="${leaveapplication.contactDetails}"></td>
+            <td align="left" th:text="${leaveapplication.costLeaveDays}"></td>
+            <td align="left" th:text="${leaveapplication.responseComment}"></td>
+            <td align="left" th:text="${leaveapplication.responseDate}"></td>
             <td align="left" th:text="${leaveapplication.application_status}"></td>
             <td>
                 <span th:if="${leaveapplication.application_status == T(com.team4.leave_application.Model.LeaveApplicationEventEnum).APPLIED or leaveapplication.application_status == T(com.team4.leave_application.Model.LeaveApplicationEventEnum).UPDATED }">
@@ -37,9 +43,8 @@
                     <a th:href="@{/staff/application/cancel/{id}(id = ${leaveapplication.leaveApplicationId})}" class="btn btn-default"><span>Cancel</span></a>
                 </span>
                 <span th:if="${leaveapplication.application_status == T(com.team4.leave_application.Model.LeaveApplicationEventEnum).REJECTED}">
-                    <a th:href="@{/staff/application/delete/{id}(id = ${leaveapplication.leaveApplicationId})}" class="btn btn-default"><span>ReApply</span></a>
+                    <a th:href="@{/staff/application/apply}" class="btn btn-default"><span>ReApply</span></a>
                 </span>
-
 
             </td>
         </tr>

@@ -4,13 +4,11 @@ import com.team4.leave_application.Model.LeaveApplication;
 import com.team4.leave_application.Model.LeaveApplicationEventEnum;
 import com.team4.leave_application.Model.Staff;
 import com.team4.leave_application.Model.UserSession;
-import com.team4.leave_application.Service.HolidayService;
-import com.team4.leave_application.Service.LeaveApplicationService;
-import com.team4.leave_application.Service.LeaveTypeService;
-import com.team4.leave_application.Service.RemainLeaveService;
+import com.team4.leave_application.Service.*;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +18,8 @@ import java.util.Date;
 @Controller
 @RequestMapping("/staff")
 public class StaffController {
+    static  final String subject = "submit notification";
+    static final String message = "you already submit an application, please wait for the response";
     @Autowired
     private RemainLeaveService remainLeaveService;
     @Autowired
@@ -28,7 +28,10 @@ public class StaffController {
     private LeaveApplicationService leaveApplicationService;
     @Autowired
     private LeaveTypeService leaveTypeService;
-
+    @Autowired
+    private EmailService emailService;
+    @Autowired
+    private StaffService staffService;
     @GetMapping("/application/history")
     public String History(HttpSession session, Model model){
         var usession = (UserSession) session.getAttribute("usession");
@@ -41,28 +44,43 @@ public class StaffController {
 
     @GetMapping("/application/apply")
     public String Apply(Model model){
-        var typelist = leaveTypeService.findAllLeaveType();
+        var typelist = leaveTypeService.findAllLeaveTypeObj();
         model.addAttribute("typelist",typelist);
-        model.addAttribute("chooseType",new String());
+
         model.addAttribute("leaveApplication",new LeaveApplication());
         return "apply";
     }
     @PostMapping("/application/apply")
-    public String ApplyPost(HttpSession session,Model model,@ModelAttribute @Valid LeaveApplication application,@RequestParam(name = "chooseType") String chooseType){
-        var LeaveType = leaveTypeService.findLeaveTypeByName(chooseType);
+    public String ApplyPost(HttpSession session,Model model,@ModelAttribute @Valid LeaveApplication application){
+        var leaveTypeName = application.getLeaveType().getLeaveTypeName();
+        var LeaveType = leaveTypeService.findLeaveTypeByName(leaveTypeName);
         application.setLeaveType(LeaveType);
         //first set the leave type
         var usession = (UserSession) session.getAttribute("usession");
         var staff = (Staff) usession.getStaff();
         // get the staff
         var days = holidayService.calLeaveDays(application.getStart_date(),application.getEnd_date());
-        if (remainLeaveService.findRemainLeave(staff,LeaveType)>=days){
+        var remaindays = remainLeaveService.findRemainLeave(staff,LeaveType);
+        if (remaindays>=days){
             // enough leave
             // create application
             application.setStaff(staff);
             application.setApplication_status(LeaveApplicationEventEnum.APPLIED);
             application.setCreate_date(new Date());
             leaveApplicationService.save(application);
+
+            // adjust the remain leave
+            var remainleave= remainLeaveService.findRemainLeaveObj(staff,LeaveType);
+            remainleave.setRemainLeave(remaindays-days);
+            remainLeaveService.updateRemainLeave(remainleave);
+
+            // send email to manager
+            var managerid = staff.getManagerId();
+            var manager = staffService.findStaffById(managerid);
+            var managerEmail = manager.getEmail();
+            emailService.sendSimpleMessage(managerEmail,subject,message);
+
+
             return "redirect:/staff/application/history";
 
         }
@@ -82,6 +100,11 @@ public class StaffController {
             if (application.getApplication_status() == LeaveApplicationEventEnum.APPROVED){
                 application.setApplication_status(LeaveApplicationEventEnum.CANCELLED);
                 leaveApplicationService.update(application);
+                // adjust the remain leave
+                var days = application.getCostLeaveDays();
+                var remainleave= remainLeaveService.findRemainLeaveObj(staff,application.getLeaveType());
+                remainleave.setRemainLeave(remainleave.getRemainLeave()+days);
+                remainLeaveService.updateRemainLeave(remainleave);
                 return "redirect:/staff/application/history";
             }
             model.addAttribute("error","only approved application can be cancelled");
@@ -102,6 +125,11 @@ public class StaffController {
             if (application.getApplication_status() == LeaveApplicationEventEnum.APPLIED || application.getApplication_status() == LeaveApplicationEventEnum.UPDATED){
                 application.setApplication_status(LeaveApplicationEventEnum.DELETED);
                 leaveApplicationService.update(application);
+                // adjust the remain leave
+                var days = application.getCostLeaveDays();
+                var remainleave= remainLeaveService.findRemainLeaveObj(staff,application.getLeaveType());
+                remainleave.setRemainLeave(remainleave.getRemainLeave()+days);
+                remainLeaveService.updateRemainLeave(remainleave);
                 return "redirect:/staff/application/history";
             }
                 model.addAttribute("error","only applied or updated application cannot be deleted");
@@ -115,23 +143,61 @@ public class StaffController {
     @GetMapping("/application/edit/{id}")
     public String Edit(Model model,@PathVariable int id){
         var application = leaveApplicationService.findById(id);
-        var typelist = leaveTypeService.findAllLeaveType();
+        var typelist = leaveTypeService.findAllLeaveTypeObj();
         model.addAttribute("typelist",typelist);
-        model.addAttribute("chooseType",new String());
         model.addAttribute("leaveApplication",application);
         return "application-edit";
     }
 
     @PostMapping("/application/edit/{id}")
-    public String Edit(@ModelAttribute("leaveApplication") @Valid LeaveApplication application, @PathVariable int id, BindingResult result,@RequestParam(name = "chooseType") String chooseType,Model model){
+    public String Edit(@ModelAttribute("leaveApplication") @Valid LeaveApplication application, @PathVariable int id, BindingResult result){
         if (result.hasErrors()){
             return "application-edit";
         }
-        var LeaveType = leaveTypeService.findLeaveTypeByName(chooseType);
-        application.setLeaveType(LeaveType);
-        application.setApplication_status(LeaveApplicationEventEnum.UPDATED);
-        leaveApplicationService.update(application);
+        // seems the backend is impossible to get the origin application from the frontend.
+        var originApplication = leaveApplicationService.findById(id);
+        // map the data from frontend to origin application
+        originApplication.setStart_date(application.getStart_date());
+        originApplication.setEnd_date(application.getEnd_date());
+        originApplication.setReasons(application.getReasons());
+        originApplication.setWorkDissemination(application.getWorkDissemination());
+        originApplication.setContactDetails(application.getContactDetails());
+        // also adjust the leave type
+        var leaveTypeName = application.getLeaveType().getLeaveTypeName();
+        var LeaveType = leaveTypeService.findLeaveTypeByName(leaveTypeName);
+        originApplication.setLeaveType(LeaveType);
+        // set the status
+        originApplication.setApplication_status(LeaveApplicationEventEnum.UPDATED);
+        // set the cost leave days
+        var days = holidayService.calLeaveDays(application.getStart_date(),application.getEnd_date());
+        // get the origin cost first, and later change it.
+        var origindays = originApplication.getCostLeaveDays();
+        var remainleave= remainLeaveService.findRemainLeaveObj(originApplication.getStaff(),originApplication.getLeaveType());
+        remainleave.setRemainLeave(remainleave.getRemainLeave()+origindays-days);
+        remainLeaveService.updateRemainLeave(remainleave);
+        // adjust the cost of application
+        originApplication.setCostLeaveDays(days);
+        leaveApplicationService.update(originApplication);
         return "redirect:/staff/application/history";
 
     }
+    @ResponseBody
+    @GetMapping("/application/validate")
+    public  String Validate(HttpSession session,
+                            @RequestParam("start_date") @DateTimeFormat(pattern = "yyyy-MM-dd")Date start_date,
+                            @RequestParam("end_date") @DateTimeFormat(pattern = "yyyy-MM-dd")Date end_date,
+                            @RequestParam("leave_type") String leaveTypeName){
+        var usession = (UserSession) session.getAttribute("usession");
+        var staff = (Staff) usession.getStaff();
+        var days = holidayService.calLeaveDays(start_date,end_date);
+        var leaveType = leaveTypeService.findLeaveTypeByName(leaveTypeName);
+        var remaindays = remainLeaveService.findRemainLeave(staff,leaveType);
+        if (days > remaindays){
+            return "*your remain " + leaveTypeName +" days is " + remaindays + " days" + ", not enough";
+        }
+        else{
+            return "*this application will cost you "+ days + " days " + leaveTypeName;
+        }
+    }
+
 }

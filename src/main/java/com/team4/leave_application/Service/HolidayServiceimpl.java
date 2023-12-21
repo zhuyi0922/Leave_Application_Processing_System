@@ -32,7 +32,7 @@ public class HolidayServiceimpl implements HolidayService{
         while (!calendar.getTime().after(end_date)) {
             int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
             // if weekend, jump to next
-            if (dayOfWeek == Calendar.SATURDAY && dayOfWeek == Calendar.SUNDAY) {
+            if (dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY) {
                 calendar.add(Calendar.DAY_OF_MONTH, 1);
                 continue;
             }

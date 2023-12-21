@@ -4,42 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leave Application Form</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
 
 <h2>Leave Application Form</h2>
 
-<form th:action="@{/staff/application/edit/{id}(id=${leaveApplication.leaveApplicationId})}" method="post" th:object="${leaveApplication}">
+<form th:action="@{/staff/application/edit/{id}(id=${leaveApplication.leaveApplicationId})}" method="post" >
 
+    <input type="hidden" th:value="${leaveApplication.leaveApplicationId}" th:field="${leaveApplication.leaveApplicationId}">
     <label for="start_date">Start Date:</label>
-    <input type="date" id="start_date" name="start_date" th:field="*{start_date}" th:value="${leaveApplication.start_date}" required>
+    <input type="date" id="start_date" name="start_date" th:field="${leaveApplication.start_date}" th:value="${leaveApplication.start_date}" required>
     <br>
 
     <label for="end_date">End Date:</label>
-    <input type="date" id="end_date" name="end_date" th:field="*{end_date}" th:value="${leaveApplication.end_date}" required>
+    <input type="date" id="end_date" name="end_date" th:field="${leaveApplication.end_date}" th:value="${leaveApplication.end_date}" required>
     <br>
 
     <label for="typeSelect">Choose a type:</label>
-    <select id="typeSelect" name="chooseType">
-        <option th:each="t : ${typelist}" th:value="${t}" th:text="${t}" th:selected="${t == leaveApplication.leaveType.leaveTypeName}"></option>
+    <select id="typeSelect" name="chooseType" th:field="${leaveApplication.leaveType.leaveTypeName}">
+        <option th:each="t : ${typelist}" th:value="${t.leaveTypeName}" th:text="${t.leaveTypeName}" th:selected="${t.leaveTypeName==leaveApplication.leaveType.leaveTypeName}"></option>
     </select>
     <br>
 
     <label for="reasons">Reasons:</label>
-    <textarea id="reasons" name="reasons" th:field="*{reasons}" th:value="${leaveApplication.reasons}" required></textarea>
+    <textarea id="reasons" name="reasons" th:field="${leaveApplication.reasons}" th:value="${leaveApplication.reasons}" required></textarea>
     <br>
 
     <label for="workDissemination">Work Dissemination:</label>
-    <textarea id="workDissemination" name="workDissemination" th:field="*{workDissemination}" th:value="${leaveApplication.start_date}"></textarea>
+    <textarea id="workDissemination" name="workDissemination" th:field="${leaveApplication.start_date}" th:value="${leaveApplication.start_date}"></textarea>
     <br>
 
     <label for="contactDetails">Contact Details:</label>
-    <input type="text" id="contactDetails" name="contactDetails" th:field="*{contactDetails}" th:value="${leaveApplication.start_date}">
+    <input type="text" id="contactDetails" name="contactDetails" th:field="${leaveApplication.start_date}" th:value="${leaveApplication.start_date}">
     <br>
 
     <button type="submit">Update</button>
 
 </form>
 
+
+<script>
+    $(document).ready(function () {
+        // 监听输入框变化
+        $('#start_date, #end_date, #typeSelect').on('change', function () {
+            // 获取输入值
+            var startDate = $('#start_date').val();
+            var endDate = $('#end_date').val();
+            var leaveType = $('#typeSelect').val();
+
+            // 发送Ajax请求
+            $.get('/staff/application/validate', {
+                start_date: startDate,
+                end_date: endDate,
+                leave_type: leaveType
+            }, function (data) {
+                // 处理响应，data为服务器返回的JSON数据
+                console.log(data);
+            });
+        });
+    });
+</script>
 </body>
 </html>

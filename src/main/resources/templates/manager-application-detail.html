@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form th:object="${leaveapplication}">
+
+        <div>
+            <label>Staff Name:</label>
+            <span th:text="${leaveapplication.staff.firstName} + '' + ${leaveapplication.staff.middleName} + '' + ${leaveapplication.staff.lastName}"></span>
+        </div>
+
+        <div>
+            <label>Start Date:</label>
+            <span th:text="*{start_date}"></span>
+        </div>
+
+        <div>
+            <label>End Date:</label>
+            <span th:text="*{end_date}"></span>
+        </div>
+
+        <div>
+            <label>Leave Type:</label>
+            <span th:text="*{leaveType.leaveTypeName}"></span>
+        </div>
+
+        <div>
+            <label>Reasons:</label>
+            <p th:text="*{reasons}"></p>
+        </div>
+
+        <div>
+            <label>Work Dissemination:</label>
+            <p th:text="*{workDissemination}"></p>
+        </div>
+
+        <div>
+            <label>Contact Details:</label>
+            <span th:text="*{contactDetails}"></span>
+        </div>
+
+        <div>
+            <span>
+            <label for="comment">Comment:</label>
+            <textarea type="text" id="comment" name="comment" th:field="*{responseComment}"></textarea>
+            </span>
+        </div>
+
+        <div>
+        <span>
+            <label>Decision:</label>
+                <input type="radio" id="reject" name="approvalStatus" th:value="REJECT" />
+                <label for="reject">Reject</label>
+                <input type="radio" id="approve" name="approvalStatus" th:value="APPROVE" />
+                <label for="approve">Approve</label>
+        </span>
+        </div>
+        <button type="submit">Confirm</button>
+    </form>
+</body>
+</html>

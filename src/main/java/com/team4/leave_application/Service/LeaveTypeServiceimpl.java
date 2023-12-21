@@ -20,4 +20,9 @@ public class LeaveTypeServiceimpl implements LeaveTypeService{
     public LeaveType findLeaveTypeByName(String name){
         return leaveTypeRepository.findLeaveTypeByLeaveTypeName(name);
     }
+
+    @Transactional
+    public List<LeaveType> findAllLeaveTypeObj(){
+        return leaveTypeRepository.findAll();
+    }
 }

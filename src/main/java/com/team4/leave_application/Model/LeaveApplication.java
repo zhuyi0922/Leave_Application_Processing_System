@@ -9,6 +9,7 @@ import java.util.Date;
 
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -38,7 +39,7 @@ public class LeaveApplication {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date create_date;
 
-    @OneToOne(orphanRemoval = true)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "application_leavetype")
     private LeaveType leaveType;
 
@@ -51,6 +52,9 @@ public class LeaveApplication {
     @Column(name = "contact_details")
     private String contactDetails;
 
+    @Column(name = "cost_leave_days")
+    private int costLeaveDays;
+
     @Column(name="response_comment")
     private String responseComment;
 
@@ -61,6 +65,4 @@ public class LeaveApplication {
     @JoinColumn(name = "staff_id", nullable = false)
     private Staff staff;
 
-    public LeaveApplication() {
-    }
 }

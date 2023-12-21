@@ -7,4 +7,5 @@ import java.util.List;
 public interface LeaveTypeService {
     List<String> findAllLeaveType();
     LeaveType findLeaveTypeByName(String name);
+    List<LeaveType> findAllLeaveTypeObj();
 }
