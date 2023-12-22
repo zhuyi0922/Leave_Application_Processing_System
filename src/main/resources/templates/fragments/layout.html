@@ -20,6 +20,9 @@
               <div class="subnav-content">
                 <a th:href="@{/manager/view_pending}">Pending Approvals</a>
                 <a th:href="@{/manager/subordinates-history}">Subordinates History</a>
+                <a th:href="@{/manager/view_pending}">View Pending Application</a>
+				<a th:href="@{/manager/application-history}">Application History</a>
+				<a th:href="@{/manager/compensation}">Compensation Leave</a>
               </div>
             </div>
           </div>
@@ -29,7 +32,7 @@
               <button class="subnavbtn">Admin Menu <i class="fa fa-caret-down"></i></button>
               <div class="subnav-content">
                 <a th:href="@{/admin/role/list}" >Roles</a>
-                <a th:href="@{/admin/employee/list}" >Employees</a>
+                <a th:href="@{/admin/leavetype/list}" >Employees</a>
                 <a th:href="@{/admin/user/list}" >Users</a>
               </div>
             </div>
@@ -47,17 +50,6 @@
           </div>
         </div>
         
-        <div th:if="${role.roleId == 'manager'}">
-			<div class="subnav">
-				<button class="subnavbtn">Manager Menu<i class="fa fa-caret-down"></i></button>
-				<div class="subnav-content">
-					<a th:href="@{/manager/view_pending}">View Pending Application</a>
-					<a th:href="@{/manager/application-history}">Application History</a>
-					<a th:href="@{/manager/compensation}">Compensation Leave</a>
-				</div>
-			</div>
-		</div>
-        
         <a th:href="@{/logout}">Logout</a>
         
       </div>
@@ -67,7 +59,7 @@
   
   <div th:fragment="header" id="header">
     <div th:if="${not #strings.isEmpty(session.usession)}">
-      <h2><em th:utext="'Hello ' + ${session.usession.user.name}"></em></h2>
+      <h2><em th:utext="'Hello ' + ${session.usession.user.username}"></em></h2>
     </div>
   </div>
 </body>

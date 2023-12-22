@@ -32,7 +32,7 @@ public class Staff {
     @Column(name = "last_name", nullable = false)
     private String lastName;
     
-    @Column(name = "gender", nullable = false)
+    @Column(name = "gender")
     private String gender;
     
     @Column(name = "birthday")
@@ -41,7 +41,7 @@ public class Staff {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "manager_id", nullable = false)
+    @Column(name = "manager_id")
     private int managerId;
 
     @Column(name = "title", nullable = false)

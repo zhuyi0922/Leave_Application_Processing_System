@@ -1,37 +1,38 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <!-- Add any additional styles or scripts if needed -->
-</head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head"/>
 <body>
-
-<h2>Login</h2>
-
-<form th:action="@{/login}" method="post">
-
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
-    <br>
-
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-    <br>
-
-    <label for="role">User Role:</label>
-    <select id="role" name="role" required>
-        <option value="admin">Admin</option>
-        <option value="staff">Staff</option>
-    </select>
-    <br>
-
-    <button type="submit">Login</button>
-
-</form>
-
-
-
+  <div th:replace="fragments/layout.html :: menu"/>
+  <div th:replace="fragments/layout.html :: header"/>
+  <h3>Login</h3> 
+  <form action="#" th:object="${user}" th:action="@{'/login/authenticate'}" method="post">
+    <table class="framed">
+      <tr>
+        <td><span>Username</span></td>
+        <td><input type="text" th:field="*{username}"></td>
+        <td><span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" /><td>
+      </tr>
+      <tr>
+        <td><span>Password</span></td>
+        <td><input type="password" th:field="*{password}"></td>
+        <td><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"/></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <input type="submit" />
+          <input type="reset" />
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td colspan="2">
+          <span th:if="${loginMessage != null}" th:text="${loginMessage}"></span>
+        </td>
+      </tr>
+    </table>
+  </form>
+  </div>
 </body>
+
 </html>

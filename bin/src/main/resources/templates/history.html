@@ -5,6 +5,46 @@
     <title>Title</title>
 </head>
 <body>
+<div th:if="${not #lists.isEmpty(applications)}">
 
+    <table style="border: 1px">
+        <tr class="listHeading">
+            <th><span>start-date</span></th>
+            <th><span>end-date</span></th>
+            <th><span>create-date</span></th>
+            <th><span>leave-type</span></th>
+            <th><span>reasons</span></th>
+            <th><span>work dissemination</span></th>
+            <th><span>contact details</span></th>
+            <th><span>status</span></th>
+            <th><span>operation</span></th>
+        </tr>
+        <tr th:each="leaveapplication : ${applications}" class="listRecord">
+            <td align="left" th:text="${leaveapplication.start_date}"></td>
+            <td align="left" th:text="${leaveapplication.end_date}"></td>
+            <td align="left" th:text="${leaveapplication.create_date}"></td>
+            <td align="left" th:text="${leaveapplication.leaveType.leaveTypeName}"></td>
+            <td align="left" th:text="${leaveapplication.reasons}"></td>
+            <td align="left" th:text="${leaveapplication.workDissemination}"></td>
+            <td align="left" th:text="${leaveapplication.contactDetails}"></td>
+            <td align="left" th:text="${leaveapplication.application_status}"></td>
+            <td>
+                <span th:if="${leaveapplication.application_status == T(com.team4.leave_application.Model.LeaveApplicationEventEnum).APPLIED or leaveapplication.application_status == T(com.team4.leave_application.Model.LeaveApplicationEventEnum).UPDATED }">
+                    <a th:href="@{/staff/application/edit/{id}(id = ${leaveapplication.leaveApplicationId})}" class="btn btn-default"><span>Edit</span></a>
+                    <a th:href="@{/staff/application/delete/{id}(id = ${leaveapplication.leaveApplicationId})}" class="btn btn-default"><span>Delete</span></a>
+                </span>
+                <span th:if="${leaveapplication.application_status == T(com.team4.leave_application.Model.LeaveApplicationEventEnum).APPROVED}">
+                    <a th:href="@{/staff/application/cancel/{id}(id = ${leaveapplication.leaveApplicationId})}" class="btn btn-default"><span>Cancel</span></a>
+                </span>
+                <span th:if="${leaveapplication.application_status == T(com.team4.leave_application.Model.LeaveApplicationEventEnum).REJECTED}">
+                    <a th:href="@{/staff/application/delete/{id}(id = ${leaveapplication.leaveApplicationId})}" class="btn btn-default"><span>ReApply</span></a>
+                </span>
+
+
+            </td>
+        </tr>
+    </table>
+
+</div>
 </body>
 </html>

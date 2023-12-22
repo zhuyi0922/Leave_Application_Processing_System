@@ -12,11 +12,43 @@ public class LeaveTypeServiceimpl implements LeaveTypeService{
     @Autowired
     private LeaveTypeRepository leaveTypeRepository;
 
+    @Override
     public List<String> findAllLeaveType(){
         return leaveTypeRepository.findAll().stream().map(leaveType -> leaveType.getLeaveTypeName()).toList();
     }
+    
+    @Override
+    public List<LeaveType> findAllLeaveTypes(){
+    	return leaveTypeRepository.findAll();
+    }
 
+    @Override
     public LeaveType findLeaveTypeByName(String name){
         return leaveTypeRepository.findLeaveTypeByLeaveTypeName(name);
+    }
+    
+    @Override
+    public LeaveType findLeaveTypeById(int leaveTypeId) {
+    	return leaveTypeRepository.findById(leaveTypeId).orElse(null);
+    }
+    
+    @Override	
+    public List<String> findAllLeaveTypeIds() {
+    	return leaveTypeRepository.findAllLeaveTypeIds();
+    }
+    
+    @Override
+    public LeaveType createLeaveType(LeaveType leaveType) {
+    	return leaveTypeRepository.saveAndFlush(leaveType);
+    }
+    
+    @Override
+    public void deleteLeaveType(LeaveType leaveType) {
+    	leaveTypeRepository.delete(leaveType);
+    }
+    
+    @Override
+    public LeaveType editLeaveType(LeaveType leaveType) {
+    	return leaveTypeRepository.saveAndFlush(leaveType);
     }
 }
