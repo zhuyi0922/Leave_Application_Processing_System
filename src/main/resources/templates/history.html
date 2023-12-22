@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <head th:replace="fragments/layout.html :: html_head"/>
 </head>
 <body>
+<div th:replace="fragments/layout.html :: menu"/>
+<div th:replace="fragments/layout.html :: header"/>
 <div th:if="${not #lists.isEmpty(applications)}">
 
     <table style="border: 1px">

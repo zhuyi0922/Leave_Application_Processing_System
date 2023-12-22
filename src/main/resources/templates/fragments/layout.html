@@ -3,6 +3,7 @@
 <head th:fragment="html_head" id="html_head">
   <meta charset="ISO-8859-1">
   <title>Course Application Tracking System - CATS</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" th:href="@{/css/simple.css}" />
 </head>
 
@@ -14,7 +15,8 @@
       <a th:href="@{/about}">Leave Application</a>
       <div th:if="${session.usession?.user}">
         <div th:each="role : ${session.usession.user.roleSet}">
-          <div th:if="${role.roleId == 'manager'}">
+
+          <div th:if="${role.name.equals('manager')}">
             <div class="subnav">
               <button class="subnavbtn">Manager Menu <i class="fa fa-caret-down"></i></button>
               <div class="subnav-content">
@@ -24,7 +26,7 @@
             </div>
           </div>
           
-          <div th:if="${role.roleId == 'admin'}">
+          <div th:if="${role.name.equals('admin')}">
             <div class="subnav">
               <button class="subnavbtn">Admin Menu <i class="fa fa-caret-down"></i></button>
               <div class="subnav-content">
@@ -36,27 +38,16 @@
           </div>
 
 
-          <div th:if="${role.roleId == 'staff'}">
+          <div th:if="${role.name.equals('employee')}">
             <div class="subnav">
               <button class="subnavbtn">Staff Menu <i class="fa fa-caret-down"></i></button>
               <div class="subnav-content">
-                <a th:href="@{/staff/course/history}">History</a>
-                <a th:href="@{/staff/course/create}">Apply</a>
+                <a th:href="@{/staff/application/history}">History</a>
+                <a th:href="@{/staff/application/apply}">Apply</a>
               </div>
             </div>
           </div>
         </div>
-        
-        <div th:if="${role.roleId == 'manager'}">
-			<div class="subnav">
-				<button class="subnavbtn">Manager Menu<i class="fa fa-caret-down"></i></button>
-				<div class="subnav-content">
-					<a th:href="@{/manager/view_pending}">View Pending Application</a>
-					<a th:href="@{/manager/application-history}">Application History</a>
-					<a th:href="@{/manager/compensation}">Compensation Leave</a>
-				</div>
-			</div>
-		</div>
         
         <a th:href="@{/logout}">Logout</a>
         
@@ -67,7 +58,7 @@
   
   <div th:fragment="header" id="header">
     <div th:if="${not #strings.isEmpty(session.usession)}">
-      <h2><em th:utext="'Hello ' + ${session.usession.user.name}"></em></h2>
+      <h2><em th:utext="'Hello ' + ${session.usession.user.username}"></em></h2>
     </div>
   </div>
 </body>

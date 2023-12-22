@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <head th:replace="fragments/layout.html :: html_head"/>
 </head>
 <body>
+<div th:replace="fragments/layout.html :: menu"/>
+<div th:replace="fragments/layout.html :: header"/>
     <form th:action="@{/manager/application/edit/{id}(id = ${leaveapplication.leaveApplicationId})}" th:object="${leaveapplication}" method="post">
 
         <div>

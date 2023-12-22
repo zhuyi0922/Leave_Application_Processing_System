@@ -3,8 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Create User</title>
+  <head th:replace="fragments/layout.html :: html_head"/>
 </head>
 <body>
+<div th:replace="fragments/layout.html :: menu"/>
+<div th:replace="fragments/layout.html :: header"/>
 <h2>Create User</h2>
 <form action="/admin/users" method="post">
   <label for="username">Username:</label><br>
