@@ -1,0 +1,21 @@
+body{
+	background-color: #36465D;
+}
+
+.centerpage{
+	max-width: 400px;
+	background-color: white;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 5px;
+}
+
+.loginheader{
+	border-radius: 5px 5px 0 0;
+	background-color: #158cba;
+	padding: 10px;
+	color: white;
+	text-align: center;
+}
