@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+</head>
+<body>
+
+<h2>Admin Page</h2>
+
+    <ul>
+        <li><a th:href="@{/admin/users/list}">Users</a></li>
+        <li><a th:href="@{/admin/leavetype/list}">Leave Type</a></li>
+        <li><a th:href="@{/admin/role/list}">Role</a></li>
+        <li><a th:href="@{/admin/leaveapplication/list}">Leave Application</a></li>
+    </ul>
+</body>
+</html>

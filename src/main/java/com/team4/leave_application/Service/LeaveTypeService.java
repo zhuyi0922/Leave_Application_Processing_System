@@ -7,5 +7,12 @@ import java.util.List;
 public interface LeaveTypeService {
     List<String> findAllLeaveType();
     LeaveType findLeaveTypeByName(String name);
-    List<LeaveType> findAllLeaveTypeObj();
+	LeaveType createLeaveType(LeaveType leaveType);
+	void deleteLeaveType(LeaveType leaveType);
+	LeaveType editLeaveType(LeaveType leaveType);
+	List<String> findAllLeaveTypeIds();
+	List<LeaveType> findAllLeaveTypes();
+	LeaveType findLeaveTypeById(int leaveTypeId);
+
+	List<LeaveType> findAllByTitle(String staffTitle);
 }

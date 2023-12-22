@@ -19,7 +19,6 @@ public class LeaveType {
     
     @Column(name = "leave_type_name", nullable = false)
     private String leaveTypeName;
-    // comfirm something with Yk
 
     @Column(name = "staff_title", nullable = false)
     private String staffTitle;

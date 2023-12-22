@@ -44,7 +44,9 @@ public class StaffController {
 
     @GetMapping("/application/apply")
     public String Apply(Model model){
-        var typelist = leaveTypeService.findAllLeaveTypeObj();
+        var usession = (UserSession) model.getAttribute("usession");
+        var staff = (Staff) usession.getStaff();
+        var typelist = leaveTypeService.findAllByTitle(staff.getTitle());
         model.addAttribute("typelist",typelist);
 
         model.addAttribute("leaveApplication",new LeaveApplication());
@@ -144,7 +146,9 @@ public class StaffController {
     @GetMapping("/application/edit/{id}")
     public String Edit(Model model,@PathVariable int id){
         var application = leaveApplicationService.findById(id);
-        var typelist = leaveTypeService.findAllLeaveTypeObj();
+        var usession = (UserSession) model.getAttribute("usession");
+        var staff = (Staff) usession.getStaff();
+        var typelist = leaveTypeService.findAllByTitle(staff.getTitle());
         model.addAttribute("typelist",typelist);
         model.addAttribute("leaveApplication",application);
         return "application-edit";

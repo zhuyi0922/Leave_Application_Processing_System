@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head"/>
+
+<body>
+  <div th:replace="fragments/layout.html :: menu"/>
+  <div th:replace="fragments/layout.html :: header"/> 
+  <h3>Leave Type List page</h3>
+  <a th:href="@{/admin/leavetype/create}">Add Leave Type</a>
+  <a th:href="@{/admin/users}">Back</a>
+  <div th:if="${not #lists.isEmpty(leaveTypeList)}">
+    <table style="border: 1;">
+      <tr class="listHeading">
+        <th><span th:text="#{fieldLabel.leaveTypeId}"></span></th>
+        <th><span th:text="#{fieldLabel.leaveTypeName}"></span></th>
+        <th><span th:text="#{fieldLabel.staffTitle}"></span></th>
+        <th><span th:text="#{fieldLabel.maxLeaveDay}"></span></th>
+        <th><span th:text="#{caption.edit}"></span></th>
+        <th><span th:text="#{caption.delete}"></span></th>
+      </tr>
+      <tr th:each="leaveType : ${leaveTypeList}" class="listRecord">
+        <td align="left" th:text="${leaveType.leaveTypeId}">Id</td>
+        <td align="left" th:text="${leaveType.leaveTypeName}">Name</td>
+        <td align="left" th:text="${leaveType.staffTitle}">Staff Title</td>
+        <td align="left" th:text="${leaveType.maxLeaveDay}">Max Leave Day</td>
+        <td><a th:href="@{/admin/leavetype/edit/}+${leaveType.leaveTypeId}" class="btn btn-default"><span
+              th:text="#{caption.edit}"></span></a></td>
+        <td><a th:href="@{/admin/leavetype/delete/}+${leaveType.leaveTypeId}" class="btn btn-default"><span
+              th:text="#{caption.delete}"></span></a></td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>

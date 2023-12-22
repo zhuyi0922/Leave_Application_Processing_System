@@ -1,8 +1,6 @@
 package com.team4.leave_application.Service;
 
 import com.team4.leave_application.Model.Staff;
-import com.team4.leave_application.Repository.StaffRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,4 +9,9 @@ import java.util.List;
 public interface StaffService {
     Staff findStaffById(int id);
     List<Staff> findSubordinates(int managerid);
+	List<String> findAllStaffIds();
+	List<Staff> findAllStaff();
+	Staff editStaff(Staff staff);
+	Staff createStaff(Staff staff);
+	void deleteStaff(Staff staff);
 }

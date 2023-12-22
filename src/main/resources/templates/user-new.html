@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head"/>
+
+<body>
+  <div th:replace="fragments/layout.html :: menu"/>
+  <div th:replace="fragments/layout.html :: header"/> 
+  <h3>Create User page</h3>
+  <a th:href="@{/admin/users/list}">Back</a>
+  <form action="#" th:action="@{'/admin/users/create'}" th:object="${user}" method="post">
+    <table>
+      <tbody>
+        <tr>
+          <td><span th:text="#{fieldLabel.userId}"></span></td>
+          <td><input type="text" th:field="*{userId}" /></td>
+          <td th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}"></td>
+        </tr>
+        <tr>
+          <td><span th:text="#{fieldLabel.username}"></span></td>
+          <td><input type="text" th:field="*{username}" /></td>
+          <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></td>
+        </tr>
+        <tr>
+          <td><span th:text="#{fieldLabel.password}"></span></td>
+          <td><input type="text" th:field="*{password}" /></td>
+          <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></td>
+        </tr>
+        <tr>
+          <td><span th:text="#{fieldLabel.staffid}"></span></td>
+          <td><input type="text" th:field="*{staff.id}" /></td>
+          <td th:if="${#fields.hasErrors('staff.id')}" th:errors="*{staff.id}"></td>
+        </tr>
+        <tr>
+          <td><span th:text="#{fieldLabel.firstName}"></span></td>
+          <td><input type="text" th:field="*{staff.firstName}" /></td>
+          <td th:if="${#fields.hasErrors('staff.firstName')}" th:errors="*{staff.firstName}"></td>
+        </tr>
+        <tr>
+          <td><span th:text="#{fieldLabel.lastName}"></span></td>
+          <td><input type="text" th:field="*{staff.lastName}" /></td>
+          <td th:if="${#fields.hasErrors('staff.lastName')}" th:errors="*{staff.lastName}"></td>
+        </tr>
+        <tr>
+          <td><span th:text="#{fieldLabel.email}"></span></td>
+          <td><input type="text" th:field="*{staff.email}" /></td>
+          <td th:if="${#fields.hasErrors('staff.email')}" th:errors="*{staff.email}"></td>
+        </tr>
+        <tr>
+          <td><span th:text="#{fieldLabel.gender}"></span></td>
+          <td><input type="text" th:field="*{staff.gender}" /></td>
+          <td th:if="${#fields.hasErrors('staff.gender')}" th:errors="*{staff.gender}"></td>
+        </tr>
+        <tr>
+          <td><span th:text="#{fieldLabel.staffTitle}"></span></td>
+          <td><input type="text" th:field="*{staff.title}" /></td>
+          <td th:if="${#fields.hasErrors('staff.title')}" th:errors="*{staff.title}"></td>
+        </tr>
+        <tr>
+		  <td><span th:text="#{fieldLabel.staffManagerId}"></span></td>
+          <td><input type="text" th:field="*{staff.managerId}" /></td>
+		</tr>
+		<tr>
+            <div th:each="role : ${roles}">
+                <input type="checkbox" th:value="${role.roleId}" name="roleSet" th:text="${role.name}" />
+            </div>
+        </tr>
+        <tr>
+          <td><input type="submit" value="Create" class="blcass" /></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</body>
+
+</html>
