@@ -64,7 +64,7 @@ public class CommonController {
         }
 
         if (roles.contains("manager")) {
-            return "redirect:/manager/pending";
+            return "redirect:/manager/view_pending";
         }
 
         return "redirect:/staff/application/history";

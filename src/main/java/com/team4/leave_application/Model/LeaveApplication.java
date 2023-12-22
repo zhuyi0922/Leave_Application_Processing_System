@@ -53,7 +53,7 @@ public class LeaveApplication {
     private String contactDetails;
 
     @Column(name = "cost_leave_days")
-    private int costLeaveDays;
+    private Integer costLeaveDays;
 
     @Column(name="response_comment")
     private String responseComment;

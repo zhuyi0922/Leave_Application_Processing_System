@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-    <form th:object="${leaveapplication}">
+    <form th:action="@{/manager/application/edit/{id}(id = ${leaveapplication.leaveApplicationId})}" th:object="${leaveapplication}" method="post">
 
         <div>
             <label>Staff Name:</label>
