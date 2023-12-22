@@ -67,6 +67,7 @@ public class StaffController {
             application.setStaff(staff);
             application.setApplication_status(LeaveApplicationEventEnum.APPLIED);
             application.setCreate_date(new Date());
+            application.setCostLeaveDays(days);
             leaveApplicationService.save(application);
 
             // adjust the remain leave
