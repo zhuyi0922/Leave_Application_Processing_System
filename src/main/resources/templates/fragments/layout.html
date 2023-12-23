@@ -48,16 +48,15 @@
 					</div>
 				</div>
 				
-				<a class="logout-bar" th:href="@{/logout}">Logout</a>
-				
 			</div>
+			<a class="logout-bar" th:href="@{/logout}">Logout</a>
 		</div>
 	</nav>
 </div>
 
 <div th:fragment="header" id="header">
-		<div th:if="${not #strings.isEmpty(usession)}">
-			<span th:text="${'Hello, ' + session.ussession.user.name}"></span>
+		<div th:if="${not #strings.isEmpty(session.usession)}">
+			<span th:text="${session.usession.staff.firstName}"></span>
 		</div>
 </div>
 
