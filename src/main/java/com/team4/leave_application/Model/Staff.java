@@ -53,7 +53,7 @@ public class Staff implements Serializable {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "ot_hours", columnDefinition = "0")
+    @Column(name = "ot_hours", columnDefinition = "integer default 0")
     private Integer otHours;
 
     @ToString.Exclude
