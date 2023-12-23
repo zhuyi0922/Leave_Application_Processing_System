@@ -8,6 +8,7 @@ import com.team4.leave_application.Service.*;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,11 +34,15 @@ public class StaffController {
     @Autowired
     private StaffService staffService;
     @GetMapping("/application/history")
-    public String History(HttpSession session, Model model){
+    public String History(HttpSession session, Model model,
+                          @RequestParam(defaultValue = "0") int page,
+                          @RequestParam(defaultValue = "3") int size){
         var usession = (UserSession) session.getAttribute("usession");
         var staff = (Staff) usession.getStaff();
         // do not use the getLeaveApplications(), it does not work!!!!!
-        var applications = leaveApplicationService.findApplicationsByStaff(staff);
+        var applications = leaveApplicationService.findApplicationsByStaffInPage(staff, PageRequest.of(page, size));
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", applications.getTotalPages());
         model.addAttribute("applications", applications);
         return "history";
     }

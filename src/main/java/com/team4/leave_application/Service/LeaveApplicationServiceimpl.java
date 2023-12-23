@@ -7,9 +7,12 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 @Service
@@ -29,10 +32,15 @@ public class LeaveApplicationServiceimpl implements LeaveApplicationService {
     }
     
     @Transactional
+    public Page<LeaveApplication> findApplicationsByStaffInPage(Staff staff, PageRequest pageRequest){
+        return leaveApplicationRepository.findAllByStaff(staff,pageRequest);
+    }
+
+    @Transactional
     public List<LeaveApplication> findApplicationsByStaff(Staff staff){
         return leaveApplicationRepository.findAllByStaff(staff);
     }
-    
+
     @Transactional
     public List<LeaveApplication> findPendingApplicationByStaffID(int staffId) {
         return leaveApplicationRepository.findPendingApplicationByStaffId(staffId);

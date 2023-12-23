@@ -52,6 +52,14 @@
             </td>
         </tr>
     </table>
+    <!--this is for the pagination-->
+    <!-- Add these lines at the end of your existing HTML -->
+    <span th:if="${applications.hasPrevious()}">
+        <a th:href="@{'/staff/application/history?page=' + ${applications.previousPageable().pageNumber}}" class="btn btn-default">Previous</a>
+    </span>
+    <span th:if="${applications.hasNext()}">
+        <a th:href="@{'/staff/application/history?page=' + ${applications.nextPageable().pageNumber}}" class="btn btn-default">Next</a>
+    </span>
 
 </div>
 </body>
