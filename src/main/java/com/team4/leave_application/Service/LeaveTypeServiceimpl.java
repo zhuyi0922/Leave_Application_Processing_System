@@ -59,4 +59,10 @@ public class LeaveTypeServiceimpl implements LeaveTypeService{
     public LeaveType editLeaveType(LeaveType leaveType) {
     	return leaveTypeRepository.saveAndFlush(leaveType);
     }
+
+    @Override
+    public LeaveType findByTitleAndName(String staffTitle, String leaveTypeName) {
+    	return leaveTypeRepository.findByStaffTitleAndLeaveTypeName(staffTitle, leaveTypeName);
+    }
+
 }

@@ -54,13 +54,14 @@ public class StaffController {
     }
     @PostMapping("/application/apply")
     public String ApplyPost(HttpSession session,Model model,@ModelAttribute @Valid LeaveApplication application){
-        var leaveTypeName = application.getLeaveType().getLeaveTypeName();
-        var LeaveType = leaveTypeService.findLeaveTypeByName(leaveTypeName);
-        application.setLeaveType(LeaveType);
-        //first set the leave type
+        //first get the staff
         var usession = (UserSession) session.getAttribute("usession");
         var staff = (Staff) usession.getStaff();
-        // get the staff
+        //second get the LeaveType object
+        var leaveTypeName = application.getLeaveType().getLeaveTypeName();
+        var LeaveType = leaveTypeService.findByTitleAndName(staff.getTitle(),leaveTypeName);
+        application.setLeaveType(LeaveType);
+        // get the acual leave days and remain leave days.
         var days = holidayService.calLeaveDays(application.getStart_date(),application.getEnd_date());
         var remaindays = remainLeaveService.findRemainLeave(staff,LeaveType);
         if (remaindays>=days){
@@ -82,7 +83,6 @@ public class StaffController {
             var manager = staffService.findStaffById(managerid);
             var managerEmail = manager.getEmail();
             emailService.sendSimpleMessage(managerEmail,subject,message);
-
 
             return "redirect:/staff/application/history";
 
@@ -169,8 +169,8 @@ public class StaffController {
         originApplication.setContactDetails(application.getContactDetails());
         // also adjust the leave type
         var leaveTypeName = application.getLeaveType().getLeaveTypeName();
-        var LeaveType = leaveTypeService.findLeaveTypeByName(leaveTypeName);
-        originApplication.setLeaveType(LeaveType);
+        var LeaveType = leaveTypeService.findByTitleAndName(originApplication.getStaff().getTitle(),leaveTypeName);
+        application.setLeaveType(LeaveType);
         // set the status
         originApplication.setApplication_status(LeaveApplicationEventEnum.UPDATED);
         // set the cost leave days

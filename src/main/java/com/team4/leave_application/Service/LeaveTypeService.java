@@ -15,4 +15,6 @@ public interface LeaveTypeService {
 	LeaveType findLeaveTypeById(int leaveTypeId);
 
 	List<LeaveType> findAllByTitle(String staffTitle);
+
+	LeaveType findByTitleAndName(String staffTitle, String leaveTypeName);
 }

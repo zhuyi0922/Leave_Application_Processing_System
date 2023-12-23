@@ -17,4 +17,6 @@ public interface LeaveTypeRepository extends JpaRepository<LeaveType, Integer> {
 	void deleteByLeaveTypeId(int leaveTypeId);
 
     List<LeaveType> findAllByStaffTitle(String staffTitle);
+
+    LeaveType findByStaffTitleAndLeaveTypeName(String staffTitle, String leaveTypeName);
 }
