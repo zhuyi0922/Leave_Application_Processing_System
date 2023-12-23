@@ -43,7 +43,7 @@ public class ManagerController {
     }
 
     // View subordinates history
-    @RequestMapping(value="/application-history",method = RequestMethod.GET)
+    @RequestMapping(value="/subordinates-history",method = RequestMethod.GET)
     public String subordinatesApplicationHistory(HttpSession session, Model model) {
         UserSession userSession = (UserSession) session.getAttribute("usession");
 

@@ -3,14 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manager Pending Applications</title>
+    <title>Subordinate Leave Application History</title>
     <head th:replace="fragments/layout.html :: html_head"/>
 </head>
 <body>
 <div th:replace="fragments/layout.html :: menu"/>
 <div th:replace="fragments/layout.html :: header"/>
 
-<h2>Manager Pending Applications</h2>
+<div class="body-form" style="max-width: 90%">
+	<div class="formtitle">
+		<h2>Subordinate Leave Application History</h2>
+	</div>
+	
+	<div class="formcontent">
+		<p th:if="${subordinatehistory !=null}"><strong>You have no subordinates.</strong></p>
+	</div>
+</div>
 
 <div th:each="entry : ${subordinatehistory}">
     <h3 th:text="${entry.key.firstName}+ ' ' + (${entry.key.middleName} ?: ' ') + ' ' + ${entry.key.lastName}"></h3>
