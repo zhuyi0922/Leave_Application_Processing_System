@@ -16,48 +16,46 @@
 	</div>
 	
 	<div class="formcontent">
-		<p th:if="${subordinatehistory !=null}"><strong>You have no subordinates.</strong></p>
+		<p th:if="${subordinatehistory == null}" style="color:red;">You have no subordinates.</p>
+		<div th:each="entry : ${subordinatehistory}">
+			<h3 th:text="${entry.key.firstName}+ ' ' + (${entry.key.middleName} ?: ' ') + ' ' + ${entry.key.lastName}"></h3>
+			<p th:if="${#lists.isEmpty(entry.value)}" style="color:red;">The staff has no application.</p>
+			<table border="1" th:if="${not #lists.isEmpty(entry.value)}">
+				<thead>
+					<tr>
+						<th>Application ID</th>
+						<th>Leave Type</th>
+						<th>Start Date</th>
+						<th>End Date</th>
+						<th>Create Date</th>
+						<th>Reasons</th>
+						<th>work dissemination</th>
+						<th>contact details</th>
+						<th>cost leave days</th>
+						<th>manager comment</th>
+						<th>response date</th>
+						<th>status</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="leaveapplication : ${entry.value}">
+						<td th:text="${leaveapplication.leaveApplicationId}"></td>
+						<td th:text="${leaveapplication.leaveType.leaveTypeName}"></td>
+						<td th:text="${#dates.format(leaveapplication.start_date, 'yyyy-MM-dd')}"></td>
+						<td th:text="${#dates.format(leaveapplication.end_date, 'yyyy-MM-dd')}"></td>
+						<td th:text="${#dates.format(leaveapplication.create_date, 'yyyy-MM-dd')}"></td>
+						<td th:text="${leaveapplication.reasons}"></td>
+						<td th:text="${leaveapplication.workDissemination}"></td>
+						<td th:text="${leaveapplication.contactDetails}"></td>
+						<td th:text="${leaveapplication.costLeaveDays}"></td>
+						<td th:text="${leaveapplication.responseComment}"></td>
+						<td th:text="${leaveapplication.responseDate}"></td>
+						<td th:text="${leaveapplication.application_status}"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
-</div>
-
-<div th:each="entry : ${subordinatehistory}">
-    <h3 th:text="${entry.key.firstName}+ ' ' + (${entry.key.middleName} ?: ' ') + ' ' + ${entry.key.lastName}"></h3>
-    <p th:if="${#lists.isEmpty(entry.value)}"><strong>there is no application</strong></p>
-    <table border="1" th:if="${not #lists.isEmpty(entry.value)}">
-        <thead>
-        <tr>
-            <th>Application ID</th>
-            <th>Leave Type</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Create Date</th>
-            <th>Reasons</th>
-            <th>work dissemination</th>
-            <th>contact details</th>
-            <th>cost leave days</th>
-            <th>manager comment</th>
-            <th>response date</th>
-            <th>status</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="leaveapplication : ${entry.value}">
-            <td th:text="${leaveapplication.leaveApplicationId}"></td>
-            <td th:text="${leaveapplication.leaveType.leaveTypeName}"></td>
-            <td th:text="${#dates.format(leaveapplication.start_date, 'yyyy-MM-dd')}"></td>
-            <td th:text="${#dates.format(leaveapplication.end_date, 'yyyy-MM-dd')}"></td>
-            <td th:text="${#dates.format(leaveapplication.create_date, 'yyyy-MM-dd')}"></td>
-            <td th:text="${leaveapplication.reasons}"></td>
-            <td th:text="${leaveapplication.workDissemination}"></td>
-            <td th:text="${leaveapplication.contactDetails}"></td>
-            <td th:text="${leaveapplication.costLeaveDays}"></td>
-            <td th:text="${leaveapplication.responseComment}"></td>
-            <td th:text="${leaveapplication.responseDate}"></td>
-            <td th:text="${leaveapplication.application_status}"></td>
-
-        </tr>
-        </tbody>
-    </table>
 </div>
 
 </body>
