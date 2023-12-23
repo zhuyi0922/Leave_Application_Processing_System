@@ -215,6 +215,8 @@ public class AdminController {
 	    model.addAttribute("user", new User());
 	    List<Staff> staff = staffService.findAllStaff();
 	    model.addAttribute("staff", staff);
+	    List<String> staffIds = staffService.findAllStaffIds();
+	    model.addAttribute("staffIds",staffIds);
 	    List<Role> roles = roleService.findAllRoles();
 	    model.addAttribute("roles", roles);
 	    
@@ -228,6 +230,7 @@ public class AdminController {
 		        model.addAttribute("user", user); 
 		        model.addAttribute("userResult", userResult);
 		        model.addAttribute("roles", roleService.findAllRoles());
+		        model.addAttribute("staffIds",staffService.findAllStaffIds());
 		        return "user-new";
 		    }
 		
@@ -252,6 +255,8 @@ public class AdminController {
 		model.addAttribute("user", user);	
 	    List<Role> roles = roleService.findAllRoles();
 	    model.addAttribute("roles", roles);
+	    List<String> staffIds = staffService.findAllStaffIds();
+	    model.addAttribute("staffIds",staffIds);
 	    var currentRoles = user.getRoleSet();
 	    model.addAttribute("currentRoles", currentRoles);
 		return "user-edit";
@@ -265,8 +270,16 @@ public class AdminController {
 			model.addAttribute("roles",roles);
 			var currentRoles = user.getRoleSet() != null ? user.getRoleSet() : new ArrayList();
 		    model.addAttribute("currentRoles", currentRoles);
+		    List<String> staffIds = staffService.findAllStaffIds();
+		    model.addAttribute("staffIds",staffIds);
 			return "user-edit";
 		}
+		
+		
+		Staff staff = user.getStaff();
+	    if (staff != null) {
+	        staffService.editStaff(staff);
+	    }
 		
 		String message = "User was successfully updated.";
 		System.out.println(message);

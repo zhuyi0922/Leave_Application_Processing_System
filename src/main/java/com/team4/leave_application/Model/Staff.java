@@ -8,9 +8,11 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import java.time.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
 
 @NoArgsConstructor
 @Getter
@@ -37,14 +39,16 @@ public class Staff implements Serializable {
     @Column(name = "gender")
     private String gender;
     
+    @Temporal(TemporalType.DATE)
     @Column(name = "birthday")
-    private LocalDate birtday;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date birthday;
     
     @Column(name = "email")
     private String email;
 
     @Column(name = "manager_id")
-    private int managerId;
+    private Integer managerId;
 
     @Column(name = "title", nullable = false)
     private String title;

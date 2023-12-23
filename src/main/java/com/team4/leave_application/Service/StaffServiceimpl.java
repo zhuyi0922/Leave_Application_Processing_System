@@ -34,6 +34,7 @@ public class StaffServiceimpl implements StaffService{
     public Staff createStaff(Staff staff) {
     	return staffRepository.save(staff);
     }
+
     @Transactional
     public Staff editStaff(Staff staff) {
     	return staffRepository.save(staff);
