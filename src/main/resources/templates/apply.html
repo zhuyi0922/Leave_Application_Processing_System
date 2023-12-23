@@ -11,42 +11,75 @@
 <div th:replace="fragments/layout.html :: menu"/>
 <div th:replace="fragments/layout.html :: header"/>
 
-<h2>Leave Application Form</h2>
+<div class="body-form" style="max-width: 600px">
+	<div class="formtitle">
+		<h2>Leave Application Form</h2>
+	</div>
+	
+	<div class="formcontent">
+		<form th:action="@{/staff/application/apply}" method="post" >
+			<table class="formtable">
+				<tr>
+					<th class="formheader">
+						 <label for="start_date">Start Date</label>
+					</th>
+					<td class="forminput">
+						<input type="date" id="start_date" name="start_date" th:field="${leaveApplication.start_date}" required>
+						<span id="start_date_error" style="color: red;"></span>
+					</td>
+				</tr>
+				<tr>
+					<th class="formheader">
+						<label for="end_date">End Date</label>
+					</th>
+					<td>
+						<input type="date" id="end_date" name="end_date" th:field="${leaveApplication.end_date}" required>
+						<span id="end_date_error" style="color: red;"></span>
+					</td>
+				</tr>
+				<tr>
+					<th class="formheader">
+						<label for="typeSelect">Leave Type</label>
+					</th>
+					<td>
+						<select id="typeSelect" name="chooseType" th:field="${leaveApplication.leaveType.leaveTypeName}">
+							<option th:each="t : ${typelist}" th:value="${t.leaveTypeName}" th:text="${t.leaveTypeName}"></option>
+						</select>
+						<span id="validationResult"></span>
+					</td>
+				</tr>
+				<tr>
+					<th class="formheader">
+						<label for="reasons">Reasons</label>
+					</th>
+					<td>
+						<textarea id="reasons" name="reasons" th:field="${leaveApplication.reasons}" style="min-height: 10em;" required></textarea>
+					</td>
+				</tr>
+				<tr>
+					<th class="formheader">
+						<label for="workDissemination">Work Dissemination</label>
+					</th>
+					<td>
+						<textarea id="workDissemination" name="workDissemination" th:field="${leaveApplication.workDissemination}" style="min-height: 5em;"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<th class="formheader">
+						<label for="contactDetails">Contact Details</label>
+					</th>
+					<td>
+						<input type="text" id="contactDetails" name="contactDetails" th:field="${leaveApplication.contactDetails}">
+					</td>
+				</tr>
+			</table>
+			<button type="submit">Submit</button>
+			<button type="reset">Reset</button>
+		</form>
+	</div>
+</div>
 
-<form th:action="@{/staff/application/apply}" method="post" >
 
-    <label for="start_date">Start Date:</label>
-    <input type="date" id="start_date" name="start_date" th:field="${leaveApplication.start_date}" required>
-    <span id="start_date_error" style="color: red;"></span>
-    <br>
-
-    <label for="end_date">End Date:</label>
-    <input type="date" id="end_date" name="end_date" th:field="${leaveApplication.end_date}" required>
-    <span id="end_date_error" style="color: red;"></span>
-    <br>
-
-    <label for="typeSelect">Choose a type:</label>
-    <select id="typeSelect" name="chooseType" th:field="${leaveApplication.leaveType.leaveTypeName}">
-        <option th:each="t : ${typelist}" th:value="${t.leaveTypeName}" th:text="${t.leaveTypeName}"></option>
-    </select>
-    <span id="validationResult"></span>
-    <br>
-
-    <label for="reasons">Reasons:</label>
-    <textarea id="reasons" name="reasons" th:field="${leaveApplication.reasons}" required></textarea>
-    <br>
-
-    <label for="workDissemination">Work Dissemination:</label>
-    <textarea id="workDissemination" name="workDissemination" th:field="${leaveApplication.workDissemination}" ></textarea>
-    <br>
-
-    <label for="contactDetails">Contact Details:</label>
-    <input type="text" id="contactDetails" name="contactDetails" th:field="${leaveApplication.contactDetails}">
-    <br>
-
-    <button type="submit">Submit</button>
-
-</form>
 
 <script>
     $(document).ready(function () {

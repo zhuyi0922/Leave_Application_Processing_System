@@ -1,5 +1,6 @@
 package com.team4.leave_application.Interceptor;
 
+import com.team4.leave_application.Model.Role;
 import com.team4.leave_application.Model.UserSession;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -30,7 +31,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        if (uri.startsWith("/home/")) {
+        if (uri.startsWith("/home/") || uri.startsWith("/login/")) {
             return true;
         }
 
@@ -44,6 +45,14 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         }
         // still not implement if the user is not staff or admin
         // refer to demo.
+        List<String> userRoles = userSession.getUser().getRoleSet().stream().map(x -> x.getName()).toList();
+        if (uri.startsWith("/admin") && !userRoles.contains("admin")) {
+            response.sendRedirect("/no-accessability");
+        }
+
+        if (uri.startsWith("/manager") && !userRoles.contains("manager")) {
+            response.sendRedirect("/no-accessability");
+        }
         return true;
     }
 }

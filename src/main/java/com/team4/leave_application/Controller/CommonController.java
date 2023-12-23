@@ -76,4 +76,9 @@ public class CommonController {
         session.invalidate();
         return "redirect:/login";
     }
+
+    @GetMapping("/no-accessability")
+    public String noAccessabilityPage(){
+        return "no-accessability";
+    }
 }
