@@ -1,17 +1,22 @@
 package com.team4.leave_application.Service;
 
-import com.team4.leave_application.Model.LeaveType;
-import com.team4.leave_application.Repository.LeaveTypeRepository;
+import com.team4.leave_application.Model.*;
+import com.team4.leave_application.Repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class LeaveTypeServiceimpl implements LeaveTypeService{
     @Autowired
     private LeaveTypeRepository leaveTypeRepository;
+    @Autowired
+    private RemainLeaveRepository remainLeaveRepository;
+    @Autowired
+    private StaffRepository staffRepository;
     @Transactional
 
     @Override
@@ -64,5 +69,37 @@ public class LeaveTypeServiceimpl implements LeaveTypeService{
     public LeaveType findByTitleAndName(String staffTitle, String leaveTypeName) {
     	return leaveTypeRepository.findByStaffTitleAndLeaveTypeName(staffTitle, leaveTypeName);
     }
-
+    
+    public int calculateRemainLeaveChange(int maxLeaveDayPre, int maxLeaveDayAft) {
+    	return (maxLeaveDayAft - maxLeaveDayPre);
+    }
+    
+    public boolean existsByLeaveType(LeaveType leaveType) {
+    	return remainLeaveRepository.existsByLeaveType(leaveType);
+    }
+    
+    public void createRemainLeave(LeaveType leaveType) {
+    	List<Staff> staffList = staffRepository.findByTitle(leaveType.getStaffTitle());
+    	List<RemainLeave> remainLeaves = new ArrayList<>();
+    	for (Staff staff : staffList) {
+    		RemainLeave remainLeave = new RemainLeave();
+    		remainLeave.setLeaveType(leaveType);
+            remainLeave.setStaff(staff);
+            remainLeave.setRemainLeave(leaveType.getMaxLeaveDay());
+            remainLeaves.add(remainLeave);
+    	}
+    	remainLeaveRepository.saveAll(remainLeaves);
+    }
+    
+    @Transactional
+    public void editRemainLeave(int remainLeaveChange, LeaveType leaveType) {
+    	List<RemainLeave> leaveTypeRecords = remainLeaveRepository.findRemainLeaveByLeaveType(leaveType);
+    	if (leaveTypeRecords != null && !leaveTypeRecords.isEmpty()) {
+    		for (RemainLeave records : leaveTypeRecords) {
+    			int newRemainLeave = records.getRemainLeave() + remainLeaveChange;    			
+    			records.setRemainLeave(newRemainLeave);
+    			remainLeaveRepository.save(records);
+    		}
+    	}
+    }
 }

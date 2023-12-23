@@ -11,11 +11,6 @@
     <table>
       <tbody>
         <tr>
-          <td><span th:text="#{fieldLabel.userId}"></span></td>
-          <td><input type="text" th:field="*{userId}" /></td>
-          <td th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}"></td>
-        </tr>
-        <tr>
           <td><span th:text="#{fieldLabel.username}"></span></td>
           <td><input type="text" th:field="*{username}" /></td>
           <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></td>
@@ -24,11 +19,6 @@
           <td><span th:text="#{fieldLabel.password}"></span></td>
           <td><input type="text" th:field="*{password}" /></td>
           <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></td>
-        </tr>
-        <tr>
-          <td><span th:text="#{fieldLabel.staffid}"></span></td>
-          <td><input type="text" th:field="*{staff.id}" /></td>
-          <td th:if="${#fields.hasErrors('staff.id')}" th:errors="*{staff.id}"></td>
         </tr>
         <tr>
           <td><span th:text="#{fieldLabel.firstName}"></span></td>
@@ -75,10 +65,13 @@
             </fieldset>
 		</tr>
 		<tr>
+			<td><span th:text="#{fieldLabel.role}"></span></td>
+			<td>
             <div th:each="role : ${roles}">
-                <input type="checkbox" th:value="${role.roleId}" name="roleSet" th:text="${role.name}" />
+                <input type="checkbox" id="roleCheckBox" th:value="${role.roleId}" onclick="toggleManagerSelection()" name="roleSet" th:text="${role.name}" />
             </div>
             <td th:if="${#fields.hasErrors('roleSet')}" th:errors="*{roleSet}"></td>
+        	</td>
         </tr>
         <tr>
           <td><input type="submit" value="Create" class="blcass" /></td>

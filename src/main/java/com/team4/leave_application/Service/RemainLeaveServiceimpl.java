@@ -5,6 +5,9 @@ import com.team4.leave_application.Model.RemainLeave;
 import com.team4.leave_application.Model.Staff;
 import com.team4.leave_application.Repository.RemainLeaveRepository;
 import jakarta.transaction.Transactional;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +27,13 @@ public class RemainLeaveServiceimpl implements RemainLeaveService{
     @Transactional
     public void updateRemainLeave(RemainLeave remainLeave){
         remainLeaveRepository.saveAndFlush(remainLeave);
+    }
+    @Transactional
+    public void updateRemainLeaves(LeaveType leaveType, int maxLeaveDay) {
+        List<RemainLeave> leaveTypeRecords = remainLeaveRepository.findRemainLeaveByLeaveType(leaveType);
+        for (RemainLeave record : leaveTypeRecords) {
+            record.setRemainLeave(maxLeaveDay);
+            remainLeaveRepository.save(record);
+        }
     }
 }

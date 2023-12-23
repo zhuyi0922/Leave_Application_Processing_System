@@ -13,8 +13,10 @@ public interface LeaveTypeService {
 	List<String> findAllLeaveTypeIds();
 	List<LeaveType> findAllLeaveTypes();
 	LeaveType findLeaveTypeById(int leaveTypeId);
-
 	List<LeaveType> findAllByTitle(String staffTitle);
-
 	LeaveType findByTitleAndName(String staffTitle, String leaveTypeName);
+	int calculateRemainLeaveChange(int maxLeaveDayPre, int maxLeaveDayAft);
+	void editRemainLeave(int remainLeaveChange, LeaveType leaveType);
+	void createRemainLeave(LeaveType leaveType);
+	boolean existsByLeaveType(LeaveType leaveType);
 }

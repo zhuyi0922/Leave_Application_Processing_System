@@ -22,11 +22,6 @@
           <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></td>
         </tr>
         <tr>
-          <td><span th:text="#{fieldLabel.staffid}"></span></td>
-          <td><input type="text" th:field="*{staff.id}" /></td>
-          <td th:if="${#fields.hasErrors('staff.id')}" th:errors="*{staff.id}"></td>
-        </tr>
-        <tr>
           <td><span th:text="#{fieldLabel.firstName}"></span></td>
           <td><input type="text" th:field="*{staff.firstName}" /></td>
           <td th:if="${#fields.hasErrors('staff.firstName')}" th:errors="*{staff.firstName}"></td>
@@ -72,8 +67,8 @@
 		</tr>
 		<tr>
             <div th:each="role : ${roles}">
-				<input type="checkbox" th:value="${role.roleId}" th:name="roleSet" th:checked="${currentRoles.contains(role)}" />
-				<label th:text="${role.name}"></label>
+				<input type="checkbox" id="roleCheckBox" th:value="${role.roleId}" onclick="toggleManagerSelection()" th:name="roleSet" th:checked="${currentRoles.contains(role)}" />
+				<label th:text="${role.name}">Role</label>
             </div>
             <td th:if="${#fields.hasErrors('roleSet')}" th:errors="*{roleSet}"></td>
         </tr>

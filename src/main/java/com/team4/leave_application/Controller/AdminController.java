@@ -31,6 +31,8 @@ public class AdminController {
 	@Autowired
 	private RoleService roleService;
 	@Autowired
+	private RemainLeaveService remainLeaveService;
+	@Autowired
 	private UserValidator userValidator;
 	@Autowired
 	private StaffValidator staffValidator;
@@ -99,8 +101,16 @@ public class AdminController {
 	    if (result.hasErrors()) {
 	        return "leavetype-edit";
 	      }
+
+	    LeaveType originalLeaveType = leaveTypeService.findLeaveTypeById(Id);
+	    int maxLeaveDayPre = originalLeaveType.getMaxLeaveDay();
 	    
-	    leaveTypeService.editLeaveType(leaveType);
+	    leaveTypeService.editLeaveType(leaveType);	    
+	    int remainLeaveChange = leaveTypeService.calculateRemainLeaveChange(maxLeaveDayPre, leaveType.getMaxLeaveDay());
+	    
+	    if (remainLeaveChange != 0) {
+	        leaveTypeService.editRemainLeave(remainLeaveChange, leaveType);
+	    }
 	    String message = "Leave Type was successfully updated.";
 	    System.out.println(message);
 	    
@@ -110,12 +120,28 @@ public class AdminController {
 	@GetMapping("leavetype/delete/{Id}")
 	public String deleteLeaveType(@PathVariable int Id) throws LeaveTypeNotFound{
 		LeaveType leaveType = leaveTypeService.findLeaveTypeById(Id);
-		leaveTypeService.deleteLeaveType(leaveType);
-		
-	    String message = "The LeaveType " + leaveType.getLeaveTypeId() + " was successfully deleted.";
-	    System.out.println(message);
+		if(!leaveTypeService.existsByLeaveType(leaveType)) {
+			leaveTypeService.deleteLeaveType(leaveType);		
+		    String message = "The LeaveType " + leaveType.getLeaveTypeId() + " was successfully deleted.";
+		    System.out.println(message);
+	    }
 	    
 	    return "redirect:/admin/leavetype/list";
+	}
+	
+	@GetMapping("leavetype/update/{Id}")
+	public String updateLeaveType(@PathVariable int Id) throws LeaveTypeNotFound{
+		LeaveType leaveType = leaveTypeService.findLeaveTypeById(Id);
+		if (leaveTypeService.existsByLeaveType(leaveType)) {
+			remainLeaveService.updateRemainLeaves(leaveType, leaveType.getMaxLeaveDay());
+		}
+		else {
+	        leaveTypeService.createRemainLeave(leaveType);
+	    }
+		
+	    String message = "The LeaveType " + leaveType.getLeaveTypeId() + " was successfully updated.";
+	    System.out.println(message);
+		return "redirect:/admin/leavetype/list";
 	}
 	
 	/*
