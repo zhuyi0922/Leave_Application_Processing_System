@@ -166,6 +166,10 @@ th
 	width: 30%;
 }
 
+.formheader2{
+    width: 100%;
+    white-space: nowrap;
+}
 td
 {
   color: #669;

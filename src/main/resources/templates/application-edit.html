@@ -5,47 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leave Application Form</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
     <head th:replace="fragments/layout.html :: html_head"/>
 </head>
 <body>
 <div th:replace="fragments/layout.html :: menu"/>
 <div th:replace="fragments/layout.html :: header"/>
 
-<h2>Leave Application Form</h2>
+<div class="body-form" style="max-width: 600px">
+    <div class="formtitle">
+        <h2>Leave Application Edit</h2>
+    </div>
 
-<form th:action="@{/staff/application/edit/{id}(id=${leaveApplication.leaveApplicationId})}" method="post" >
+    <div class="formcontent">
+        <form th:action="@{/staff/application/edit/{id}(id=${leaveApplication.leaveApplicationId})}" method="post">
+            <input type="hidden" th:value="${leaveApplication.leaveApplicationId}" th:field="${leaveApplication.leaveApplicationId}">
+            <table class="formtable">
+                <tr>
+                    <th class="formheader">
+                        <label for="start_date">Start Date:</label>
+                    </th>
+                    <td class="forminput">
+                        <input type="date" id="start_date" name="start_date" th:field="${leaveApplication.start_date}" th:value="${leaveApplication.start_date}" required>
+                        <span id="start_date_error" style="color: red;"></span>
+                    </td>
+                </tr>
 
-    <input type="hidden" th:value="${leaveApplication.leaveApplicationId}" th:field="${leaveApplication.leaveApplicationId}">
-    <label for="start_date">Start Date:</label>
-    <input type="date" id="start_date" name="start_date" th:field="${leaveApplication.start_date}" th:value="${leaveApplication.start_date}" required>
-    <br>
+                <tr>
+                    <th class="formheader">
+                        <label for="end_date">End Date:</label>
+                    </th>
+                    <td class="forminput">
+                        <input type="date" id="end_date" name="end_date" th:field="${leaveApplication.end_date}" th:value="${leaveApplication.end_date}" required>
+                        <span id="end_date_error" style="color: red;"></span>
+                    </td>
+                </tr>
 
-    <label for="end_date">End Date:</label>
-    <input type="date" id="end_date" name="end_date" th:field="${leaveApplication.end_date}" th:value="${leaveApplication.end_date}" required>
-    <br>
+                <tr>
+                    <th class="formheader">
+                        <label for="typeSelect">Choose a type:</label>
+                    </th>
+                    <td class="forminput">
+                        <select id="typeSelect" name="chooseType" th:field="${leaveApplication.leaveType.leaveTypeName}">
+                            <option th:each="t : ${typelist}" th:value="${t.leaveTypeName}" th:text="${t.leaveTypeName}" th:selected="${t.leaveTypeName==leaveApplication.leaveType.leaveTypeName}"></option>
+                        </select>
+                        <span id="validationResult"></span>
+                    </td>
+                </tr>
 
-    <label for="typeSelect">Choose a type:</label>
-    <select id="typeSelect" name="chooseType" th:field="${leaveApplication.leaveType.leaveTypeName}">
-        <option th:each="t : ${typelist}" th:value="${t.leaveTypeName}" th:text="${t.leaveTypeName}" th:selected="${t.leaveTypeName==leaveApplication.leaveType.leaveTypeName}"></option>
-    </select>
-    <br>
+                <tr>
+                    <th class="formheader">
+                        <label for="reasons">Reasons:</label>
+                    </th>
+                    <td class="forminput">
+                        <textarea id="reasons" name="reasons" th:field="${leaveApplication.reasons}" th:value="${leaveApplication.reasons}" style="min-height: 10em;" required></textarea>
+                    </td>
+                </tr>
 
-    <label for="reasons">Reasons:</label>
-    <textarea id="reasons" name="reasons" th:field="${leaveApplication.reasons}" th:value="${leaveApplication.reasons}" required></textarea>
-    <br>
+                <tr>
+                    <th class="formheader">
+                        <label for="workDissemination">Work Dissemination:</label>
+                    </th>
+                    <td class="forminput">
+                        <textarea id="workDissemination" name="workDissemination" th:field="${leaveApplication.workDissemination}" th:value="${leaveApplication.workDissemination}" style="min-height: 5em;"></textarea>
+                    </td>
+                </tr>
 
-    <label for="workDissemination">Work Dissemination:</label>
-    <textarea id="workDissemination" name="workDissemination" th:field="${leaveApplication.start_date}" th:value="${leaveApplication.start_date}"></textarea>
-    <br>
-
-    <label for="contactDetails">Contact Details:</label>
-    <input type="text" id="contactDetails" name="contactDetails" th:field="${leaveApplication.start_date}" th:value="${leaveApplication.start_date}">
-    <br>
-
-    <button type="submit">Update</button>
-
-</form>
-
+                <tr>
+                    <th class="formheader">
+                        <label for="contactDetails">Contact Details:</label>
+                    </th>
+                    <td class="forminput">
+                        <input type="text" id="contactDetails" name="contactDetails" th:field="${leaveApplication.contactDetails}" th:value="${leaveApplication.contactDetails}">
+                    </td>
+                </tr>
+            </table>
+            <button type="submit">Update</button>
+            <button type="reset">Reset</button>
+        </form>
+    </div>
+</div>
 
 <script>
     $(document).ready(function () {
@@ -56,6 +95,28 @@
             var endDate = $('#end_date').val();
             var leaveType = $('#typeSelect').val();
 
+            var currentDate = new Date().toISOString().split('T')[0];
+
+            // 检查start-date是否小于当前时间
+            if (startDate < currentDate) {
+                $('#start_date_error').text("Start date cannot be less than the current date.");
+                disableSubmitButton();
+                return;
+            } else {
+                $('#start_date_error').text(""); // 清空错误消息
+            }
+
+            // 检查end-date是否小于start-date
+            if (endDate && endDate < startDate) {
+                $('#end_date_error').text("End date cannot be less than start date.");
+                disableSubmitButton();
+                return;
+            } else {
+                $('#end_date_error').text(""); // 清空错误消息
+            }
+
+            // 启用submit按钮
+            enableSubmitButton();
             // 发送Ajax请求
             $.get('/staff/application/validate', {
                 start_date: startDate,
@@ -63,9 +124,17 @@
                 leave_type: leaveType
             }, function (data) {
                 // 处理响应，data为服务器返回的JSON数据
-                console.log(data);
+                document.getElementById("validationResult").innerHTML = data;
             });
         });
+
+        function disableSubmitButton() {
+            $('button[type="submit"]').prop('disabled', true);
+        }
+
+        function enableSubmitButton() {
+            $('button[type="submit"]').prop('disabled', false);
+        }
     });
 </script>
 </body>

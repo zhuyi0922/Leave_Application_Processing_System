@@ -3,26 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
     <title>Overtime Work Application</title>
 </head>
 <body>
-
-<h2>Overtime Work Claim</h2>
-
-<form th:action="@{/staff/compensation-claim}" id="overtimeForm" method="post" th:object="${OTWork}">
-    <label for="overworkDate">Overwork Date:</label>
-    <input type="date" id="overworkDate" name="overworkDate" th:field="*{otDate}" required>
-    <br>
-
-    <label for="overworkTime">Overwork Time:</label>
-    <select id="overworkTime" name="overworkTime" th:field="*{otTime}" required>
-        <option value="AM">AM</option>
-        <option value="PM">PM</option>
-    </select>
-    <br>
-
-    <button type="submit">Claim</button>
-</form>
+<div class="body-form" style="max-width: 50%;height: 330px">
+    <div class="formtitle">
+        <h2>Overtime Work Claim</h2>
+    </div>
+    <div class="formcontent">
+        <form th:action="@{/staff/compensation-claim}" id="overtimeForm" method="post" th:object="${OTWork}">
+            <table class="formtable"> <!-- 添加table标签 -->
+                <tr class="formrow">
+                    <th class="formheader">
+                        <label for="overworkDate">Overwork Date:</label>
+                    </th>
+                    <td class="forminput">
+                        <input type="date" id="overworkDate" name="overworkDate" th:field="*{otDate}" required>
+                    </td>
+                </tr>
+                <tr class="formrow">
+                    <th class="formheader">
+                        <label for="overworkTime">Overwork Time:</label>
+                    </th>
+                    <td class="forminput">
+                        <select id="overworkTime" name="overworkTime" th:field="*{otTime}" required>
+                            <option value="AM">AM</option>
+                            <option value="PM">PM</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <button type="submit">Claim</button>
+        </form>
+    </div>
+</div>
 
 </body>
 </html>
