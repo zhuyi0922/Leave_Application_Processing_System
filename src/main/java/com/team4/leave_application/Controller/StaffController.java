@@ -48,8 +48,8 @@ public class StaffController {
     }
 
     @GetMapping("/application/apply")
-    public String Apply(Model model){
-        var usession = (UserSession) model.getAttribute("usession");
+    public String Apply(Model model,HttpSession session){
+        var usession = (UserSession) session.getAttribute("usession");
         var staff = (Staff) usession.getStaff();
         var typelist = leaveTypeService.findAllByTitle(staff.getTitle());
         model.addAttribute("typelist",typelist);
@@ -149,9 +149,9 @@ public class StaffController {
         }
     }
     @GetMapping("/application/edit/{id}")
-    public String Edit(Model model,@PathVariable int id){
+    public String Edit(Model model,@PathVariable int id,HttpSession session){
         var application = leaveApplicationService.findById(id);
-        var usession = (UserSession) model.getAttribute("usession");
+        var usession = (UserSession) session.getAttribute("usession");
         var staff = (Staff) usession.getStaff();
         var typelist = leaveTypeService.findAllByTitle(staff.getTitle());
         model.addAttribute("typelist",typelist);
