@@ -49,7 +49,7 @@
 						<td th:text="${leaveapplication.contactDetails}"></td>
 						<td th:text="${leaveapplication.costLeaveDays}"></td>
 						<td th:text="${leaveapplication.responseComment}"></td>
-						<td th:text="${leaveapplication.responseDate}"></td>
+						<td th:text="${#dates.format(leaveapplication.responseDate, 'yyyy-MM-dd')}"></td>
 						<td th:text="${leaveapplication.application_status}"></td>
 					</tr>
 				</tbody>
