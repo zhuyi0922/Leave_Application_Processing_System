@@ -252,18 +252,22 @@ public class AdminController {
 		model.addAttribute("user", user);	
 	    List<Role> roles = roleService.findAllRoles();
 	    model.addAttribute("roles", roles);
-	    var currentRoles = user.getRoleSet(); 
+	    var currentRoles = user.getRoleSet();
 	    model.addAttribute("currentRoles", currentRoles);
 		return "user-edit";
 	}
 	
 	@PostMapping("users/edit/{userId}")
 	public String editUser(@ModelAttribute @Valid User user, BindingResult result, 
-			@PathVariable int userId) throws RoleNotFound {
+			@PathVariable int userId, Model model) throws RoleNotFound {
 		if (result.hasErrors()) {
+			var roles = roleService.findAllRoles();
+			model.addAttribute("roles",roles);
+			var currentRoles = user.getRoleSet() != null ? user.getRoleSet() : new ArrayList();
+		    model.addAttribute("currentRoles", currentRoles);
 			return "user-edit";
 		}
-
+		
 		String message = "User was successfully updated.";
 		System.out.println(message);
 		userService.editUser(user);

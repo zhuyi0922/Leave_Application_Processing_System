@@ -63,6 +63,7 @@
             <div th:each="role : ${roles}">
                 <input type="checkbox" th:value="${role.roleId}" name="roleSet" th:text="${role.name}" />
             </div>
+            <td th:if="${#fields.hasErrors('roleSet')}" th:errors="*{roleSet}"></td>
         </tr>
         <tr>
           <td><input type="submit" value="Create" class="blcass" /></td>

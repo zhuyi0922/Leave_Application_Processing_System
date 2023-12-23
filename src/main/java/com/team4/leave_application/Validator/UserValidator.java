@@ -34,6 +34,9 @@ public class UserValidator implements Validator {
             // Pop the errors path
             errors.popNestedPath();
         }
+        if (user.getRoleSet() == null || user.getRoleSet().isEmpty()) {
+        	errors.rejectValue("roleSet", "error.user.roleset.empty");
+        }
 	}
 
 }

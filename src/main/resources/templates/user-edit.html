@@ -57,9 +57,10 @@
 		</tr>
 		<tr>
             <div th:each="role : ${roles}">
-				<input type="checkbox" th:value="${role.roleId}" th:name="roles" th:checked="${currentRoles.contains(role)}" />
-				<label th:text="${role.name}">
+				<input type="checkbox" th:value="${role.roleId}" th:name="roleSet" th:checked="${currentRoles.contains(role)}" />
+				<label th:text="${role.name}"></label>
             </div>
+            <td th:if="${#fields.hasErrors('roleSet')}" th:errors="*{roleSet}"></td>
         </tr>
         <tr>
           <td><input type="submit" value="Create" class="blcass" /></td>
