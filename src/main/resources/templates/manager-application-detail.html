@@ -8,6 +8,10 @@
 <body>
 <div th:replace="fragments/layout.html :: menu"/>
 <div th:replace="fragments/layout.html :: header"/>
+
+<div>
+	
+</div>
     <form th:action="@{/manager/application/edit/{id}(id = ${leaveapplication.leaveApplicationId})}" th:object="${leaveapplication}" method="post">
 
         <div>
