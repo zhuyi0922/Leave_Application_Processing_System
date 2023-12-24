@@ -14,7 +14,8 @@
     <div class="formtitle">
         <h2>Leave Application History</h2>
     </div>
-<div th:if="${not #lists.isEmpty(applications)}">
+    <div th:if="${#lists.isEmpty(applications.content)}">there is no application</div>
+<div th:if="${not #lists.isEmpty(applications.content)}">
     <table class="formtable">
         <tr class="listHeading">
             <th class="formheader2"><span>Start Date</span></th>
