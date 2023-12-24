@@ -57,7 +57,11 @@ public class LeaveApplicationServiceimpl implements LeaveApplicationService {
 
 	@Transactional
 	public LeaveApplication changeLeaveApplication(LeaveApplication leaveApplication) {
-		return leaveApplicationRepository.saveAndFlush(leaveApplication);
-		
+		return leaveApplicationRepository.saveAndFlush(leaveApplication);	
+	}
+	
+	@Transactional
+	public void deleteLeaveApplication(int leaveApplicationId) {
+		leaveApplicationRepository.deleteById(leaveApplicationId);
 	}
 }

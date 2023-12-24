@@ -29,4 +29,6 @@ public interface UserService {
 	List<String> findManagerNameByUID(int userId);
 
 	void deleteUserById(int userId);
+	
+	public List<Integer> findAllStaffIdsByRoleName(String roleName);
 }

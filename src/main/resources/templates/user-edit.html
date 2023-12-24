@@ -9,6 +9,7 @@
   <h3>Edit User page</h3>
   <a th:href="@{/admin/users/list}">Back</a>
   <form action="#" th:action="@{/admin/users/edit/}+${user.userId}" th:object="${user}" method="post">
+    <input type="hidden" th:field="*{staff.id}" />
     <table>
       <tbody>
         <tr>
@@ -67,13 +68,13 @@
 		</tr>
 		<tr>
             <div th:each="role : ${roles}">
-				<input type="checkbox" id="roleCheckBox" th:value="${role.roleId}" onclick="toggleManagerSelection()" th:name="roleSet" th:checked="${currentRoles.contains(role)}" />
+				<input type="checkbox" th:value="${role.roleId}" th:name="roleSet" th:checked="${currentRoles.contains(role)}" />
 				<label th:text="${role.name}">Role</label>
             </div>
             <td th:if="${#fields.hasErrors('roleSet')}" th:errors="*{roleSet}"></td>
         </tr>
         <tr>
-          <td><input type="submit" value="Create" class="blcass" /></td>
+          <td><input type="submit" value="Update" class="blcass" /></td>
           <td></td>
         </tr>
       </tbody>

@@ -68,7 +68,7 @@
 			<td><span th:text="#{fieldLabel.role}"></span></td>
 			<td>
             <div th:each="role : ${roles}">
-                <input type="checkbox" id="roleCheckBox" th:value="${role.roleId}" onclick="toggleManagerSelection()" name="roleSet" th:text="${role.name}" />
+                <input type="checkbox" th:value="${role.roleId}" name="roleSet" th:text="${role.name}" />
             </div>
             <td th:if="${#fields.hasErrors('roleSet')}" th:errors="*{roleSet}"></td>
         	</td>

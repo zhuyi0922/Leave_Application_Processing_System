@@ -2,12 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User List</title>
-    <!-- 可以添加CSS样式或其他头部信息 -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <head th:replace="fragments/layout.html :: html_head"/>
 </head>
 <body>
+	<div th:replace="fragments/layout.html :: menu"/>
+	<div th:replace="fragments/layout.html :: header"/> 
     <h1>User List</h1>
     <a th:href="@{/admin/users/create}">Add User</a>
+	<input type="hidden" id="currentUserId" th:value="${session.usession.user.userId}" />
     <table>
         <tr>
             <th>User ID</th>
@@ -28,9 +33,20 @@
                     <li th:each="role : ${user.roleSet}" th:text="${role.name}">Role Name</li>
                 </ul>
             </td>
-            <td><a th:href="@{/admin/users/edit/}+${user.userId}" class="btn btn-default"><span th:text="#{caption.edit}"></span></a></td>
-        	<td><a th:href="@{/admin/users/delete/}+${user.userId}" class="btn btn-default"><span th:text="#{caption.delete}"></span></a></td>
+            <td> 
+				<button type="button" th:onclick="|window.location.href='/admin/users/edit/' + ${user.userId}|" class="btn btn-default">
+                    <span th:text="#{caption.edit}">Edit</span>
+                </button>
+            </td>
+        	<td>
+				<div th:if="${user.userId} != ${session.usession.user.userId}">
+				    <button type="button" th:onclick="|window.location.href='/admin/users/delete/' + ${user.userId}|" class="btn btn-default">
+				         <span th:text="#{caption.delete}">Delete</span>
+				    </button>
+				</div>
+			</td>
         </tr>
     </table>
+
 </body>
 </html>

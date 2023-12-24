@@ -1,7 +1,7 @@
 package com.team4.leave_application.Service;
 
 import com.team4.leave_application.Model.Staff;
-import com.team4.leave_application.Repository.StaffRepository;
+import com.team4.leave_application.Repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +12,10 @@ import java.util.List;
 public class StaffServiceimpl implements StaffService{
     @Autowired
     private StaffRepository staffRepository;
+    @Autowired
+    private LeaveApplicationRepository leaveApplicationRepository;
+    @Autowired
+    private RemainLeaveRepository remainLeaveRepository;
     @Transactional
     public Staff findStaffById(int id){
         return staffRepository.findById(id);
@@ -42,6 +46,8 @@ public class StaffServiceimpl implements StaffService{
     
     @Transactional
     public void deleteStaff(Staff staff) {
+    	leaveApplicationRepository.deleteAll(staff.getLeaveApplications());
+    	remainLeaveRepository.deleteAll(staff.getRemainLeaves());
     	staffRepository.delete(staff);
     }
 }

@@ -1,5 +1,6 @@
 package com.team4.leave_application.Service;
 
+import com.team4.leave_application.Model.Holiday;
 import com.team4.leave_application.Repository.HolidayRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,31 @@ public class HolidayServiceimpl implements HolidayService{
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
         return workdays;
+    }
+    
+    @Transactional
+    public List<Holiday> findAllHoliday(){
+    	return holidayRepository.findAll();
+    }
+    
+    @Transactional
+    public List<Holiday> findHolidayByDate(Date date){
+    	return holidayRepository.findByDate(date);
+    }
+    
+    public Holiday createHoliday(Holiday holiday) {
+    	return holidayRepository.saveAndFlush(holiday);
+    }
+    
+    public Holiday editHoliday(Holiday holiday) {
+    	return holidayRepository.saveAndFlush(holiday);
+    }
+    
+    public void deleteHoliday(Holiday holiday) {
+    	holidayRepository.delete(holiday);
+    }
+    
+    public Holiday findHoliday(int holidayId) {
+    	return holidayRepository.findById(holidayId).orElse(null);
     }
 }

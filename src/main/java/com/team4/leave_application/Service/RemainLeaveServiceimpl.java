@@ -36,4 +36,7 @@ public class RemainLeaveServiceimpl implements RemainLeaveService{
             remainLeaveRepository.save(record);
         }
     }
+    public void deleteRemainLeaves(int remainLeaveId) {
+    	remainLeaveRepository.deleteById(remainLeaveId);
+    }
 }

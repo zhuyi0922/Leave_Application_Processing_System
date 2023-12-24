@@ -31,6 +31,8 @@ public class AdminController {
 	@Autowired
 	private RoleService roleService;
 	@Autowired
+	private HolidayService holidayService;
+	@Autowired
 	private RemainLeaveService remainLeaveService;
 	@Autowired
 	private UserValidator userValidator;
@@ -241,8 +243,8 @@ public class AdminController {
 	    model.addAttribute("user", new User());
 	    List<Staff> staff = staffService.findAllStaff();
 	    model.addAttribute("staff", staff);
-	    List<String> staffIds = staffService.findAllStaffIds();
-	    model.addAttribute("staffIds",staffIds);
+	    List<Integer> managerStaffIds = userService.findAllStaffIdsByRoleName("manager");
+	    model.addAttribute("staffIds",managerStaffIds);
 	    List<Role> roles = roleService.findAllRoles();
 	    model.addAttribute("roles", roles);
 	    
@@ -256,7 +258,7 @@ public class AdminController {
 		        model.addAttribute("user", user); 
 		        model.addAttribute("userResult", userResult);
 		        model.addAttribute("roles", roleService.findAllRoles());
-		        model.addAttribute("staffIds",staffService.findAllStaffIds());
+		        model.addAttribute("staffIds", userService.findAllStaffIdsByRoleName("manager"));
 		        return "user-new";
 		    }
 		
@@ -269,6 +271,15 @@ public class AdminController {
 	      newRoleSet.add(completeRole);
 	    });
 	    user.setRoleSet(newRoleSet);
+	    
+	    List<LeaveType> allLeaveTypes = leaveTypeService.findAllLeaveTypes();
+	    for (LeaveType leaveType : allLeaveTypes) {
+	        RemainLeave remainLeave = new RemainLeave();
+	        remainLeave.setStaff(newStaff);
+	        remainLeave.setLeaveType(leaveType);
+	        remainLeave.setRemainLeave(leaveType.getMaxLeaveDay());
+	        remainLeaveService.updateRemainLeave(remainLeave);
+	    }
 
 	    userService.createUser(user);
 	    
@@ -281,8 +292,11 @@ public class AdminController {
 		model.addAttribute("user", user);	
 	    List<Role> roles = roleService.findAllRoles();
 	    model.addAttribute("roles", roles);
-	    List<String> staffIds = staffService.findAllStaffIds();
-	    model.addAttribute("staffIds",staffIds);
+	    List<Integer> managerStaffIds = userService.findAllStaffIdsByRoleName("manager");
+	    if (user.getStaff() != null) {
+	        managerStaffIds.remove(Integer.valueOf(user.getStaff().getId()));
+	    }
+	    model.addAttribute("staffIds",managerStaffIds);
 	    var currentRoles = user.getRoleSet();
 	    model.addAttribute("currentRoles", currentRoles);
 		return "user-edit";
@@ -297,7 +311,7 @@ public class AdminController {
 			var currentRoles = user.getRoleSet() != null ? user.getRoleSet() : new ArrayList();
 		    model.addAttribute("currentRoles", currentRoles);
 		    List<String> staffIds = staffService.findAllStaffIds();
-		    model.addAttribute("staffIds",staffIds);
+		    model.addAttribute("staffIds",staffIds);	
 			return "user-edit";
 		}
 		
@@ -316,14 +330,81 @@ public class AdminController {
 	
 	@GetMapping("users/delete/{userid}")
 	public String deleteUser(@PathVariable int userid) {
+		
 		User user = userService.findUser(userid);
 		
 		userService.deleteUser(user);
-		staffService.deleteStaff(user.getStaff());
 		
 	    String message = "The user " + user.getUserId() + " was successfully deleted.";
 	    System.out.println(message);
 		
 		return "redirect:/admin/users/list";
+	}
+	
+	/*
+	 * -----------------------
+	 * Holiday CRUD Operations
+	 * -----------------------
+	 */
+	
+	@GetMapping("holiday/list")
+	public String holidayListPage(Model model) {
+		List<Holiday> holidayList = holidayService.findAllHoliday();
+		model.addAttribute("holidayList", holidayList);
+		return "holiday-list";
+	}
+	
+	@GetMapping("holiday/create")
+	public String newHolidayPage(Model model) {
+	  model.addAttribute("holiday", new Holiday());
+		
+		return "holiday-new";
+	}
+	
+	@PostMapping("holiday/create")
+	public String createNewHoliday(@ModelAttribute @Valid Holiday holiday, BindingResult result) {
+		if (result.hasErrors()) {
+			return "holiday-new";
+		}
+
+		String message = "New holiday " + holiday.getHolidayId() + " was successfully created.";
+		System.out.println(message);
+		holidayService.createHoliday(holiday);
+		
+		return "redirect:/admin/holiday/list";
+	}
+	
+	@GetMapping("holiday/edit/{holidayId}")
+	public String editHolidayPage(@PathVariable int holidayId, Model model) {
+		Holiday holiday = holidayService.findHoliday(holidayId);
+		model.addAttribute("holiday", holiday);
+			
+		return "holiday-edit";
+	}
+	
+	@PostMapping("holiday/edit/{holidayId}")
+	public String editHoliday(@ModelAttribute @Valid Holiday holiday, BindingResult result, 
+			@PathVariable int holidayId) throws HolidayNotFound {
+		if (result.hasErrors()) {
+			return "holiday-edit";
+		}
+
+		String message = "Holiday was successfully updated.";
+		System.out.println(message);
+		holidayService.editHoliday(holiday);
+		
+		return "redirect:/admin/holiday/list";
+	}
+
+	@GetMapping("holiday/delete/{holidayId}")
+	public String deleteRole(@PathVariable int holidayId)
+			throws HolidayNotFound {
+		Holiday holiday = holidayService.findHoliday(holidayId);
+		holidayService.deleteHoliday(holiday);
+		
+		String message = "The holiday " + holiday.getHolidayId() + " was successfully deleted.";
+		System.out.println(message);
+		
+		return "redirect:/admin/holiday/list";
 	}
 }
