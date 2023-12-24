@@ -4,50 +4,61 @@
 
 <body>
   <div th:replace="fragments/layout.html :: menu"/>
-  <h3>Edit Leave Type Page</h3>
-  <a th:href="@{/admin/leavetype/list}">Back</a>
-  <form action="#" th:action="@{/admin/leavetype/edit/{Id}(Id=${leaveType.leaveTypeId})}" th:object="${leaveType}" method="post">
-    <table>
-      <tbody>
-        <tr>
-          <td><span th:text="#{fieldLabel.leaveTypeId}"></span></td>
-          <td>
-            <fieldset><input type="text" th:field="*{leaveTypeId}" readonly="readonly" /></fieldset>
-          </td>
-          <td th:if="${#fields.hasErrors('leaveTypeId')}" th:errors="*{leaveTypeId}"></td>
-        </tr>
-         <tr>
-          <td><span th:text="#{fieldLabel.leaveTypeName}"></span></td>
-          <td>
-            <fieldset><input type="text" th:field="*{leaveTypeName}" /></fieldset>
-          </td>
-          <td th:if="${#fields.hasErrors('leaveTypeName')}" th:errors="*{leaveTypeName}"></td>
-        </tr>
-        <tr>
-        <tr>
-          <td><span th:text="#{fieldLabel.staffTitle}"></span></td>
-          <td>
-            <fieldset><input type="text" th:field="*{staffTitle}" /></fieldset>
-          </td>
-          <td th:if="${#fields.hasErrors('staffTitle')}" th:errors="*{staffTitle}"></td>
-        </tr>
-        <tr>
-          <td><span th:text="#{fieldLabel.maxLeaveDay}"></span></td>
-          <td>
-            <fieldset><input type="text" th:field="*{maxLeaveDay}" /></fieldset>
-          </td>
-          <td th:if="${#fields.hasErrors('maxLeaveDay')}" th:errors="*{maxLeaveDay}"></td>
-        </tr>
-        <tr>
-          <td>
-            <fieldset><input type="submit" value="Update" class="blcass" /></fieldset>
-          </td>
-          <td></td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
-  </form>
+  <div class="body-form" style="max-width: 600px">
+	  <div class="formtitle"><h2>Edit Leave Type</h2></div>
+	  <div class="formcontent">
+		  <button class="subbutton" th:onclick="|window.location.href='@{/admin/leavetype/list}'|">Back</button>
+		  <form action="#" th:action="@{/admin/leavetype/edit/{Id}(Id=${leaveType.leaveTypeId})}" th:object="${leaveType}" method="post">
+			  <table class="formtable3">
+				  <tbody>
+					  <tr>
+						  <th><span th:text="#{fieldLabel.leaveTypeId}"></span></th>
+						  <td>
+							  <fieldset>
+								  <input type="text" th:field="*{leaveTypeId}" readonly="readonly" />
+							  </fieldset>
+							  <span th:if="${#fields.hasErrors('leaveTypeId')}" th:errors="*{leaveTypeId}"></span>
+						  </td>
+					  </tr>
+					  <tr>
+						  <th><span th:text="#{fieldLabel.leaveTypeName}"></span></th>
+						  <td>
+							  <fieldset>
+								  <input type="text" th:field="*{leaveTypeName}" />
+							  </fieldset>
+							  <span th:if="${#fields.hasErrors('leaveTypeName')}" th:errors="*{leaveTypeName}"></span>
+						  </td>
+					  </tr>
+					  <tr>
+						  <th><span th:text="#{fieldLabel.staffTitle}"></span></th>
+						  <td>
+							  <fieldset>
+								  <input type="text" th:field="*{staffTitle}" />
+							  </fieldset>
+							  <span th:if="${#fields.hasErrors('staffTitle')}" th:errors="*{staffTitle}"></span>
+						  </td>
+					  </tr>
+					  <tr>
+						  <th><span th:text="#{fieldLabel.maxLeaveDay}"></span></th>
+						  <td>
+							  <fieldset>
+								  <input type="text" th:field="*{maxLeaveDay}" />
+							  </fieldset>
+							  <span th:if="${#fields.hasErrors('maxLeaveDay')}" th:errors="*{maxLeaveDay}"></span>
+						  </td>
+					  </tr>
+					  <tr>
+						 <td>
+							 <fieldset>
+								 <button type="submit">Update</buttont>
+							 </fieldset>
+						 </td> 
+					  </tr>
+				  </tbody>
+			  </table>
+		  </form>
+	  </div>
+  </div>
 
 </body>
 
