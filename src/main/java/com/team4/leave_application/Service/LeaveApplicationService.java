@@ -23,4 +23,6 @@ public interface LeaveApplicationService {
 	public List<LeaveApplication> findPendingApplicationByStaffID(int staffId);
 	
 	public LeaveApplication changeLeaveApplication(LeaveApplication leaveApplication);
+	
+	public void deleteLeaveApplication(int leaveApplicationId);
 }

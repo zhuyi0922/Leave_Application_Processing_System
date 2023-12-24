@@ -9,4 +9,6 @@ public interface RemainLeaveService {
     public int findRemainLeave(Staff staff, LeaveType leaveType);
     public RemainLeave findRemainLeaveObj(Staff staff, LeaveType leaveType);
     public void updateRemainLeave(RemainLeave remainLeave);
+	public void updateRemainLeaves(LeaveType leaveType, int maxLeaveDay);
+    public void deleteRemainLeaves(int remainLeaveId);
 }

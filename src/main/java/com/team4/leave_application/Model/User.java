@@ -26,7 +26,7 @@ public class User implements Serializable {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "staff_id", referencedColumnName = "id", nullable = true)
     private Staff staff;
     

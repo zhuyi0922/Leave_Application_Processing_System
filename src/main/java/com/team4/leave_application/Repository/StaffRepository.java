@@ -14,4 +14,6 @@ public interface StaffRepository extends JpaRepository<Staff, Integer> {
     
     @Query("SELECT DISTINCT s.Id FROM Staff s")
     List<String> findAllStaffIds();
+    
+    List<Staff> findByTitle(String staffTitle);
 }

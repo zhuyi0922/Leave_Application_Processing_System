@@ -2,13 +2,15 @@ package com.team4.leave_application.Service;
 
 import com.team4.leave_application.Model.Role;
 import com.team4.leave_application.Model.User;
-import com.team4.leave_application.Repository.UserRepository;
+import com.team4.leave_application.Model.Staff;
+import com.team4.leave_application.Repository.*;
 import jakarta.transaction.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,8 @@ import org.springframework.stereotype.Service;
 public class UserServiceimpl implements UserService{
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private StaffRepository staffRepository;
     @Transactional
     public User authenticate(String username, String pwd) {
         return userRepository.findByUsernameAndPassword(username, pwd);
@@ -73,6 +77,14 @@ public class UserServiceimpl implements UserService{
     public User findByUsername(String username) {
     	return userRepository.findByUsername(username);
     }
+    
+    public List<Integer> findAllStaffIdsByRoleName(String roleName) {
+        List<User> users = userRepository.findAllUsersByRoleName(roleName);
+        return users.stream()
+                    .filter(u -> u.getStaff() != null)
+                    .map(u -> u.getStaff().getId())
+                    .collect(Collectors.toList());
+    }
 
     public List<User> findAllUsers(){
     	return userRepository.findAll();
@@ -83,10 +95,8 @@ public class UserServiceimpl implements UserService{
             Optional<User> existingUser = userRepository.findById(user.getUserId());
             if (existingUser.isPresent()) {
                 User userToDelete = existingUser.get();
-
                 userToDelete.setRoleSet(Collections.emptyList());
                 userRepository.save(userToDelete);
-
                 userRepository.delete(userToDelete);
             }
         }

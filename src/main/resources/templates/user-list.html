@@ -5,13 +5,16 @@
     <title>User List</title>
     <link th:href="@{/css/styles.css}" rel="stylesheet" />
     <!-- 可以添加CSS样式或其他头部信息 -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <head th:replace="fragments/layout.html :: html_head"/>
 </head>
 <body>
 <div th:replace="fragments/layout.html :: menu"/>
 <div class="body-form" style="width: 70%">
     <h2 class="formtitle">User List</h2>
 <a th:href="@{/admin/users/create}" class="formbutton">Add User</a>
-<table class="formtable">
+    <input type="hidden" id="currentUserId" th:value="${session.usession.user.userId}" />
+    <table class="formtable">
     <tr class="formrow">
         <th class="formheader">User ID</th>
         <th class="formheader">Username</th>
@@ -31,8 +34,18 @@
         <td class="forminput">
             <span th:each="role : ${user.roleSet}" th:text="${role.name}" style="padding: 0; margin: 0;"><br></span>
         </td>
-        <td class="forminput"><a th:href="@{/admin/users/edit/}+${user.userId}" class="btn btn-default"><span th:text="#{caption.edit}"></span></a></td>
-        <td class="forminput"><a th:href="@{/admin/users/delete/}+${user.userId}" class="btn btn-default"><span th:text="#{caption.delete}"></span></a></td>
+        <td>
+            <button type="button" th:onclick="|window.location.href='/admin/users/edit/' + ${user.userId}|" class="btn btn-default">
+                <span th:text="#{caption.edit}">Edit</span>
+            </button>
+        </td>
+        <td>
+            <div th:if="${user.userId} != ${session.usession.user.userId}">
+                <button type="button" th:onclick="|window.location.href='/admin/users/delete/' + ${user.userId}|" class="btn btn-default">
+                    <span th:text="#{caption.delete}">Delete</span>
+                </button>
+            </div>
+        </td>
     </tr>
 </table>
 </div>
