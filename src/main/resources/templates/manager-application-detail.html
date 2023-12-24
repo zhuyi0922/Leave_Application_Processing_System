@@ -9,63 +9,98 @@
 <div th:replace="fragments/layout.html :: menu"/>
 <div th:replace="fragments/layout.html :: header"/>
 
-<div>
+<div class="body-form" style="max-width: 90%">
+	<div class="formtitle">
+		<h2 th:text="'Application Detail for ' + ${leaveapplication.leaveApplicationId}"></h2>
+	</div>
 	
-</div>
-    <form th:action="@{/manager/application/edit/{id}(id = ${leaveapplication.leaveApplicationId})}" th:object="${leaveapplication}" method="post">
+	<div class="formcontent">
+		<form th:action="@{/manager/application/edit/{id}(id = ${leaveapplication.leaveApplicationId})}" th:object="${leaveapplication}" method="post">
+			<table class="formtable">
+				<tr>
+					<th class="formheader">
+						<label>Staff Name</label>
+					</th>
+					<td>
+						<span th:text="${leaveapplication.staff.firstName} + '' + ${leaveapplication.staff.middleName} + '' + ${leaveapplication.staff.lastName}"></span>
+					</td>
+				</tr>
+				<tr>
+					<th class="formheader">
+						<label>Start Date</label>
+					</th>
+					<td>
+						<span th:text="*{start_date}"></span>
+					</td>
+				</tr>
+				<tr>
+					<th class="formheader">
+						<label>End Date</label>
+					</th>
+					<td>
+						<span th:text="*{end_date}"></span>
+					</td>
+				</tr>
+				<tr>
+					<th class="formheader">
+						 <label>Leave Type</label>
+					</th>
+					<td>
+						<span th:text="*{leaveType.leaveTypeName}"></span>
+					</td>
+				</tr>
+				<tr>
+					<th class="formheader">
+						<label>Reasons</label>
+					</th>
+					<td>
+						<p th:text="*{reasons}"></p>
+					</td>
+				</tr>
+				<tr>
+					<th class="formheader">
+						<label>Work Dissemination</label>
+					</th>
+					<td>
+						<p th:text="*{workDissemination}"></p>
+					</td>
+				</tr>
+				<tr>
+					<th class="formheader">
+						 <label>Contact Details</label>
+					</th>
+					<td>
+						 <span th:text="*{contactDetails}"></span>
+					</td>
+				</tr>
+				<tr>
+					<th class="formheader">
+						<label for="comment">Comment:</label>
+					</th>
+					<td>
+						<span>
+							 <textarea type="text" id="comment" name="comment" th:field="*{responseComment}"></textarea>
+						</span>
+					</td>
+				</tr>
+				<tr>
+					<th class="formheader">
+						 <label>Decision:</label>
+					</th>
+					<td>
+						<input type="radio" id="reject" name="approvalStatus" th:value="REJECT" /><label for="reject">Reject</label>
+						<input type="radio" id="approve" name="approvalStatus" th:value="APPROVE" /><label for="approve">Approve</label>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<button type="submit">Confirm</button>
+					</td>
+				</tr>
+			</table>
 
-        <div>
-            <label>Staff Name:</label>
-            <span th:text="${leaveapplication.staff.firstName} + '' + ${leaveapplication.staff.middleName} + '' + ${leaveapplication.staff.lastName}"></span>
-        </div>
-
-        <div>
-            <label>Start Date:</label>
-            <span th:text="*{start_date}"></span>
-        </div>
-
-        <div>
-            <label>End Date:</label>
-            <span th:text="*{end_date}"></span>
-        </div>
-
-        <div>
-            <label>Leave Type:</label>
-            <span th:text="*{leaveType.leaveTypeName}"></span>
-        </div>
-
-        <div>
-            <label>Reasons:</label>
-            <p th:text="*{reasons}"></p>
-        </div>
-
-        <div>
-            <label>Work Dissemination:</label>
-            <p th:text="*{workDissemination}"></p>
-        </div>
-
-        <div>
-            <label>Contact Details:</label>
-            <span th:text="*{contactDetails}"></span>
-        </div>
-
-        <div>
-            <span>
-            <label for="comment">Comment:</label>
-            <textarea type="text" id="comment" name="comment" th:field="*{responseComment}"></textarea>
-            </span>
-        </div>
-
-        <div>
-        <span>
-            <label>Decision:</label>
-                <input type="radio" id="reject" name="approvalStatus" th:value="REJECT" />
-                <label for="reject">Reject</label>
-                <input type="radio" id="approve" name="approvalStatus" th:value="APPROVE" />
-                <label for="approve">Approve</label>
-        </span>
-        </div>
-        <button type="submit">Confirm</button>
-    </form>
+		</form>
+	</div>
+	
 </body>
 </html>

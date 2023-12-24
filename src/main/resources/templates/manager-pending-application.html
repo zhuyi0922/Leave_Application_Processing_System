@@ -15,7 +15,8 @@
 		<h2>Manager Pending Applications</h2>
 	</div>
 	
-	<div class="formcontent">
+	<div class="formcontent" style="max-width: 100%;">
+		<p th:if="${subordinatehistory == null}" style="color:red;">You have no subordinates.</p>
 		<div th:each="entry : ${pendingapplist}">
 			<h3 th:text="${entry.key.firstName}+ ' ' + (${entry.key.middleName} ?: ' ') + ' ' + ${entry.key.lastName}"></h3>
 			<p th:if="${#lists.isEmpty(entry.value)}"><strong>There is no pending application.</strong></p>
