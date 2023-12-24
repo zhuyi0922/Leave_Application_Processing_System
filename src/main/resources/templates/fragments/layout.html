@@ -8,7 +8,7 @@
 
 <body>
 
-<div th:fragment="menu" id="menu" style="border-radius: 10px;">
+<div th:fragment="menu" id="menu" style="border-radius: 10px; padding: 5px;">
 	
 	<nav class="navbar">
 		
@@ -31,9 +31,10 @@
 					<div class="subnav">
 						<button class="subnavbtn">Admin</i></button>
 						<div class="subnav-content">
-							<a th:href="@{/admin/role/list}">Manage Roles</a>
-							<a th:href="@{/admin/employee/list}">Manage Employees</a>
-							<a th:href="@{/admin/users/list}" >Manage Users</a>
+							<a th:href="@{/admin/users/list}">User</a>
+							<a th:href="@{/admin/leavetype/list}">Leave Type</a>
+							<a th:href="@{/admin/role/list}">Roles</a>
+							<a th:href="@{/admin/leaveapplication/list}">Leave Application</a>
 						</div>
 					</div>
 				</div>
@@ -42,8 +43,9 @@
 					<div class="subnav">
 						<button class="subnavbtn">Staff</button>
 						<div class="subnav-content">
-							<a class="dropdown-item" th:href="@{/staff/application/history}">Leave History</a><a class="dropdown-item" th:href="@{/staff/application/apply}">Apply Leave</a>
-							<a class="dropdown-item" th:href="@{/staff/compensation-claim}">Claim Compensation</a>
+							<a th:href="@{/staff/application/history}">Leave History</a>
+							<a th:href="@{/staff/application/apply}">Apply Leave</a>
+							<a th:href="@{/staff/compensation-claim}">Claim Compensation</a>
 						</div>
 					</div>
 				</div>

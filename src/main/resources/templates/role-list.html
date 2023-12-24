@@ -17,12 +17,10 @@
 			<h2>Role List</h2>
 		</div>
 		<div class="formcontent">
-			<button type="button" th:onclick="|window.location.href='@{/admin/role/create}'|">Add Role</button>
-			<a th:href="@{/admin/role/create}">Add Role</a>
-			<button type="button" th:onclick="@{/admin/users}">Back</button>
-			<a th:href="@{/admin/users}">Back</a>
+			<button class="subbutton" th:onclick="|window.location.href='@{/admin/role/create}'|">Add Role</button>
+			<button class="subbutton" th:onclick="|window.location.href='@{/admin/users}'|">Back</button>
 			<div th:if="${not #lists.isEmpty(roleList)}">
-				<table class="formtable">
+				<table class="formtable" style="margin: 10px;">
 					<tr class="listheading">
 						<th><span th:text="#{fieldLabel.roleId}"></span></th>
 						<th><span th:text="#{fieldLabel.roleName}"></span></th>
@@ -34,10 +32,8 @@
 						<td align="left" th:text="${role.roleId}">Id</td>
 						<td align="left" th:text="${role.name}">Name</td>
 						<td align="left" th:text="${role.description}">Description</td>
-						<td><a th:href="@{/admin/role/edit/}+${role.roleId}" class="btn btn-default">
-							<span th:text="#{caption.edit}"></span></a></td>
-						<td><a th:href="@{/admin/role/delete/}+${role.roleId}" class="btn btn-default">
-							<span th:text="#{caption.delete}"></span></a></td>
+						<td><a th:href="@{/admin/role/edit/}+${role.roleId}"> <span th:text="#{caption.edit}"></span></a></td>
+						<td><a th:href="@{/admin/role/delete/}+${role.roleId}"><span th:text="#{caption.delete}"></span></a></td>
 					</tr>
 				</table>
 			</div>

@@ -13,6 +13,7 @@
 	</div>
 	
 	<div class="formcontent">
+		<button class="subbutton" th:onclick="|window.location.href='@{/manager/home}'|">Back</button>
 		<form th:action="@{/manager/application/edit/{id}(id = ${leaveapplication.leaveApplicationId})}" th:object="${leaveapplication}" method="post">
 			<table class="formtable">
 				<tr>

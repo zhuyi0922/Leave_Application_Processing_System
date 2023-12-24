@@ -13,6 +13,7 @@
         <h2>Overtime Work Claim</h2>
     </div>
     <div class="formcontent">
+		<button class="subbutton" th:onclick="|window.location.href='@{/staff/home}'|">Back</button>
         <form th:action="@{/staff/compensation-claim}" id="overtimeForm" method="post" th:object="${OTWork}">
             <table class="formtable"> <!-- 添加table标签 -->
                 <tr class="formrow">

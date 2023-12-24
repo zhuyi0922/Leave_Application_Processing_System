@@ -26,6 +26,11 @@ public class ManagerController {
     @InitBinder
     private void initBinder(WebDataBinder binder) { }
 
+    @RequestMapping(value="/home")
+    public String managerHome() {
+    	return "manager-home";
+    }
+    
     @RequestMapping(value="/view_pending")
     public String pendingApplicationApproval(HttpSession session, Model model) {
 
