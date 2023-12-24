@@ -24,6 +24,16 @@ A:Hover {
   color: #CC0066;
 }
 
+.body-header{
+    border-radius: 10px;
+    background-color: #ffffff;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    max-width: 90%;
+    font-size: 16px;
+}
 .body-form{
 	border-radius: 10px;
 	background-color: #ffffff;

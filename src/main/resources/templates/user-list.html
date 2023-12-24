@@ -3,34 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>User List</title>
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
     <!-- 可以添加CSS样式或其他头部信息 -->
 </head>
 <body>
-    <h1>User List</h1>
-    <a th:href="@{/admin/users/create}">Add User</a>
-    <table>
-        <tr>
-            <th>User ID</th>
-            <th>Username</th>
-            <th>Staff ID</th>
-            <th>Staff Name</th>
-            <th>Email</th>
-            <th>Roles</th>
-        </tr>
-        <tr th:each="user : ${userList}">
-            <td th:text="${user.userId}">User ID</td>
-            <td th:text="${user.username}">Username</td>
-            <td th:text="${user.staff != null ? user.staff.id : 'N/A'}">Staff ID</td>
-            <td th:text="${user.staff != null ? user.staff.firstName + ' ' + user.staff.lastName : 'N/A'}">Staff Name</td>
-            <td th:text="${user.staff != null ? user.staff.email : 'N/A'}">Email</td>
-            <td>
-                <ul>
-                    <li th:each="role : ${user.roleSet}" th:text="${role.name}">Role Name</li>
-                </ul>
-            </td>
-            <td><a th:href="@{/admin/users/edit/}+${user.userId}" class="btn btn-default"><span th:text="#{caption.edit}"></span></a></td>
-        	<td><a th:href="@{/admin/users/delete/}+${user.userId}" class="btn btn-default"><span th:text="#{caption.delete}"></span></a></td>
-        </tr>
-    </table>
+<div th:replace="fragments/layout.html :: menu"/>
+<div class="body-form" style="width: 80%">
+<h1 class="formtitle">User List</h1>
+<a th:href="@{/admin/users/create}" class="formbutton">Add User</a>
+<table class="formtable">
+    <tr class="formrow">
+        <th class="formheader">User ID</th>
+        <th class="formheader">Username</th>
+        <th class="formheader">Staff ID</th>
+        <th class="formheader">Staff Name</th>
+        <th class="formheader">Email</th>
+        <th class="formheader">Roles</th>
+        <th class="formheader">Edit</th>
+        <th class="formheader">Delete</th>
+    </tr>
+    <tr th:each="user : ${userList}" class="formrow">
+        <td class="forminput" th:text="${user.userId}">User ID</td>
+        <td class="forminput" th:text="${user.username}">Username</td>
+        <td class="forminput" th:text="${user.staff != null ? user.staff.id : 'N/A'}">Staff ID</td>
+        <td class="forminput" th:text="${user.staff != null ? user.staff.firstName + ' ' + user.staff.lastName : 'N/A'}">Staff Name</td>
+        <td class="forminput" th:text="${user.staff != null ? user.staff.email : 'N/A'}">Email</td>
+        <td class="forminput">
+            <p th:each="role : ${user.roleSet}" th:text="${role.name}" style="margin-top: 0"></p>
+        </td>
+        <td class="forminput"><a th:href="@{/admin/users/edit/}+${user.userId}" class="btn btn-default"><span th:text="#{caption.edit}"></span></a></td>
+        <td class="forminput"><a th:href="@{/admin/users/delete/}+${user.userId}" class="btn btn-default"><span th:text="#{caption.delete}"></span></a></td>
+    </tr>
+</table>
+</div>
 </body>
 </html>

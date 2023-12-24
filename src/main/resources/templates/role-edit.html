@@ -5,7 +5,6 @@
 <body>
 
   <div th:replace="fragments/layout.html :: menu"/>
-  <div th:replace="fragments/layout.html :: header"/> 
   <h3>Edit Role page</h3>
   <a th:href="@{/admin/role/list}">Back</a>
   <form action="#" th:action="@{/admin/role/edit/}+${role.roleId}" th:object="${role}" method="post">

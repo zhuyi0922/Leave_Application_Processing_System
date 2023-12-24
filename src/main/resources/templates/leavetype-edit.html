@@ -4,7 +4,6 @@
 
 <body>
   <div th:replace="fragments/layout.html :: menu"/>
-  <div th:replace="fragments/layout.html :: header"/> 
   <h3>Edit Leave Type Page</h3>
   <a th:href="@{/admin/leavetype/list}">Back</a>
   <form action="#" th:action="@{/admin/leavetype/edit/{Id}(Id=${leaveType.leaveTypeId})}" th:object="${leaveType}" method="post">
