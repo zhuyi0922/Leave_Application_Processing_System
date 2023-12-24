@@ -199,6 +199,9 @@ td
 td .forminput{
 	width: 70%;
 }
+.forminput{
+    overflow-wrap: break-word;
+}
 
 tbody tr:hover td
 {

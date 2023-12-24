@@ -8,8 +8,8 @@
 </head>
 <body>
 <div th:replace="fragments/layout.html :: menu"/>
-<div class="body-form" style="width: 80%">
-<h1 class="formtitle">User List</h1>
+<div class="body-form" style="width: 70%">
+    <h2 class="formtitle">User List</h2>
 <a th:href="@{/admin/users/create}" class="formbutton">Add User</a>
 <table class="formtable">
     <tr class="formrow">
@@ -29,7 +29,7 @@
         <td class="forminput" th:text="${user.staff != null ? user.staff.firstName + ' ' + user.staff.lastName : 'N/A'}">Staff Name</td>
         <td class="forminput" th:text="${user.staff != null ? user.staff.email : 'N/A'}">Email</td>
         <td class="forminput">
-            <p th:each="role : ${user.roleSet}" th:text="${role.name}" style="margin-top: 0"></p>
+            <span th:each="role : ${user.roleSet}" th:text="${role.name}" style="padding: 0; margin: 0;"><br></span>
         </td>
         <td class="forminput"><a th:href="@{/admin/users/edit/}+${user.userId}" class="btn btn-default"><span th:text="#{caption.edit}"></span></a></td>
         <td class="forminput"><a th:href="@{/admin/users/delete/}+${user.userId}" class="btn btn-default"><span th:text="#{caption.delete}"></span></a></td>

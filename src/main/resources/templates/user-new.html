@@ -3,6 +3,7 @@
 <head th:replace="fragments/layout.html :: html_head"/>
 <body>
 <div class="menu" th:replace="fragments/layout.html :: menu"/>
+<div class="body-form" style="max-width: 70%">
 <h3 class="formtitle">Create User page</h3>
 <a th:href="@{/admin/users/list}" class="formbutton">Back</a>
 <form action="#" th:action="@{'/admin/users/create'}" th:object="${user}" method="post">
@@ -92,5 +93,6 @@
     </tbody>
   </table>
 </form>
+</div>
 </body>
 </html>
