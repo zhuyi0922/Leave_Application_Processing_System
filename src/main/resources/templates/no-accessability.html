@@ -2,9 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Access Denied</title>
+    <head th:replace="fragments/layout.html :: html_head"/>
 </head>
 <body>
-    <p> you don't have the authority to this page</p>
+	<div th:replace="fragments/layout.html :: menu"/>
+	<div class="body-form" style="max-width: 80%">
+	<div class="formtitle">
+		<h2 th:text="Access Denied"></h2>
+	</div>
+	<div class="formcontent">
+		<p class="warning">You do not have the authority to this page.</p>
+	</div>
 </body>
 </html>
