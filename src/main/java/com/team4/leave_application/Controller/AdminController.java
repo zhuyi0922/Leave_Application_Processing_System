@@ -1,6 +1,8 @@
 package com.team4.leave_application.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,6 +44,8 @@ public class AdminController {
 	private LeaveTypeValidator leaveTypeValidator;
 	@Autowired
 	private RoleValidator roleValidator;
+	@Autowired
+	private LeaveApplicationService LeaveApplicationService;
 	
 	@GetMapping("users")
 	public String adminPage() {
@@ -406,5 +410,24 @@ public class AdminController {
 		System.out.println(message);
 		
 		return "redirect:/admin/holiday/list";
+	}
+
+	@GetMapping("applications/list")
+	public String applicationListPage(Model model,@RequestParam(defaultValue = "0") int page,
+									  @RequestParam(defaultValue = "5") int size) {
+
+		Page<LeaveApplication> applicationList = LeaveApplicationService.findAll(PageRequest.of(page, size));
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", applicationList.getTotalPages());
+		model.addAttribute("applicationList", applicationList);
+		return "admin-applications-list";
+	}
+
+	@GetMapping("application/delete/{id}")
+	public String deleteApplication(@PathVariable int id) {
+		var application = LeaveApplicationService.findById(id);
+		var staff = application.getStaff();
+		LeaveApplicationService.deleteLeaveApplication(application);
+		return "redirect:/admin/applications/list";
 	}
 }

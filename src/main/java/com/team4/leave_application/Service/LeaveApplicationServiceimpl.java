@@ -61,7 +61,15 @@ public class LeaveApplicationServiceimpl implements LeaveApplicationService {
 	}
 	
 	@Transactional
-	public void deleteLeaveApplication(int leaveApplicationId) {
-		leaveApplicationRepository.deleteById(leaveApplicationId);
+	public void deleteLeaveApplication(LeaveApplication application) {
+        application.getStaff().getLeaveApplications().remove(application);
+		leaveApplicationRepository.delete(application);
+        leaveApplicationRepository.flush();
 	}
+
+    @Transactional
+    public Page<LeaveApplication> findAll(PageRequest pageRequest){
+        return leaveApplicationRepository.findAll(pageRequest);
+    }
+
 }

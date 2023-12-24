@@ -3,10 +3,13 @@ package com.team4.leave_application.Repository;
 import com.team4.leave_application.Model.LeaveApplication;
 import com.team4.leave_application.Model.Staff;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 public interface LeaveApplicationRepository extends JpaRepository<LeaveApplication, Integer> {
@@ -23,7 +26,15 @@ public interface LeaveApplicationRepository extends JpaRepository<LeaveApplicati
 	@Query("SELECT a FROM LeaveApplication a WHERE a.staff = :staffId")
     List<LeaveApplication> findApplicationsByStaffId(int staffId);
 
-    
-    
+    Page<LeaveApplication> findAll(Pageable pageable);
+
+    @Query
+    void deleteById(int id);
+
+    @Transactional
+    @Modifying
+    @Query("delete from LeaveApplication l where l.leaveApplicationId = ?1")
+    void deleteByLeaveApplicationId(int leaveApplicationId);
+
 
 }

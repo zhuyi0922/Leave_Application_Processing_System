@@ -24,5 +24,8 @@ public interface LeaveApplicationService {
 	
 	public LeaveApplication changeLeaveApplication(LeaveApplication leaveApplication);
 	
-	public void deleteLeaveApplication(int leaveApplicationId);
+	public void deleteLeaveApplication(LeaveApplication application);
+
+    public Page<LeaveApplication> findAll(PageRequest pageRequest);
+
 }
