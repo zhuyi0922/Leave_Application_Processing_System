@@ -10,11 +10,6 @@
   <table class="formtable">
     <tbody>
     <tr class="formrow">
-      <td><span th:text="#{fieldLabel.userId}" class="formlabel"></span></td>
-      <td><input type="text" th:field="*{userId}" class="forminput" /></td>
-      <td th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}" class="formerror"></td>
-    </tr>
-    <tr class="formrow">
       <td><span th:text="#{fieldLabel.username}" class="formlabel"></span></td>
       <td><input type="text" th:field="*{username}" class="forminput" /></td>
       <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="formerror"></td>
@@ -23,11 +18,6 @@
       <td><span th:text="#{fieldLabel.password}" class="formlabel"></span></td>
       <td><input type="text" th:field="*{password}" class="forminput" /></td>
       <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="formerror"></td>
-    </tr>
-    <tr class="formrow">
-      <td><span th:text="#{fieldLabel.staffid}" class="formlabel"></span></td>
-      <td><input type="text" th:field="*{staff.id}" class="forminput" /></td>
-      <td th:if="${#fields.hasErrors('staff.id')}" th:errors="*{staff.id}" class="formerror"></td>
     </tr>
     <tr class="formrow">
       <td><span th:text="#{fieldLabel.firstName}" class="formlabel"></span></td>

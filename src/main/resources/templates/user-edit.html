@@ -3,26 +3,15 @@
 <head th:replace="fragments/layout.html :: html_head"/>
 
 <body>
+<div th:replace="fragments/layout.html :: menu"/>
 
-  <div th:replace="fragments/layout.html :: menu"/>
-  <div th:replace="fragments/layout.html :: header"/> 
-  <h3>Edit User page</h3>
-  <a th:href="@{/admin/users/list}">Back</a>
-  <form action="#" th:action="@{/admin/users/edit/}+${user.userId}" th:object="${user}" method="post">
-    <input type="hidden" th:field="*{staff.id}" />
-    <table>
-      <tbody>
-        <tr>
-          <td><span th:text="#{fieldLabel.username}"></span></td>
-          <td><input type="text" th:field="*{username}" /></td>
-          <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></td>
-<div class="menu" th:replace="fragments/layout.html :: menu"/>
 <div class="body-form" style="max-width: 70%">
   <div class="formtitle">
     <h2>Edit User page</h2>
   </div>
   <div class="formcontent">
     <form action="#" th:action="@{/admin/users/edit/}+${user.userId}" th:object="${user}" method="post">
+    <input type="hidden" th:field="*{staff.id}">
       <table class="formtable">
         <a th:href="@{/admin/users/list}" class="formbutton">Back</a>
         <tbody>
@@ -31,19 +20,10 @@
           <td><input type="text" th:field="*{username}" class="forminput" /></td>
           <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="formerror"></td>
         </tr>
-        <tr>
-          <td><span th:text="#{fieldLabel.password}"></span></td>
-          <td><input type="text" th:field="*{password}" /></td>
-          <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></td>
         <tr class="formrow">
           <th><span th:text="#{fieldLabel.password}" class="formlabel"></span></th>
           <td><input type="text" th:field="*{password}" class="forminput" /></td>
           <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="formerror"></td>
-        </tr>
-        <tr class="formrow">
-          <th><span th:text="#{fieldLabel.staffid}" class="formlabel"></span></th>
-          <td><input type="text" th:field="*{staff.id}" class="forminput" /></td>
-          <td th:if="${#fields.hasErrors('staff.id')}" th:errors="*{staff.id}" class="formerror"></td>
         </tr>
         <tr class="formrow">
           <th><span th:text="#{fieldLabel.firstName}" class="formlabel"></span></th>
