@@ -119,6 +119,13 @@ h4 {
 	margin: 5px;
 }
 
+.formtable3{
+	table-layout:var(--bs-gutter-x);
+	width: 100%;
+	margin: 5px;
+	padding: 5px;
+}
+
 .row{
 	--bs-gutter-x:1.5rem;
 	--bs-gutter-y:0;
@@ -210,6 +217,11 @@ td .forminput{
 }
 .forminput{
     overflow-wrap: break-word;
+}
+
+.forminput2{
+	overflow-wrap: break-word;
+	padding: 0;
 }
 
 tbody tr:hover td
@@ -404,6 +416,15 @@ button[type="reset"]:hover {
 	border-radius: 10px;
 }
 
+.tablebutton{
+	background-color: #36465D;
+	color: #fff;
+	vertical-align: text-top;
+	cursor: pointer;
+	border-radius: 5px;
+	
+}
+
 button[type="button"]{
 	background-color: #36465D;
 	color: #fff;
@@ -415,6 +436,7 @@ button[type="button"]{
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
+
 
 button-disabled
  {

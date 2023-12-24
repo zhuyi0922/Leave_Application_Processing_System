@@ -4,6 +4,13 @@
 
 <body>
   <div th:replace="fragments/layout.html :: menu"/>
+  <div class="body-form" style="max-width: 600px">
+		<div class="formtitle">
+			<h2>Leave Type</h2>
+		</div>
+		<div class="formcontent">
+			</div>
+			</div>
   <h3>New Leave Type Page</h3>
   <a th:href="@{/admin/leavetype/list}">Back</a>
   <form action="#" th:action="@{/admin/leavetype/create}" th:object="${leaveType}" method="post">
