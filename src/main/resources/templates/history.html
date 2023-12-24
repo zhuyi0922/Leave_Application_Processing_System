@@ -8,66 +8,68 @@
 </head>
 <body>
 <div th:replace="fragments/layout.html :: menu"/>
-<div th:replace="fragments/layout.html :: header"/>
 
 <div class="body-form" style="max-width: 90%">
     <div class="formtitle">
         <h2>Leave Application History</h2>
     </div>
-    <div th:if="${#lists.isEmpty(applications.content)}">there is no application</div>
-<div th:if="${not #lists.isEmpty(applications.content)}">
-    <table class="formtable">
-        <tr class="listHeading">
-            <th class="formheader2"><span>Start Date</span></th>
-            <th class="formheader2"><span>End Date</span></th>
-            <th class="formheader2"><span>Create Date</span></th>
-            <th class="formheader2"><span>Leave Type</span></th>
-            <th class="formheader2"><span>Reasons</span></th>
-            <th class="formheader2"><span>Dissemination</span></th>
-            <th class="formheader2"><span>Contact Details</span></th>
-            <th class="formheader2"><span>Leave Days</span></th>
-            <th class="formheader2"><span>Comment</span></th>
-            <th class="formheader2"><span>Response Date</span></th>
-            <th class="formheader2"><span>Status</span></th>
-            <th class="formheader2"><span>Operation</span></th>
-        </tr>
-        <tr th:each="leaveapplication : ${applications}" class="listRecord">
-            <td th:text="${leaveapplication.start_date}"></td>
-            <td th:text="${leaveapplication.end_date}"></td>
-            <td th:text="${leaveapplication.create_date}"></td>
-            <td th:text="${leaveapplication.leaveType.leaveTypeName}"></td>
-            <td th:text="${leaveapplication.reasons}"></td>
-            <td th:text="${leaveapplication.workDissemination}"></td>
-            <td th:text="${leaveapplication.contactDetails}"></td>
-            <td th:text="${leaveapplication.costLeaveDays}"></td>
-            <td th:text="${leaveapplication.responseComment}"></td>
-            <td th:text="${#dates.format(leaveapplication.responseDate, 'yyyy-MM-dd')}"></td>
-            <td th:text="${leaveapplication.application_status}"></td>
-            <td>
-                <span th:if="${leaveapplication.application_status == T(com.team4.leave_application.Model.LeaveApplicationEventEnum).APPLIED or leaveapplication.application_status == T(com.team4.leave_application.Model.LeaveApplicationEventEnum).UPDATED }">
-                    <a th:href="@{/staff/application/edit/{id}(id = ${leaveapplication.leaveApplicationId})}" class="btn btn-default"><span>Edit</span></a>
-                    <a th:href="@{/staff/application/delete/{id}(id = ${leaveapplication.leaveApplicationId})}" class="btn btn-default"><span>Delete</span></a>
-                </span>
-                <span th:if="${leaveapplication.application_status == T(com.team4.leave_application.Model.LeaveApplicationEventEnum).APPROVED}">
-                    <a th:href="@{/staff/application/cancel/{id}(id = ${leaveapplication.leaveApplicationId})}" class="btn btn-default"><span>Cancel</span></a>
-                </span>
-                <span th:if="${leaveapplication.application_status == T(com.team4.leave_application.Model.LeaveApplicationEventEnum).REJECTED}">
-                    <a th:href="@{/staff/application/apply}" class="btn btn-default"><span>ReApply</span></a>
-                </span>
-
-            </td>
-        </tr>
-    </table>
-    <!--this is for the pagination-->
-    <!-- Add these lines at the end of your existing HTML -->
-    <span th:if="${applications.hasPrevious()}" class="btn btn-default">
-        <a th:href="@{'/staff/application/history?page=' + ${applications.previousPageable().pageNumber}}" class="btn btn-default">Previous</a>
-    </span>
-    <span th:if="${applications.hasNext()}" class="btn btn-default">
-        <a th:href="@{'/staff/application/history?page=' + ${applications.nextPageable().pageNumber}}" class="btn btn-default">Next</a>
-    </span>
-
-</div>
+    <div class="formcontent" th:if="${#lists.isEmpty(applications.content)}">
+		<p style="color:red"><strong>There is no application</strong></p>
+	</div>
+	
+	<div class="formcontent" th:if="${not #lists.isEmpty(applications.content)}">
+	    <table class="formtable">
+	        <tr class="listHeading">
+	            <th class="formheader2"><span>Start Date</span></th>
+	            <th class="formheader2"><span>End Date</span></th>
+	            <th class="formheader2"><span>Create Date</span></th>
+	            <th class="formheader2"><span>Leave Type</span></th>
+	            <th class="formheader2"><span>Reasons</span></th>
+	            <th class="formheader2"><span>Dissemination</span></th>
+	            <th class="formheader2"><span>Contact Details</span></th>
+	            <th class="formheader2"><span>Leave Days</span></th>
+	            <th class="formheader2"><span>Comment</span></th>
+	            <th class="formheader2"><span>Response Date</span></th>
+	            <th class="formheader2"><span>Status</span></th>
+	            <th class="formheader2"><span>Operation</span></th>
+	        </tr>
+	        <tr th:each="leaveapplication : ${applications}" class="listRecord">
+	            <td th:text="${leaveapplication.start_date}"></td>
+	            <td th:text="${leaveapplication.end_date}"></td>
+	            <td th:text="${leaveapplication.create_date}"></td>
+	            <td th:text="${leaveapplication.leaveType.leaveTypeName}"></td>
+	            <td th:text="${leaveapplication.reasons}"></td>
+	            <td th:text="${leaveapplication.workDissemination}"></td>
+	            <td th:text="${leaveapplication.contactDetails}"></td>
+	            <td th:text="${leaveapplication.costLeaveDays}"></td>
+	            <td th:text="${leaveapplication.responseComment}"></td>
+	            <td th:text="${#dates.format(leaveapplication.responseDate, 'yyyy-MM-dd')}"></td>
+	            <td th:text="${leaveapplication.application_status}"></td>
+	            <td>
+	                <span th:if="${leaveapplication.application_status == T(com.team4.leave_application.Model.LeaveApplicationEventEnum).APPLIED or leaveapplication.application_status == T(com.team4.leave_application.Model.LeaveApplicationEventEnum).UPDATED }">
+	                    <a th:href="@{/staff/application/edit/{id}(id = ${leaveapplication.leaveApplicationId})}" class="btn btn-default"><span>Edit</span></a>
+	                    <a th:href="@{/staff/application/delete/{id}(id = ${leaveapplication.leaveApplicationId})}" class="btn btn-default"><span>Delete</span></a>
+	                </span>
+	                <span th:if="${leaveapplication.application_status == T(com.team4.leave_application.Model.LeaveApplicationEventEnum).APPROVED}">
+	                    <a th:href="@{/staff/application/cancel/{id}(id = ${leaveapplication.leaveApplicationId})}" class="btn btn-default"><span>Cancel</span></a>
+	                </span>
+	                <span th:if="${leaveapplication.application_status == T(com.team4.leave_application.Model.LeaveApplicationEventEnum).REJECTED}">
+	                    <a th:href="@{/staff/application/apply}" class="btn btn-default"><span>ReApply</span></a>
+	                </span>
+	
+	            </td>
+	        </tr>
+	    </table>
+	    <!--this is for the pagination-->
+	    <!-- Add these lines at the end of your existing HTML -->
+	    <span th:if="${applications.hasPrevious()}" class="btn btn-default">
+	        <a th:href="@{'/staff/application/history?page=' + ${applications.previousPageable().pageNumber}}" class="btn btn-default">Previous</a>
+	    </span>
+	    <span th:if="${applications.hasNext()}" class="btn btn-default">
+	        <a th:href="@{'/staff/application/history?page=' + ${applications.nextPageable().pageNumber}}" class="btn btn-default">Next</a>
+	    </span>
+	
+	</div>
 </div>
 </body>
 </html>

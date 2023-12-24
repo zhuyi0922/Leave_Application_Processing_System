@@ -7,11 +7,9 @@
 </head>
 <body>
 <div th:replace="fragments/layout.html :: menu"/>
-<div th:replace="fragments/layout.html :: header"/>
-
-<div class="body-form" style="max-width: 90%">
+<div class="body-form" style="max-width: 80%">
 	<div class="formtitle">
-		<h2 th:text="'Application Detail for ' + ${leaveapplication.leaveApplicationId}"></h2>
+		<h2 th:text="'Application Details (ID: ' + ${leaveapplication.leaveApplicationId} + ')'"></h2>
 	</div>
 	
 	<div class="formcontent">
@@ -22,7 +20,7 @@
 						<label>Staff Name</label>
 					</th>
 					<td>
-						<span th:text="${leaveapplication.staff.firstName} + '' + ${leaveapplication.staff.middleName} + '' + ${leaveapplication.staff.lastName}"></span>
+						<span th:text="${leaveapplication.staff.firstName} + ${leaveapplication.staff.middleName != null ? ' ' + leaveapplication.staff.middleName + ' ' : ' '} + ${leaveapplication.staff.lastName}"></span>
 					</td>
 				</tr>
 				<tr>

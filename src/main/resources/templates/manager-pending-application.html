@@ -8,15 +8,14 @@
 </head>
 <body>
 <div th:replace="fragments/layout.html :: menu"/>
-<div th:replace="fragments/layout.html :: header"/>
-
 <div class="body-form" style="max-width: 90%">
 	<div class="formtitle">
 		<h2>Manager Pending Applications</h2>
 	</div>
-	
-	<div class="formcontent" style="max-width: 100%;">
-		<p th:if="${subordinatehistory == null}" style="color:red;">You have no subordinates.</p>
+	<div class="formcontent" th:if="${not #lists.isEmpty(pendingapplist)}" style="max-width:100%;">
+		 <div th:if="${#lists.isEmpty(pendingapplist) or pendingapplist == null}" style="max-width:100%;">
+            <p style="color:red;">You have no subordinates.</p>
+        </div>
 		<div th:each="entry : ${pendingapplist}">
 			<h3 th:text="${entry.key.firstName}+ ' ' + (${entry.key.middleName} ?: ' ') + ' ' + ${entry.key.lastName}"></h3>
 			<p th:if="${#lists.isEmpty(entry.value)}"><strong>There is no pending application.</strong></p>
@@ -46,6 +45,7 @@
 			</table>
 		</div>
 	</div>
+	 </div>
 </div>
 
 </body>

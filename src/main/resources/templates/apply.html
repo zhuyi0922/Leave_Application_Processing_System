@@ -10,7 +10,6 @@
 </head>
 <body>
 <div th:replace="fragments/layout.html :: menu"/>
-<div th:replace="fragments/layout.html :: header"/>
 
 <div class="body-form" style="max-width: 600px">
 	<div class="formtitle">
@@ -54,7 +53,7 @@
 						<label for="reasons">Reasons</label>
 					</th>
 					<td>
-						<textarea id="reasons" name="reasons" th:field="${leaveApplication.reasons}" style="min-height: 10em;" required></textarea>
+						<textarea id="reasons" name="reasons" th:field="${leaveApplication.reasons}" style="min-height: 10em; max-height: 15em;" required></textarea>
 					</td>
 				</tr>
 				<tr>
@@ -62,7 +61,7 @@
 						<label for="workDissemination">Work Dissemination</label>
 					</th>
 					<td>
-						<textarea id="workDissemination" name="workDissemination" th:field="${leaveApplication.workDissemination}" style="min-height: 5em;"></textarea>
+						<textarea id="workDissemination" name="workDissemination" th:field="${leaveApplication.workDissemination}" style="min-height: 5em; max-height: 15em;"></textarea>
 					</td>
 				</tr>
 				<tr>

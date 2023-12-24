@@ -11,3 +11,6 @@ insert into `user` (`user_id`, `password`, `username`, `staff_id`) values('1','1
 insert into `user` (`user_id`, `password`, `username`, `staff_id`) values('2','123','zhu','2');
 insert into `user_role` (`user_id`, `role_id`) values('1','001');
 insert into `user_role` (`user_id`, `role_id`) values('2','003');
+
+insert into `user` (`user_id`, `password`, `username`, `staff_id`) values('3','123','esther','3');
+insert into `staff` (`id`, `birthday`, `email`, `first_name`, `gender`, `last_name`, `manager_id`, `middle_name`, `title`) values('3','2003-04-13','esther123@gmail.com','esther','female','lam','3',NULL,'admin');
