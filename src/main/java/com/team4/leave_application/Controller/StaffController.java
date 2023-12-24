@@ -33,6 +33,11 @@ public class StaffController {
     private EmailService emailService;
     @Autowired
     private StaffService staffService;
+    
+    @RequestMapping("/home")
+    public String StaffHome() {
+    	return "staff-home";
+    }
     @GetMapping("/application/history")
     public String History(HttpSession session, Model model,
                           @RequestParam(defaultValue = "0") int page,

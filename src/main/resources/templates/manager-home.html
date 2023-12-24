@@ -10,24 +10,21 @@
 <body>
 <div th:replace="fragments/layout.html :: menu"/>
 
-<div class="body-form" style="max-width: 50%">
+<div class="body-form" style="max-width: 50%;">
 	  
 	<div class="formtitle">
-		<h2>Admin Home</h2>
+		<h2>Manager Home</h2>
 	</div>
 	
 	<div class="formcontent">
 		<span class="button-span">
-				<button type="button" th:onclick="|window.location.href='@{/admin/users/list}'|">Users</button>
+				<button type="button" th:onclick="|window.location.href='@{/manager/view_pending}'|">Pending Application</button>
 		</span>
 		<span class="button-span">
-				<button type="button" th:onclick="|window.location.href='@{/admin/leavetype/list}'|">Leave Type</button>
+				<button type="button" th:onclick="|window.location.href='@{/manager/subordinates-history}'|">Subordinates History</button>
 		</span>
 		<span class="button-span">
-				<button type="button" th:onclick="|window.location.href='@{/admin/role/list}'|">Roles</button>
-		</span>
-		<span class="button-span">
-				<button type="button" th:onclick="|window.location.href='@{/admin/leaveapplication/list}'|">Leave Application</button>
+				<button type="button" th:onclick="|window.location.href='@{/manager/compensation-pending-process}'|">Pending Claim</button>
 		</span>
 	</div>
 </body>

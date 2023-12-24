@@ -15,11 +15,12 @@
 	</div>
 	
 	<div class="formcontent">
+		<button class="subbutton" th:onclick="|window.location.href='@{/manager/home}'|">Back</button>
 		<!-- p th:if="${subordinatehistory.key == null}" style="color:red;">You have no subordinates.</p -->
 		<div th:each="entry : ${subordinatehistory}">
 			<h3 th:text="${entry.key.firstName}+ ' ' + (${entry.key.middleName} ?: ' ') + ' ' + ${entry.key.lastName}"></h3>
 			<p th:if="${#lists.isEmpty(entry.value)}" style="color:red;">The staff has no application.</p>
-			<table border="1" th:if="${not #lists.isEmpty(entry.value)}">
+			<table class="formtable" th:if="${not #lists.isEmpty(entry.value)}">
 				<thead>
 					<tr>
 						<th>Application ID</th>
@@ -28,12 +29,12 @@
 						<th>End Date</th>
 						<th>Create Date</th>
 						<th>Reasons</th>
-						<th>work dissemination</th>
-						<th>contact details</th>
-						<th>cost leave days</th>
-						<th>manager comment</th>
-						<th>response date</th>
-						<th>status</th>
+						<th>Work Dissemination</th>
+						<th>Contact Details</th>
+						<th>Cost Leave Days</th>
+						<th>Comment</th>
+						<th>Response Date</th>
+						<th>Status</th>
 					</tr>
 				</thead>
 				<tbody>

@@ -4,34 +4,38 @@
 
 <body>
   <div th:replace="fragments/layout.html :: menu"/>
-  <h3>Create Role page</h3>
-  <a th:href="@{/admin/role/list}">Back</a>
-  <form action="#" th:action="@{'/admin/role/create'}" th:object="${role}" method="post">
-    <table>
-      <tbody>
-        <tr>
-          <td><span th:text="#{fieldLabel.roleId}"></span></td>
-          <td><input type="text" th:field="*{roleId}" /></td>
-          <td th:if="${#fields.hasErrors('roleId')}" th:errors="*{roleId}"></td>
-        </tr>
-        <tr>
-          <td><span th:text="#{fieldLabel.roleName}"></span></td>
-          <td><input type="text" th:field="*{name}" /></td>
-          <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></td>
-        </tr>
-        <tr>
-          <td><span th:text="#{fieldLabel.description}"></span></td>
-          <td><input type="text" th:field="*{description}" /></td>
-          <td th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></td>
-        </tr>
-        <tr>
-          <td><input type="submit" value="Create" class="blcass" /></td>
-          <td></td>
-          <td></td>
-        </tr>
-      </tbody>
-    </table>
-  </form>
+  <div class="body-form" style="max-width: 600px">
+		<div class="formtitle">
+			<h2>Create Role</h2>
+		</div>
+		<div class="formcontent">
+			<button class="subbutton" th:onclick="|window.location.href='@{/admin/role/list}'|">Back</button>
+			<form action="#" th:action="@{'/admin/role/create'}" th:object="${role}" method="post">
+				<table class="formtable">
+					<tr>
+          				<th class="formheader3"><span th:text="#{fieldLabel.roleId}"></span></th>
+         				<td><input type="text" th:field="*{roleId}" /></td>
+         				<td th:if="${#fields.hasErrors('roleId')}" th:errors="*{roleId}"></td>
+         			</tr>
+         			<tr>
+						 <th class="formheader3"><span th:text="#{fieldLabel.roleName}"></span></th>
+						 <td><input type="text" th:field="*{name}" /></td>
+						 <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></td>
+					</tr>
+					<tr>
+						<th class="formheader3"><span th:text="#{fieldLabel.description}"></span></td>
+						<td><input type="text" th:field="*{description}" /></td>
+						<td th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></td>
+					</tr>
+					<tr>
+						<td><button type="submit" value="Create" class="blcass">Create</button></td>
+					</tr>
+				</table>
+			</form>
+			
+		</div>
+  </div>
+
 </body>
 
 </html>
