@@ -10,80 +10,93 @@
     <h2>Edit User page</h2>
   </div>
   <div class="formcontent">
+	   <button class="subbutton" th:onclick="|window.location.href='@{/admin/users/list}'|">Back</button>
     <form action="#" th:action="@{/admin/users/edit/}+${user.userId}" th:object="${user}" method="post">
     <input type="hidden" th:field="*{staff.id}">
-      <table class="formtable">
-        <a th:href="@{/admin/users/list}" class="formbutton">Back</a>
+      <table class="formtable3">
         <tbody>
-        <tr class="formrow">
-          <th><span th:text="#{fieldLabel.username}" class="formlabel"></span></th>
-          <td><input type="text" th:field="*{username}" class="forminput" /></td>
-          <td th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="formerror"></td>
-        </tr>
-        <tr class="formrow">
-          <th><span th:text="#{fieldLabel.password}" class="formlabel"></span></th>
-          <td><input type="text" th:field="*{password}" class="forminput" /></td>
-          <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="formerror"></td>
-        </tr>
-        <tr class="formrow">
-          <th><span th:text="#{fieldLabel.firstName}" class="formlabel"></span></th>
-          <td><input type="text" th:field="*{staff.firstName}" class="forminput" /></td>
-          <td th:if="${#fields.hasErrors('staff.firstName')}" th:errors="*{staff.firstName}" class="formerror"></td>
-        </tr>
-        <tr class="formrow">
-          <th><span th:text="#{fieldLabel.middleName}" class="formlabel"></span></th>
-          <td><input type="text" th:field="*{staff.middleName}" class="forminput" /></td>
-        </tr>
-        <tr class="formrow">
-          <th><span th:text="#{fieldLabel.lastName}" class="formlabel"></span></th>
-          <td><input type="text" th:field="*{staff.lastName}" class="forminput" /></td>
-          <td th:if="${#fields.hasErrors('staff.lastName')}" th:errors="*{staff.lastName}" class="formerror"></td>
-        </tr>
-        <tr class="formrow">
-          <th><span th:text="#{fieldLabel.birthday}" class="formlabel"></span></th>
-          <td><input type="date" th:field="*{staff.birthday}" class="forminput"></td>
-        </tr>
-        <tr class="formrow">
-          <th><span th:text="#{fieldLabel.email}" class="formlabel"></span></th>
-          <td><input type="text" th:field="*{staff.email}" class="forminput" /></td>
-          <td th:if="${#fields.hasErrors('staff.email')}" th:errors="*{staff.email}" class="formerror"></td>
-        </tr>
-        <tr class="formrow">
-          <th><span th:text="#{fieldLabel.gender}" class="formlabel"></span></th>
-          <td>
-            <select th:field="*{staff.gender}" class="forminput">
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
-          </td>
-          <td th:if="${#fields.hasErrors('staff.gender')}" th:errors="*{staff.gender}" class="formerror"></td>
-        </tr>
-        <tr class="formrow">
-          <th><span th:text="#{fieldLabel.staffTitle}" class="formlabel"></span></th>
-          <td><input type="text" th:field="*{staff.title}" class="forminput" /></td>
-          <td th:if="${#fields.hasErrors('staff.title')}" th:errors="*{staff.title}" class="formerror"></td>
-        </tr>
-        <tr class="formrow">
-          <th><span th:text="#{fieldLabel.managerId}" class="formlabel"></span></th>
-          <td>
-            <fieldset>
-              <select th:field="*{staff.managerId}" class="forminput">
-                <option value=""></option>
-                <option th:each="manager : ${staffIds}" th:value="${manager}" th:text="${manager}">List</option>
-              </select>
-            </fieldset>
-		</tr>
-		<tr>
-            <div th:each="role : ${roles}">
-				<input type="checkbox" th:value="${role.roleId}" th:name="roleSet" th:checked="${currentRoles.contains(role)}" />
-				<label th:text="${role.name}"></label>
-            </div>
-          </th>
-          <td th:if="${#fields.hasErrors('roleSet')}" th:errors="*{roleSet}" class="formerror"></td>
-        </tr>
-        <tr class="formrow">
-          <td><input type="submit" value="Update" class="blcass" /></td>
-        </tr>
+			<tr>
+				<th><span th:text="#{fieldLabel.username}" class="formlabel"></th>
+				<td>
+					<input type="text" th:field="*{username}" class="forminput" />
+					<span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="formerror"></span>
+				</td>
+			</tr>
+			<tr>
+				<th><span th:text="#{fieldLabel.password}" class="formlabel"></span></th>
+				<td>
+					<input type="text" th:field="*{password}" class="forminput" />
+					<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="formerror"></span>
+				</td>
+			</tr>
+			<tr>
+				<th><span th:text="#{fieldLabel.firstName}" class="formlabel"></span></th>
+				<td>
+					<input type="text" th:field="*{staff.firstName}" class="forminput" />
+					<span th:if="${#fields.hasErrors('staff.firstName')}" th:errors="*{staff.firstName}" class="formerror"></span>
+				</td>
+			</tr>
+			<tr>
+				<th><span th:text="#{fieldLabel.middleName}" class="formlabel"></span></th>
+				<td><input type="text" th:field="*{staff.middleName}" class="forminput" /></td>
+			</tr>
+			<tr>
+				<th><span th:text="#{fieldLabel.lastName}" class="formlabel"></span></th>
+				<td>
+					<input type="text" th:field="*{staff.lastName}" class="forminput" />
+					<span th:if="${#fields.hasErrors('staff.lastName')}" th:errors="*{staff.lastName}" class="formerror"></span>
+				</td>
+			</tr>
+			<tr>
+				<th><span th:text="#{fieldLabel.birthday}" class="formlabel"></span></th>
+				<td><input type="date" th:field="*{staff.birthday}" class="forminput"></td>
+			</tr>
+			<tr>
+				<th><span th:text="#{fieldLabel.email}" class="formlabel"></span></th>
+				<td>
+					<input type="text" th:field="*{staff.email}" class="forminput" />
+					<span th:if="${#fields.hasErrors('staff.email')}" th:errors="*{staff.email}" class="formerror"></span>
+				</td>
+			</tr>
+			<tr>
+				<th><span th:text="#{fieldLabel.gender}" class="formlabel"></span></th>
+				<td>
+					<select th:field="*{staff.gender}" class="forminput">
+						<option value="Male">Male</option>
+						<option value="Female">Female</option>
+					</select>
+					<span th:if="${#fields.hasErrors('staff.gender')}" th:errors="*{staff.gender}" class="formerror"></span>
+				</td>
+			</tr>
+			<tr>
+				<th><span th:text="#{fieldLabel.staffTitle}" class="formlabel"></span></th>
+				<td>
+					<input type="text" th:field="*{staff.title}" class="forminput" />
+					<span th:if="${#fields.hasErrors('staff.title')}" th:errors="*{staff.title}" class="formerror"></span>
+				</td>
+			</tr>
+			<tr>
+				<th><span th:text="#{fieldLabel.managerId}" class="formlabel"></span></th>
+				<td>
+					<select th:field="*{staff.managerId}" class="forminput">
+						<option value=""></option>
+						<option th:each="manager : ${staffIds}" th:value="${manager}" th:text="${manager}">List</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>Role Set</th>
+				<td>
+					<div th:each="role : ${roles}">
+						<input type="checkbox" th:value="${role.roleId}" th:name="roleSet" th:checked="${currentRoles.contains(role)}" />
+						<label th:text="${role.name}"></label>
+					</div>
+					 <span th:if="${#fields.hasErrors('roleSet')}" th:errors="*{roleSet}" class="formerror"></span>
+				</td>
+			</tr>
+			<tr>
+				<td><button type="submit">Update</button></td>
+			</tr>
         </tbody>
       </table>
     </form>

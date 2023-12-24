@@ -9,43 +9,43 @@
 <body>
 <div th:replace="fragments/layout.html :: menu"/>
 <div class="body-form" style="width: 70%">
-    <h2 class="formtitle">User List</h2>
-<a th:href="@{/admin/users/create}" class="formbutton">Add User</a>
-    <input type="hidden" id="currentUserId" th:value="${session.usession.user.userId}" />
-    <table class="formtable">
-    <tr class="formrow">
-        <th class="formheader">User ID</th>
-        <th class="formheader">Username</th>
-        <th class="formheader">Staff ID</th>
-        <th class="formheader">Staff Name</th>
-        <th class="formheader">Email</th>
-        <th class="formheader">Roles</th>
-        <th class="formheader">Edit</th>
-        <th class="formheader">Delete</th>
-    </tr>
-    <tr th:each="user : ${userList}" class="formrow">
-        <td class="forminput" th:text="${user.userId}">User ID</td>
-        <td class="forminput" th:text="${user.username}">Username</td>
-        <td class="forminput" th:text="${user.staff != null ? user.staff.id : 'N/A'}">Staff ID</td>
-        <td class="forminput" th:text="${user.staff != null ? user.staff.firstName + ' ' + user.staff.lastName : 'N/A'}">Staff Name</td>
-        <td class="forminput" th:text="${user.staff != null ? user.staff.email : 'N/A'}">Email</td>
-        <td class="forminput">
-            <span th:each="role : ${user.roleSet}" th:text="${role.name}" style="padding: 0; margin: 0;"><br></span>
-        </td>
-        <td>
-            <button type="button" th:onclick="|window.location.href='/admin/users/edit/' + ${user.userId}|" class="btn btn-default">
-                <span th:text="#{caption.edit}">Edit</span>
-            </button>
-        </td>
-        <td>
-            <div th:if="${user.userId} != ${session.usession.user.userId}">
-                <button type="button" th:onclick="|window.location.href='/admin/users/delete/' + ${user.userId}|" class="btn btn-default">
-                    <span th:text="#{caption.delete}">Delete</span>
-                </button>
-            </div>
-        </td>
-    </tr>
-</table>
+	<div class="formtitle">
+		<h2>User List</h2>
+	</div>
+	<div class="formcontent">
+		<button class="subbutton" th:onclick="|window.location.href='@{/admin/users/create}'|">Add User</button>
+		<button class="subbutton" th:onclick="|window.location.href='@{/admin/users}'|">Back</button>
+		 <input type="hidden" id="currentUserId" th:value="${session.usession.user.userId}" />
+		 <table class="formtable3">
+			 <tr style="border-bottom: solid #A1A1A1 1px;">
+				 <th>User ID</th>
+				 <th>Username</th>
+				 <th>Staff ID</th>
+				 <th>Staff Name</th>
+				 <th>Email</th>
+				 <th>Roles</th>
+				 <th colspan="2">Action</th>
+			 </tr>
+			 <tr th:each="user : ${userList}">
+				 <td class="forminput2" th:text="${user.userId}">User ID</td>
+				 <td class="forminput2" th:text="${user.username}">Username</td>
+				 <td class="forminput2" th:text="${user.staff != null ? user.staff.id : 'N/A'}">Staff ID</td>
+				 <td class="forminput2" th:text="${user.staff != null ? user.staff.firstName + ' ' + user.staff.lastName : 'N/A'}">Staff Name</td>
+				 <td class="forminput2" th:text="${user.staff != null ? user.staff.email : 'N/A'}">Email</td>
+				 <td class="forminput2"><div th:each="role : ${user.roleSet}" th:text="${role.name}"></div></td>
+				 <td class="forminput2">
+					 <a th:href="'/admin/users/edit/' + ${user.userId}" style="vertical-align: text-top;">
+						 <span th:text="#{caption.edit}">Edit</span>
+					</a>
+				</td>
+				<td class="forminput2">
+						<a th:if="${user.userId} != ${session.usession.user.userId}" th:href="'/admin/users/delete/' + ${user.userId}" style="vertical-align: text-top;">
+							<span th:text="#{caption.delete}">Delete</span>
+						</a>
+				</td>
+			</tr>
+		 </table>
+	</div>
 </div>
 </body>
 </html>
