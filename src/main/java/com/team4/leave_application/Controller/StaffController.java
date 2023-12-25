@@ -205,7 +205,7 @@ public class StaffController {
         var usession = (UserSession) session.getAttribute("usession");
         var staff = (Staff) usession.getStaff();
         var days = holidayService.calLeaveDays(start_date,end_date);
-        var leaveType = leaveTypeService.findLeaveTypeByName(leaveTypeName);
+        var leaveType = leaveTypeService.findByTitleAndName(staff.getTitle(),leaveTypeName);
         var remaindays = remainLeaveService.findRemainLeave(staff,leaveType);
         // judge if the leave is overlap with the previous application
         if(leaveApplicationService.IsOverlap(staff,start_date,end_date)){

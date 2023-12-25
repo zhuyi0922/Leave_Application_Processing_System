@@ -121,6 +121,12 @@
             }, function (data) {
                 // 处理响应，data为服务器返回的JSON数据
                 document.getElementById("validationResult").innerHTML = data;
+				if(data.includes("*this application will cost you")){
+					enableSubmitButton();
+				}
+				else{
+					disableSubmitButton();
+				}
             });
         });
         function disableSubmitButton() {
