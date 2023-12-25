@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head"/>
+
+<body>
+  <div th:replace="fragments/layout.html :: menu"/>
+  <div class="body-form" style="max-width: 600px">
+		<div class="formtitle">
+			<h2>Create Holiday</h2>
+		</div>
+		<div class="formcontent">
+			<button class="subbutton" th:onclick="|window.location.href='@{/admin/holiday/list}'|">Back</button>
+			<form action="#" th:action="@{'/admin/holiday/create'}" th:object="${holiday}" method="post">
+				<table class="formtable">
+         			<tr>
+						 <th class="formheader3"><span th:text="#{fieldLabel.holidayName}"></span></th>
+						 <td><input type="text" th:field="*{name}" /></td>
+						 <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></td>
+					</tr>
+					<tr>
+						<th class="formheader3"><span th:text="#{fieldLabel.holidayDate}"></span></td>
+						<td><input type="date" th:field="*{date}" /></td>
+					</tr>
+					<tr>
+						<td><button type="submit" value="Create" class="blcass">Create</button></td>
+					</tr>
+				</table>
+			</form>
+			
+		</div>
+  </div>
+
+</body>
+
+</html>

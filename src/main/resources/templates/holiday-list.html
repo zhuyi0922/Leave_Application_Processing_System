@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Application Form</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+	<link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    <head th:replace="fragments/layout.html :: html_head"/>
+</head>
+
+<body>
+	<div th:replace="fragments/layout.html :: menu" />
+	<div class="body-form" style="max-width: 600px">
+		<div class="formtitle">
+			<h2>Holiday List</h2>
+		</div>
+		<div class="formcontent">
+			<button class="subbutton" th:onclick="|window.location.href='@{/admin/holiday/create}'|">Add Holiday</button>
+			<button class="subbutton" th:onclick="|window.location.href='@{/admin/users}'|">Back</button>
+			<div th:if="${not #lists.isEmpty(holidayList)}">
+				<table class="formtable" style="margin: 10px;">
+					<tr class="listheading">
+						<th><span th:text="#{fieldLabel.holidayId}"></span></th>
+						<th><span th:text="#{fieldLabel.holidayName}"></span></th>
+						<th><span th:text="#{fieldLabel.holidayDate}"></span></th>
+						<th><span th:text="#{caption.edit}"></span></th>
+						<th><span th:text="#{caption.delete}"></span></th>
+					</tr>
+					<tr th:each="holiday : ${holidayList}" class="listRecord">
+						<td align="left" th:text="${holiday.holidayId}">holidayId</td>
+						<td align="left" th:text="${holiday.name}">name</td>
+						<td align="left" th:text="${holiday.date}">Date</td>
+						<td><a th:href="@{/admin/holiday/edit/}+${holiday.holidayId}"> <span th:text="#{caption.edit}"></span></a></td>
+						<td><a th:href="@{/admin/holiday/delete/}+${holiday.holidayId}"><span th:text="#{caption.delete}"></span></a></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+			
+	</div>
+</body>

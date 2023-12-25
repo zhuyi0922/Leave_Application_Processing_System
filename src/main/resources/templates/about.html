@@ -1,0 +1,45 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="html_head" id="html_head">
+  <meta charset="ISO-8859-1">
+  <title>Leave Application</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+
+<body>
+	<div th:replace="fragments/layout.html :: menu"/>
+	<div class="body-form" style="max-width: 50%">
+		<div class="formtitle">
+			<h2>About Us</h2>
+		</div>
+		<div class="formcontent">
+			<h5>We are GDipSA57 Team 4, a warm and energetic team. This website is our team's excellent job. Here are our teammates!</h5>
+		     <div>
+		         <img src="/images/Dian.png" class="img-center" style="width: 228px; height: 228px; object-fit: cover;" alt="Image 1" />
+		         <p style="text-align: center">Dian</p>
+		     </div>
+		     <div>
+		         <img src="/images/WRX.jpg" class="img-center" style="width: 228px; height: 228px; object-fit: cover;" alt="Image 2" />
+		         <p style="text-align: center">Wang Ruixian</p>
+		     </div>
+		     <div>
+		         <img src="/images/YCY.jpg" class="img-center" style="width: 228px; height: 228px; object-fit: cover;" alt="Image 3" />
+		         <p style="text-align: center">Yan Chenyi</p>
+		     </div>
+		     <div>
+		         <img src="/images/ZY.jpg" class="img-center" style="width: 228px; height: 228px; object-fit: cover;" alt="Image 4" />
+		         <p style="text-align: center">Zhu Yi</p>
+		     </div>
+		     <div>
+		         <img src="/images/TYB.jpg" class="img-center" style="width: 228px; height: 228px; object-fit: cover;" alt="Image 5" />
+		         <p style="text-align: center">Tan Yibai</p>
+		     </div>
+		     <div>
+		         <img src="/images/LH.jpg" class="img-center" style="width: 228px; height: 228px; object-fit: cover;" alt="Image 6" />
+		         <p style="text-align: center">Li Hao</p>
+		     </div>
+		</div>
+		</div>
+	</div>
+</body>
+</html>
