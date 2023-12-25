@@ -73,7 +73,9 @@ public class LeaveApplicationServiceimpl implements LeaveApplicationService {
     @Transactional
     public boolean IsOverlap(Staff staff, Date start_date, Date end_date){
         List<LeaveApplication> leaveApplications = leaveApplicationRepository.findAllByStaff(staff);
-        var applications = leaveApplications.stream().filter(x -> x.getApplication_status().equals(LeaveApplicationEventEnum.REJECTED) || x.getApplication_status().equals(LeaveApplicationEventEnum.CANCELLED)).toList();
+        var applications = leaveApplications.stream().filter(x -> x.getApplication_status().equals(LeaveApplicationEventEnum.APPLIED) ||
+                x.getApplication_status().equals(LeaveApplicationEventEnum.UPDATED) ||
+                x.getApplication_status().equals(LeaveApplicationEventEnum.APPROVED)).toList();
         for(LeaveApplication leaveApplication:applications){
             if(leaveApplication.getStart_date().compareTo(start_date)<=0&&leaveApplication.getEnd_date().compareTo(start_date)>=0){
                 return true;
