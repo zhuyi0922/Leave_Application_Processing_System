@@ -67,19 +67,17 @@
 
             var time = document.getElementById('overworkTime').value;
 
-            // Disable the time (AM/PM) selection if the date is a weekday
-            if (!isWeekend && time === 'AM') {
-                document.getElementById('errorDate').innerHTML = 'cannot set the week day OT time as AM';
-                document.getElementsByTagName('button')[0].setAttribute('disabled', 'true');
-            }
-            else {
-                // Show an alert if the date is after the current date
-                if (isAfterCurrentDate) {
-                    document.getElementById('errorDate').innerHTML = 'Please select a date before the current date.';
-                    document.getElementsByTagName('button')[0].setAttribute('disabled', 'true');
-                } else {
+            if (isAfterCurrentDate) {
+                document.getElementById('errorDate').innerHTML = 'Please select a date before the current date.';
+                document.getElementById('button').disabled = true;
+            } else {
+                if (!isWeekend && time === 'AM') {
+                    document.getElementById('errorDate').innerHTML = 'cannot set the week day OT time as AM';
+                    document.getElementById('button').disabled = true;
+                }
+                else {
                     document.getElementById('errorDate').innerHTML = '';
-                    document.getElementsByTagName('button')[0].removeAttribute('disabled');
+                    document.getElementById('button').disabled = false;
                 }
             }
         }
