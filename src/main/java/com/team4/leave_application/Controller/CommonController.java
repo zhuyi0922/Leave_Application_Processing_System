@@ -26,10 +26,15 @@ public class CommonController {
     @Autowired
     private StaffService staffService;
 
-    @RequestMapping(value = {"/", "/login", "/home"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/", "/login"}, method = RequestMethod.GET)
     public String login(Model model) {
         model.addAttribute("user", new User());
         return "login";
+    }
+    
+    @GetMapping(value = {"/home", "/about"})
+    public String about() {
+    	return "about";
     }
 
     @RequestMapping(value = "/login/authenticate")
