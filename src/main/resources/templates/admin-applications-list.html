@@ -13,10 +13,10 @@
     <h2>Leave Application List</h2>
   </div>
   <div class="formcontent">
-    <button class="subbutton" th:onclick="|window.location.href='@{/admin/users}'|">Back</button>
+    <button class="subbutton" th:onclick="|window.location.href='@{/admin/home}'|">Back</button>
   <div th:if="${#lists.isEmpty(applicationList.content)}">There is no application</div>
   <div th:if="${not #lists.isEmpty(applicationList.content)}">
-    <table class="formtable4">
+    <table class="formtable4" style="width: 100%;">
       <tr class="listHeading">
         <th><span>Start Date</span></th>
         <th><span>End Date</span></th>

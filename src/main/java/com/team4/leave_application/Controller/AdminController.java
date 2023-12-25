@@ -54,7 +54,7 @@ public class AdminController {
 	@PersistenceContext
 	private EntityManager entityManager;
 	
-	@GetMapping("users")
+	@GetMapping("home")
 	public String adminPage() {
 		return "admin-list";
 	}
