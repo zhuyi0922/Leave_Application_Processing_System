@@ -50,4 +50,9 @@ public class StaffServiceimpl implements StaffService{
     	remainLeaveRepository.deleteAll(staff.getRemainLeaves());
     	staffRepository.delete(staff);
     }
+    
+    @Transactional
+    public List<Staff> findStaffByStaffTitle(String staffTitle){
+    	return staffRepository.findByTitle(staffTitle);
+    }
 }

@@ -1,7 +1,5 @@
 package com.team4.leave_application.Model;
 
-import java.time.LocalDate;
-
 import jakarta.persistence.*;
 import lombok.*;
 

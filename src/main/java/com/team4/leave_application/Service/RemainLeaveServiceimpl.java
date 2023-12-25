@@ -5,6 +5,7 @@ import com.team4.leave_application.Model.RemainLeave;
 import com.team4.leave_application.Model.Staff;
 import com.team4.leave_application.Repository.RemainLeaveRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -36,7 +37,16 @@ public class RemainLeaveServiceimpl implements RemainLeaveService{
             remainLeaveRepository.save(record);
         }
     }
+    @Transactional
+    @Override
     public void deleteRemainLeaves(int remainLeaveId) {
     	remainLeaveRepository.deleteById(remainLeaveId);
     }
+    @Transactional
+    public void deleteRemainLeavesByStaffAndLeaveType(Staff staff, LeaveType leaveType) {
+    	RemainLeave remainLeave = remainLeaveRepository.findByStaffAndLeaveType(staff, leaveType);
+        staff.getRemainLeaves().remove(remainLeave);
+    	remainLeaveRepository.delete(remainLeave);
+    }
+
 }

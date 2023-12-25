@@ -1,6 +1,6 @@
 package com.team4.leave_application.Repository;
 
-import com.team4.leave_application.Model.User;
+import com.team4.leave_application.Model.*;
 
 import java.util.List;
 
@@ -19,4 +19,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	
 	@Query("SELECT u FROM User u JOIN u.roleSet r WHERE r.name = :roleName")
     List<User> findAllUsersByRoleName(@Param("roleName") String roleName);
+
+	@Query("SELECT u FROM User u JOIN u.roleSet r WHERE r = :role")
+    List<User> findUsersByRole(Role role);
 }

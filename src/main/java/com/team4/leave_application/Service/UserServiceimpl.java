@@ -53,6 +53,11 @@ public class UserServiceimpl implements UserService{
     public List<String> findManagerNameByUID(int userId) {
         return userRepository.findManagerNamesByUID(userId);
       }
+    
+    @Transactional
+    public List<User> findUsersByRole(Role role) {
+        return userRepository.findUsersByRole(role);
+    }
 
     @Transactional
     public User createUser(User user) {
