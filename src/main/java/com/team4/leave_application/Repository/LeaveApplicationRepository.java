@@ -28,13 +28,5 @@ public interface LeaveApplicationRepository extends JpaRepository<LeaveApplicati
 
     Page<LeaveApplication> findAll(Pageable pageable);
 
-    @Query
-    void deleteById(int id);
-
-    @Transactional
-    @Modifying
-    @Query("delete from LeaveApplication l where l.leaveApplicationId = ?1")
-    void deleteByLeaveApplicationId(int leaveApplicationId);
-
 
 }

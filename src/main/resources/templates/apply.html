@@ -46,7 +46,7 @@
 						<select id="typeSelect" name="chooseType" th:field="${leaveApplication.leaveType.leaveTypeName}">
 							<option th:each="t : ${typelist}" th:value="${t.leaveTypeName}" th:text="${t.leaveTypeName}"></option>
 						</select>
-						<span id="validationResult"></span>
+						<span id="validationResult" style="color: red"></span>
 					</td>
 				</tr>
 				<tr>

@@ -17,6 +17,7 @@
     </div>
 
     <div class="formcontent">
+        <button class="subbutton" th:onclick="|window.location.href='@{/staff/application/history}'|">Back</button>
         <form th:action="@{/staff/application/edit/{id}(id=${leaveApplication.leaveApplicationId})}" method="post">
             <input type="hidden" th:value="${leaveApplication.leaveApplicationId}" th:field="${leaveApplication.leaveApplicationId}">
             <table class="formtable">
