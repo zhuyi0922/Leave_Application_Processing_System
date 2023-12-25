@@ -18,7 +18,7 @@
 		</div>
 		<div class="formcontent">
 			<button class="subbutton" th:onclick="|window.location.href='@{/admin/role/create}'|">Add Role</button>
-			<button class="subbutton" th:onclick="|window.location.href='@{/admin/users}'|">Back</button>
+			<button class="subbutton" th:onclick="|window.location.href='@{/admin/home}'|">Back</button>
 			<div th:if="${not #lists.isEmpty(roleList)}">
 				<table class="formtable" style="margin: 10px;">
 					<tr class="listheading">

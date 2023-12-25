@@ -18,7 +18,7 @@
 			<div th:each="role : ${session.usession.user.roleSet}">
 				<div th:if="${role.name.contains('manager')}">
 					<div class="subnav">
-						<button class="subnavbtn">Manager</button>
+						<button class="subnavbtn" onclick="window.location.href='/manager/home';">Manager</button>
 						<div class="subnav-content">
 							<a th:href="@{/manager/view_pending}">Pending Application</a>
 							<a th:href="@{/manager/subordinates-history}">Subordinates History</a>
@@ -29,7 +29,7 @@
 				
 				<div th:if="${role.name.contains('admin')}">
 					<div class="subnav">
-						<button class="subnavbtn">Admin</i></button>
+						<button class="subnavbtn" onclick="window.location.href='/admin/users';">Admin</i></button>
 						<div class="subnav-content">
 							<a th:href="@{/admin/users/list}">User</a>
 							<a th:href="@{/admin/leavetype/list}">Leave Type</a>
@@ -42,7 +42,7 @@
 				
 				<div th:if="${role.name.contains('employee')}">
 					<div class="subnav">
-						<button class="subnavbtn">Staff</button>
+						<button class="subnavbtn" onclick="window.location.href='/staff/home';">Staff</button>
 						<div class="subnav-content">
 							<a th:href="@{/staff/application/history}">Leave History</a>
 							<a th:href="@{/staff/application/apply}">Apply Leave</a>
