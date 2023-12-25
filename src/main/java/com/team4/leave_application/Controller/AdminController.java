@@ -385,8 +385,11 @@ public class AdminController {
 	 */
 	
 	@GetMapping("holiday/list")
-	public String holidayListPage(Model model) {
-		List<Holiday> holidayList = holidayService.findAllHoliday();
+	public String holidayListPage(Model model, @RequestParam(defaultValue = "0") int page,
+								  @RequestParam(defaultValue = "5") int size) {
+		Page<Holiday> holidayList = holidayService.findAllHoliday(PageRequest.of(page, size));
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", holidayList.getTotalPages());
 		model.addAttribute("holidayList", holidayList);
 		return "holiday-list";
 	}

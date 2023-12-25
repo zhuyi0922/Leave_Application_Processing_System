@@ -4,6 +4,8 @@ import com.team4.leave_application.Model.Holiday;
 import com.team4.leave_application.Repository.HolidayRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -49,8 +51,8 @@ public class HolidayServiceimpl implements HolidayService{
     }
     
     @Transactional
-    public List<Holiday> findAllHoliday(){
-    	return holidayRepository.findAll();
+    public Page<Holiday> findAllHoliday(PageRequest pageRequest){
+    	return holidayRepository.findAll(pageRequest);
     }
     
     @Transactional

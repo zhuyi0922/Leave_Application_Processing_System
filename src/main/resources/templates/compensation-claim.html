@@ -22,6 +22,7 @@
                     </th>
                     <td class="forminput">
                         <input type="date" id="overworkDate" name="overworkDate" th:field="*{otDate}" required>
+                        <div id = "errorDate"></div>
                     </td>
                 </tr>
                 <tr class="formrow">
@@ -42,5 +43,45 @@
     </div>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get the date input field
+        var dateInput = document.getElementById('overworkDate');
+        var timeInput = document.getElementById('overworkTime');
+        dateInput.addEventListener('change', updateValidation);
+        timeInput.addEventListener('change', updateValidation);
+        function updateValidation(){
+            // Parse the selected date
+            var selectedDate = new Date(dateInput.value);
+            // Get the current date
+            var currentDate = new Date();
+
+            // Check if the selected date is a weekend (Saturday or Sunday)
+            var isWeekend = selectedDate.getDay() === 0 || selectedDate.getDay() === 6;
+
+            // Check if the selected date is after the current date
+            var isAfterCurrentDate = selectedDate > currentDate;
+
+            var time = document.getElementById('overworkTime').value;
+
+            // Disable the time (AM/PM) selection if the date is a weekday
+            if (!isWeekend && time === 'AM') {
+                document.getElementById('errorDate').innerHTML = 'cannot set the week day OT time as AM';
+                document.getElementsByTagName('button')[0].setAttribute('disabled', 'true');
+            }
+            else {
+                // Show an alert if the date is after the current date
+                if (isAfterCurrentDate) {
+                    document.getElementById('errorDate').innerHTML = 'Please select a date before the current date.';
+                    document.getElementsByTagName('button')[0].setAttribute('disabled', 'true');
+                } else {
+                    document.getElementById('errorDate').innerHTML = '';
+                    document.getElementsByTagName('button')[0].removeAttribute('disabled');
+                }
+            }
+        }
+
+    });
+</script>
 </body>
 </html>

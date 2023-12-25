@@ -21,7 +21,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         System.out.println("Intercepting " + request.getRequestURI());
 
         String uri = request.getRequestURI();
-        if (uri.startsWith("/css/") || uri.startsWith("/image/")) {
+        if (uri.startsWith("/css/") || uri.startsWith("/images/")) {
             return true;
         }
 
@@ -31,7 +31,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        if (uri.startsWith("/home/") || uri.startsWith("/login/")) {
+        if (uri.startsWith("/login/")) {
             return true;
         }
 

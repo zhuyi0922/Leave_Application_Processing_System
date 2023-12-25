@@ -36,6 +36,12 @@
 						<td><a th:href="@{/admin/holiday/delete/}+${holiday.holidayId}"><span th:text="#{caption.delete}"></span></a></td>
 					</tr>
 				</table>
+				<span th:if="${holidayList.hasPrevious()}" class="btn btn-default">
+					<a th:href="@{'/admin/holiday/list?page=' + ${holidayList.previousPageable().pageNumber}}" class="btn btn-default">Previous</a>
+				</span>
+				<span th:if="${holidayList.hasNext()}" class="btn btn-default">
+					<a th:href="@{'/admin/holiday/list?page=' + ${holidayList.nextPageable().pageNumber}}" class="btn btn-default">Next</a>
+				</span>
 			</div>
 		</div>
 			
