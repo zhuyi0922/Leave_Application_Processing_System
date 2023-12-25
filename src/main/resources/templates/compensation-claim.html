@@ -8,7 +8,7 @@
 </head>
 <body>
 <div th:replace="fragments/layout.html :: menu"/>
-<div class="body-form" style="max-width: 50%;height: 330px">
+<div class="body-form" style="max-width: 50%;">
     <div class="formtitle">
         <h2>Overtime Work Claim</h2>
     </div>
@@ -16,29 +16,32 @@
 		<button class="subbutton" th:onclick="|window.location.href='@{/staff/home}'|">Back</button>
         <form th:action="@{/staff/compensation-claim}" id="overtimeForm" method="post" th:object="${OTWork}">
             <table class="formtable"> <!-- 添加table标签 -->
-                <tr class="formrow">
-                    <th class="formheader">
+                <tr>
+                    <th style="width: 30%;">
                         <label for="overworkDate">Overwork Date:</label>
                     </th>
-                    <td class="forminput">
+                    <td>
                         <input type="date" id="overworkDate" name="overworkDate" th:field="*{otDate}" required>
                         <div id = "errorDate"></div>
                     </td>
                 </tr>
-                <tr class="formrow">
-                    <th class="formheader">
+                <tr>
+                    <th style="width: 30%;">
                         <label for="overworkTime">Overwork Time:</label>
                     </th>
-                    <td class="forminput">
+                    <td>
                         <select id="overworkTime" name="overworkTime" th:field="*{otTime}" required>
                             <option value="AM">AM</option>
                             <option value="PM">PM</option>
                         </select>
                     </td>
                 </tr>
+                <tr>
+					<td>
+						 <button type="submit">Claim</button>
+					</td>
+				</tr>
             </table>
-            <br>
-            <button type="submit">Claim</button>
         </form>
     </div>
 </div>

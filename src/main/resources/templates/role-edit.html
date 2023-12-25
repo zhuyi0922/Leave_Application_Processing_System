@@ -12,17 +12,11 @@
 	</div>
 	
 	<div class="formcontent">
-		<button class="subbutton" th:onclick="|window.location.href='@{/admin/users}'|">Back</button>
+		<button class="subbutton" th:onclick="|window.location.href='@{/admin/home}'|">Back</button>
 		<form action="#" th:action="@{/admin/role/edit/}+${role.roleId}" th:object="${role}" method="post">
+			<input type="hidden" th:field="*{roleId}" />
 			<table style="width: 100%;">
 				<tbody>
-					<tr>
-						<th class="formheader3"><span th:text="#{fieldLabel.roleId}"></span></th>
-						<td class="forminput">
-								<input type="text" th:field="*{roleId}" readonly="readonly" />
-								<span th:if="${#fields.hasErrors('roleId')}" th:errors="*{roleId}">
-						</td>
-					</tr>
 					<tr>
 						<th class="formheader3"><span th:text="#{fieldLabel.roleName}"></span></th>
 						<td class="forminput">

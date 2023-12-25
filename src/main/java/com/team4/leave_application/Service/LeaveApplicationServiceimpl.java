@@ -2,6 +2,7 @@ package com.team4.leave_application.Service;
 
 import com.team4.leave_application.Model.LeaveApplication;
 import com.team4.leave_application.Model.LeaveApplicationEventEnum;
+import com.team4.leave_application.Model.LeaveType;
 import com.team4.leave_application.Model.Staff;
 import com.team4.leave_application.Repository.LeaveApplicationRepository;
 import jakarta.transaction.Transactional;
@@ -86,6 +87,16 @@ public class LeaveApplicationServiceimpl implements LeaveApplicationService {
             }
         }
         return false;
+    }
+    
+    @Transactional
+    public List<LeaveApplication> findApplicationsByLeaveTypeAndStaff(LeaveType leaveType, Staff staff){
+    	return leaveApplicationRepository.findAllByLeaveTypeAndStaff(leaveType, staff);
+    }
+    
+    @Transactional
+    public void deleteAllLeaveApplicationsByStaff(Staff staff) {
+    	leaveApplicationRepository.deleteAllByStaff(staff);
     }
 
 }

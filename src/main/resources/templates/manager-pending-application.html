@@ -14,8 +14,8 @@
 	</div>
 	<div class="formcontent" th:if="${not #lists.isEmpty(pendingapplist)}" style="max-width:100%;">
 		<button class="subbutton" th:onclick="|window.location.href='@{/manager/home}'|">Back</button>
-		<div th:if="${#lists.isEmpty(pendingapplist) or pendingapplist == null}" style="max-width:100%">
-            <p style="color:red;">You have no subordinates.</p>
+		<div th:if="${pendingapplist.isEmpty()}" style="max-width:100%">
+            <p style="color:red;">You have no pending applications .</p>
         </div>
 		<div th:each="entry : ${pendingapplist}">
 			<h3 th:text="${entry.key.firstName}+ ' ' + (${entry.key.middleName} ?: ' ') + ' ' + ${entry.key.lastName}"></h3>

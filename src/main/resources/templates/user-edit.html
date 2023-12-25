@@ -12,6 +12,7 @@
   <div class="formcontent">
 	   <button class="subbutton" th:onclick="|window.location.href='@{/admin/users/list}'|">Back</button>
     <form action="#" th:action="@{/admin/users/edit/}+${user.userId}" th:object="${user}" method="post">
+    <input type="hidden" th:field="*{userId}"/>
     <input type="hidden" th:field="*{staff.id}">
       <table class="formtable3">
         <tbody>

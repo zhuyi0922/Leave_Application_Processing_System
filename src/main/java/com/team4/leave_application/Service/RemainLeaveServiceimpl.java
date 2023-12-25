@@ -48,5 +48,8 @@ public class RemainLeaveServiceimpl implements RemainLeaveService{
         staff.getRemainLeaves().remove(remainLeave);
     	remainLeaveRepository.delete(remainLeave);
     }
-
+    @Transactional
+	public void deleteRemainLeavesByStaff(Staff staff) {
+    	remainLeaveRepository.deleteAllByStaff(staff);
+    }
 }

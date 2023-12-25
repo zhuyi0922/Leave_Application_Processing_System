@@ -39,7 +39,7 @@ public class LeaveApplication {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date create_date;
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "application_leavetype")
     private LeaveType leaveType;
 

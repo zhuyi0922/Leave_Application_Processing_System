@@ -356,12 +356,52 @@ public class AdminController {
 			return "user-edit";
 		}
 		
-		
+		Staff staffPre = userService.findUser(user.getUserId()).getStaff();
 		Staff staff = user.getStaff();
-	    if (staff != null) {
-	        staffService.editStaff(staff);
-	    }
 		
+	    if (!staffPre.getTitle().equals(staff.getTitle())) {
+	    	List<LeaveType> leaveTypesPre = leaveTypeService.findAllByTitle(staffPre.getTitle());
+	    	List<LeaveType> leaveTypesToChange = leaveTypeService.findAllByTitle(staff.getTitle());
+	    	if(!leaveTypesToChange.isEmpty()) {
+		    	for(LeaveType leaveTypePre : leaveTypesPre) {
+		    		List<LeaveApplication> leaveApplicationsPre = leaveApplicationService.findApplicationsByLeaveTypeAndStaff(leaveTypePre, staffPre);
+		    		if (!leaveApplicationsPre.isEmpty()) {
+		    			for (LeaveApplication leaveApplicationPre : leaveApplicationsPre) {
+		    				boolean isLeaveTypeFound = false;
+		                    for (LeaveType leaveTypeToChange : leaveTypesToChange) {
+		                    	if (leaveTypeToChange.getLeaveTypeName().equals(leaveApplicationPre.getLeaveType().getLeaveTypeName())) {
+		                        	leaveApplicationPre.setLeaveType(leaveTypeToChange);
+		                            isLeaveTypeFound = true;
+		                            break;
+		                        }
+		                    }
+		                    if (!isLeaveTypeFound) {
+		                        leaveApplicationService.deleteLeaveApplication(leaveApplicationPre);
+		                    }
+		                }
+		            }
+		    	}
+		    	for(LeaveType leaveTypeToChange : leaveTypesToChange) {
+		    		for(LeaveType leaveTypePre : leaveTypesPre) {
+		    			if(leaveTypePre.getLeaveTypeName().equals(leaveTypeToChange.getLeaveTypeName())) {
+					    	RemainLeave remainLeavePre = remainLeaveService.findRemainLeaveObj(staffPre, leaveTypePre);
+					    	RemainLeave newRemainLeave = new RemainLeave();
+					    	int remainLeaveChange = leaveTypeService.calculateRemainLeaveChange(remainLeavePre.getLeaveType().getMaxLeaveDay(), leaveTypeToChange.getMaxLeaveDay());
+					    	newRemainLeave.setLeaveType(leaveTypeToChange);
+					    	newRemainLeave.setRemainLeave(remainLeavePre.getRemainLeave()+remainLeaveChange);
+					    	newRemainLeave.setStaff(staff);
+					    	remainLeaveService.updateRemainLeave(newRemainLeave);
+					    	remainLeaveService.deleteRemainLeaves(remainLeavePre.getRemainLeaveId());
+					    	break;
+		    			}
+		    		}
+			    }
+		    }
+	    	staffService.editStaff(staff);
+	    }
+	    else {
+	    	staffService.editStaff(staff);
+	    }
 		String message = "User was successfully updated.";
 		System.out.println(message);
 		userService.editUser(user);
@@ -373,7 +413,9 @@ public class AdminController {
 	public String deleteUser(@PathVariable int userid) {
 		
 		User user = userService.findUser(userid);
-		
+		leaveApplicationService.deleteAllLeaveApplicationsByStaff(user.getStaff());
+		remainLeaveService.deleteRemainLeavesByStaff(user.getStaff());
+		//staffService.deleteStaff(user.getStaff());
 		userService.deleteUser(user);
 		
 	    String message = "The user " + user.getUserId() + " was successfully deleted.";

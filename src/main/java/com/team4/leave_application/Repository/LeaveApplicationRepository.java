@@ -1,6 +1,7 @@
 package com.team4.leave_application.Repository;
 
 import com.team4.leave_application.Model.LeaveApplication;
+import com.team4.leave_application.Model.LeaveType;
 import com.team4.leave_application.Model.Staff;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -27,4 +28,8 @@ public interface LeaveApplicationRepository extends JpaRepository<LeaveApplicati
     List<LeaveApplication> findApplicationsByStaffId(int staffId);
 
     Page<LeaveApplication> findAll(Pageable pageable);
+
+	List<LeaveApplication> findAllByLeaveTypeAndStaff(LeaveType leaveType, Staff staff);
+
+	void deleteAllByStaff(Staff staff);
 }

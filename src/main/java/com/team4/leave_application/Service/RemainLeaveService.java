@@ -14,4 +14,5 @@ public interface RemainLeaveService {
 	public void updateRemainLeaves(LeaveType leaveType, int maxLeaveDay);
     public void deleteRemainLeaves(int remainLeaveId);
 	public void deleteRemainLeavesByStaffAndLeaveType(Staff staff, @Valid LeaveType leaveType);
+	public void deleteRemainLeavesByStaff(Staff staff);
 }

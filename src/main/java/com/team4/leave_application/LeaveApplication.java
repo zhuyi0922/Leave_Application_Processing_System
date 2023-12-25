@@ -1,10 +1,13 @@
 package com.team4.leave_application;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ResourceBundleMessageSource;
+
+import com.team4.leave_application.Repository.*;
 
 @SpringBootApplication
 public class LeaveApplication {
@@ -20,5 +23,5 @@ public class LeaveApplication {
 	    messageSource.setDefaultEncoding("UTF-8");
 	    return messageSource;
 	}
-
+	
 }
