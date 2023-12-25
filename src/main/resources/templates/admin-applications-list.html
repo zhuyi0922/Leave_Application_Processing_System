@@ -13,22 +13,22 @@
     <h2>Leave Application List</h2>
   </div>
   <div class="formcontent">
-  <div th:if="${#lists.isEmpty(applicationList.content)}">there is no application</div>
+  <div th:if="${#lists.isEmpty(applicationList.content)}">There is no application</div>
   <div th:if="${not #lists.isEmpty(applicationList.content)}">
-    <table class="formtable">
+    <table class="formtable4">
       <tr class="listHeading">
-        <th class="formheader2"><span>Start Date</span></th>
-        <th class="formheader2"><span>End Date</span></th>
-        <th class="formheader2"><span>Create Date</span></th>
-        <th class="formheader2"><span>Leave Type</span></th>
-        <th class="formheader2"><span>Reasons</span></th>
-        <th class="formheader2"><span>Dissemination</span></th>
-        <th class="formheader2"><span>Contact Details</span></th>
-        <th class="formheader2"><span>Leave Days</span></th>
-        <th class="formheader2"><span>Comment</span></th>
-        <th class="formheader2"><span>Response Date</span></th>
-        <th class="formheader2"><span>Status</span></th>
-        <th class="formheader2"><span>Operation</span></th>
+        <th><span>Start Date</span></th>
+        <th><span>End Date</span></th>
+        <th><span>Create Date</span></th>
+        <th><span>Leave Type</span></th>
+        <th><span>Reasons</span></th>
+        <th><span>Dissemination</span></th>
+        <th><span>Contact Details</span></th>
+        <th><span>Leave Days</span></th>
+        <th><span>Comment</span></th>
+        <th><span>Response Date</span></th>
+        <th><span>Status</span></th>
+        <th><span>Operation</span></th>
       </tr>
       <tr th:each="leaveapplication : ${applicationList}" class="listRecord">
         <td th:text="${leaveapplication.start_date}"></td>
