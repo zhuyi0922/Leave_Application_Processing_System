@@ -29,7 +29,7 @@
 				
 				<div th:if="${role.name.contains('admin')}">
 					<div class="subnav">
-						<button class="subnavbtn" onclick="window.location.href='/admin/users';">Admin</i></button>
+						<button class="subnavbtn" onclick="window.location.href='/admin/home';">Admin</i></button>
 						<div class="subnav-content">
 							<a th:href="@{/admin/users/list}">User</a>
 							<a th:href="@{/admin/leavetype/list}">Leave Type</a>
