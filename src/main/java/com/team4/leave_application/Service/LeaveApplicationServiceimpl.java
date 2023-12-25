@@ -1,18 +1,16 @@
 package com.team4.leave_application.Service;
 
 import com.team4.leave_application.Model.LeaveApplication;
+import com.team4.leave_application.Model.LeaveApplicationEventEnum;
 import com.team4.leave_application.Model.Staff;
 import com.team4.leave_application.Repository.LeaveApplicationRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -70,6 +68,24 @@ public class LeaveApplicationServiceimpl implements LeaveApplicationService {
     @Transactional
     public Page<LeaveApplication> findAll(PageRequest pageRequest){
         return leaveApplicationRepository.findAll(pageRequest);
+    }
+
+    @Transactional
+    public boolean IsOverlap(Staff staff, Date start_date, Date end_date){
+        List<LeaveApplication> leaveApplications = leaveApplicationRepository.findAllByStaff(staff);
+        var applications = leaveApplications.stream().filter(x -> x.getApplication_status().equals(LeaveApplicationEventEnum.REJECTED) || x.getApplication_status().equals(LeaveApplicationEventEnum.CANCELLED)).toList();
+        for(LeaveApplication leaveApplication:applications){
+            if(leaveApplication.getStart_date().compareTo(start_date)<=0&&leaveApplication.getEnd_date().compareTo(start_date)>=0){
+                return true;
+            }
+            if(leaveApplication.getStart_date().compareTo(end_date)<=0&&leaveApplication.getEnd_date().compareTo(end_date)>=0){
+                return true;
+            }
+            if(leaveApplication.getStart_date().compareTo(start_date)>=0&&leaveApplication.getEnd_date().compareTo(end_date)<=0){
+                return true;
+            }
+        }
+        return false;
     }
 
 }

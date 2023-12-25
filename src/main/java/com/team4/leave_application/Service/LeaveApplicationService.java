@@ -5,6 +5,7 @@ import com.team4.leave_application.Model.Staff;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.Date;
 import java.util.List;
 
 public interface LeaveApplicationService {
@@ -27,5 +28,5 @@ public interface LeaveApplicationService {
 	public void deleteLeaveApplication(LeaveApplication application);
 
     public Page<LeaveApplication> findAll(PageRequest pageRequest);
-
+    public boolean IsOverlap(Staff staff, Date start_date, Date end_date);
 }

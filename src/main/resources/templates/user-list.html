@@ -45,6 +45,12 @@
 				</td>
 			</tr>
 		 </table>
+		<span th:if="${userList.hasPrevious()}" class="btn btn-default">
+			<a th:href="@{'/admin/users/list?page=' + ${userList.previousPageable().pageNumber}}" class="btn btn-default">Previous</a>
+		</span>
+		<span th:if="${userList.hasNext()}" class="btn btn-default">
+			<a th:href="@{'/admin/users/list?page=' + ${userList.nextPageable().pageNumber}}" class="btn btn-default">Next</a>
+		</span>
 	</div>
 </div>
 </body>

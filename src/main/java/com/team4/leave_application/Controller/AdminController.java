@@ -266,8 +266,11 @@ public class AdminController {
 	}
 	
 	@GetMapping("users/list")
-	public String userListPage(Model model) {
-		List<User> userList = userService.findAllUsers();
+	public String userListPage(Model model, @RequestParam(defaultValue = "0") int page,
+								@RequestParam(defaultValue = "5") int size) {
+		Page<User> userList = userService.findAllUsers(PageRequest.of(page, size));
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", userList.getTotalPages());
 		model.addAttribute("userList", userList);
 		return "user-list";
 	}

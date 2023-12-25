@@ -207,6 +207,10 @@ public class StaffController {
         var days = holidayService.calLeaveDays(start_date,end_date);
         var leaveType = leaveTypeService.findLeaveTypeByName(leaveTypeName);
         var remaindays = remainLeaveService.findRemainLeave(staff,leaveType);
+        // judge if the leave is overlap with the previous application
+        if(leaveApplicationService.IsOverlap(staff,start_date,end_date)){
+            return "*your leave is overlap with the previous application";
+        }
         if (days > remaindays){
             return "*your remain " + leaveTypeName +" days is " + remaindays + " days" + ", not enough";
         }

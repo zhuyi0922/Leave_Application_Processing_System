@@ -13,6 +13,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -91,8 +93,8 @@ public class UserServiceimpl implements UserService{
                     .collect(Collectors.toList());
     }
 
-    public List<User> findAllUsers(){
-    	return userRepository.findAll();
+    public Page<User> findAllUsers(PageRequest pageRequest) {
+    	return userRepository.findAll(pageRequest);
     }
 
     public void deleteUser(User user) {

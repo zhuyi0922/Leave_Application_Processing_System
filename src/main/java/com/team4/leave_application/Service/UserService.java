@@ -2,6 +2,8 @@ package com.team4.leave_application.Service;
 
 import com.team4.leave_application.Model.Role;
 import com.team4.leave_application.Model.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -18,7 +20,7 @@ public interface UserService {
 
 	User findByUsername(String username);
     
-	List<User> findAllUsers();
+	Page<User> findAllUsers(PageRequest pageRequest);
 
 	User findUser(int userId);
 
