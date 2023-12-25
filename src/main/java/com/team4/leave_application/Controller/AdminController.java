@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.team4.leave_application.Service.*;
 import com.team4.leave_application.Controller.Exception.*;
@@ -154,7 +155,7 @@ public class AdminController {
 	}
 	
 	@GetMapping("leavetype/update/{Id}")
-	public String updateLeaveType(@PathVariable int Id) throws LeaveTypeNotFound{
+	public String updateLeaveType(@PathVariable int Id, RedirectAttributes attributes) throws LeaveTypeNotFound{
 		LeaveType leaveType = leaveTypeService.findLeaveTypeById(Id);
 		if (leaveTypeService.existsByLeaveType(leaveType)) {
 			remainLeaveService.updateRemainLeaves(leaveType, leaveType.getMaxLeaveDay());
@@ -163,8 +164,11 @@ public class AdminController {
 	        leaveTypeService.createRemainLeave(leaveType);
 	    }
 		
+		attributes.addAttribute("updated", true);
+		
 	    String message = "The LeaveType " + leaveType.getLeaveTypeId() + " was successfully updated.";
 	    System.out.println(message);
+	    
 		return "redirect:/admin/leavetype/list";
 	}
 	

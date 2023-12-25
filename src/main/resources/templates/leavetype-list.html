@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/layout.html :: html_head"/>
+<head>
+	<head th:replace="fragments/layout.html :: html_head"/>
+	<script th:inline="javascript">
+		window.onload = function(){
+			var urlParams = new URLSearchParams(window.location.search);
+			if(urlParams.has('updated')){
+				alert("Maximum leave has been updated!");
+			}
+		}
+	</script>
+</head>
 
 <body>
   <div th:replace="fragments/layout.html :: menu"/>
