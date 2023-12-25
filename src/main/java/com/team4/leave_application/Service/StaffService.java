@@ -14,4 +14,5 @@ public interface StaffService {
 	Staff editStaff(Staff staff);
 	Staff createStaff(Staff staff);
 	void deleteStaff(Staff staff);
+	List<Staff> findStaffByStaffTitle(String staffTitle);
 }

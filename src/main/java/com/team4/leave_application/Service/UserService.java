@@ -31,4 +31,6 @@ public interface UserService {
 	void deleteUserById(int userId);
 	
 	public List<Integer> findAllStaffIdsByRoleName(String roleName);
+
+	List<User> findUsersByRole(Role role);
 }

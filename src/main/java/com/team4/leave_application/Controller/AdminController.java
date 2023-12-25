@@ -12,6 +12,8 @@ import com.team4.leave_application.Controller.Exception.*;
 import com.team4.leave_application.Model.*;
 import com.team4.leave_application.Validator.*;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.validation.Valid;
 
 import java.util.ArrayList;
@@ -35,6 +37,8 @@ public class AdminController {
 	@Autowired
 	private RemainLeaveService remainLeaveService;
 	@Autowired
+	private LeaveApplicationService leaveApplicationService;
+	@Autowired
 	private UserValidator userValidator;
 	@Autowired
 	private StaffValidator staffValidator;
@@ -42,6 +46,9 @@ public class AdminController {
 	private LeaveTypeValidator leaveTypeValidator;
 	@Autowired
 	private RoleValidator roleValidator;
+	
+	@PersistenceContext
+	private EntityManager entityManager;
 	
 	@GetMapping("users")
 	public String adminPage() {
@@ -103,15 +110,26 @@ public class AdminController {
 	    if (result.hasErrors()) {
 	        return "leavetype-edit";
 	      }
-
-	    LeaveType originalLeaveType = leaveTypeService.findLeaveTypeById(Id);
-	    int maxLeaveDayPre = originalLeaveType.getMaxLeaveDay();
+	    
+	    LeaveType leaveTypePre = leaveTypeService.findLeaveTypeById(Id);
+	    entityManager.detach(leaveTypePre);
+	    if(!leaveTypePre.getStaffTitle().equals(leaveType.getStaffTitle())) {
+	    	List<Staff> affectedStaffs = staffService.findStaffByStaffTitle(leaveTypePre.getStaffTitle());
+	    	for (Staff staff : affectedStaffs) {
+	    		remainLeaveService.deleteRemainLeavesByStaffAndLeaveType(staff, leaveTypePre);
+	    	}
+	    }
+	    
+	    int maxLeaveDayPre = leaveTypePre.getMaxLeaveDay();
 	    
 	    leaveTypeService.editLeaveType(leaveType);	    
 	    int remainLeaveChange = leaveTypeService.calculateRemainLeaveChange(maxLeaveDayPre, leaveType.getMaxLeaveDay());
 	    
-	    if (remainLeaveChange != 0) {
+	    if (remainLeaveChange != 0 && leaveTypePre.getStaffTitle().equals(leaveType.getStaffTitle())) {
 	        leaveTypeService.editRemainLeave(remainLeaveChange, leaveType);
+	    }
+	    else if(remainLeaveChange == 0 && !leaveTypePre.getStaffTitle().equals(leaveType.getStaffTitle())) {
+	    	leaveTypeService.createRemainLeave(leaveType);
 	    }
 	    String message = "Leave Type was successfully updated.";
 	    System.out.println(message);
@@ -210,6 +228,18 @@ public class AdminController {
 	public String deleteRole(@PathVariable String id)
 			throws RoleNotFound {
 		Role role = roleService.findRole(id);
+		List<User> usersWithRole = userService.findUsersByRole(role);
+		
+		for (User user : usersWithRole) {
+	        if (user.getRoleSet().size() == 1) {
+	            userService.deleteUser(user);
+	        } 
+	        else {
+	            user.getRoleSet().remove(role);
+	            userService.editUser(user);
+	        }
+	    }
+		
 		roleService.deleteRole(role);
 		
 		String message = "The role " + role.getRoleId() + " was successfully deleted.";

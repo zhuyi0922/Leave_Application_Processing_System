@@ -78,6 +78,7 @@ public class LeaveTypeServiceimpl implements LeaveTypeService{
     	return remainLeaveRepository.existsByLeaveType(leaveType);
     }
     
+    @Override
     public void createRemainLeave(LeaveType leaveType) {
     	List<Staff> staffList = staffRepository.findByTitle(leaveType.getStaffTitle());
     	List<RemainLeave> remainLeaves = new ArrayList<>();
