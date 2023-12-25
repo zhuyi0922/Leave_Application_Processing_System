@@ -27,6 +27,4 @@ public interface LeaveApplicationRepository extends JpaRepository<LeaveApplicati
     List<LeaveApplication> findApplicationsByStaffId(int staffId);
 
     Page<LeaveApplication> findAll(Pageable pageable);
-
-
 }
