@@ -18,5 +18,7 @@ public interface RemainLeaveRepository extends JpaRepository<RemainLeave, Intege
 	List<RemainLeave> findRemainLeaveByLeaveType(LeaveType leaveType);
 	@Query("SELECT rl FROM RemainLeave rl WHERE rl.staff.title = :title")
 	List<RemainLeave> findRemainLeaveByStaffTitle(@Param("title") String title);
-	void deleteAllByStaff(Staff staff);
+	@Modifying
+	@Query("DELETE FROM RemainLeave rl WHERE rl.staff = :staff")
+	void deleteAllByStaff(@Param("staff") Staff staff);
 }

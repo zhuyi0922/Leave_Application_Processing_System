@@ -23,6 +23,8 @@ public class UserServiceimpl implements UserService{
     private UserRepository userRepository;
     @Autowired
     private StaffRepository staffRepository;
+    @Autowired
+    private StaffService staffService;
     @Transactional
     public User authenticate(String username, String pwd) {
         return userRepository.findByUsernameAndPassword(username, pwd);
@@ -103,6 +105,9 @@ public class UserServiceimpl implements UserService{
             if (existingUser.isPresent()) {
                 User userToDelete = existingUser.get();
                 userToDelete.setRoleSet(Collections.emptyList());
+                Staff staffToDelete = userToDelete.getStaff();
+        		userToDelete.setStaff(null);
+        		staffService.deleteStaff(staffToDelete);
                 userRepository.save(userToDelete);
                 userRepository.delete(userToDelete);
             }

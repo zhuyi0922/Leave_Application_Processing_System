@@ -31,5 +31,7 @@ public interface LeaveApplicationRepository extends JpaRepository<LeaveApplicati
 
 	List<LeaveApplication> findAllByLeaveTypeAndStaff(LeaveType leaveType, Staff staff);
 
-	void deleteAllByStaff(Staff staff);
+	@Modifying
+	@Query("DELETE FROM LeaveApplication la WHERE la.staff = :staff")
+	void deleteAllByStaff(@Param("staff") Staff staff);
 }

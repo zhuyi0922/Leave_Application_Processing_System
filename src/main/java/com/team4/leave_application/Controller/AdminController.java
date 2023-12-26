@@ -413,9 +413,9 @@ public class AdminController {
 	public String deleteUser(@PathVariable int userid) {
 		
 		User user = userService.findUser(userid);
-		leaveApplicationService.deleteAllLeaveApplicationsByStaff(user.getStaff());
-		remainLeaveService.deleteRemainLeavesByStaff(user.getStaff());
-		//staffService.deleteStaff(user.getStaff());
+		/*leaveApplicationService.deleteAllLeaveApplicationsByStaff(user.getStaff());
+		remainLeaveService.deleteRemainLeavesByStaff(user.getStaff());*/
+
 		userService.deleteUser(user);
 		
 	    String message = "The user " + user.getUserId() + " was successfully deleted.";

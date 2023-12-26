@@ -62,4 +62,8 @@ public class Staff implements Serializable {
 
     @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
     private List<RemainLeave> remainLeaves = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
+    private List<OvertimeWork> overTimeWork = new ArrayList<>();
+
 }
