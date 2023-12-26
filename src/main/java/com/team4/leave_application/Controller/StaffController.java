@@ -22,8 +22,8 @@ import java.util.Date;
 @EnableAsync
 @RequestMapping("/staff")
 public class StaffController {
-    static  final String subject = "submit notification";
-    static final String message = "you have already submited an application, please wait for the response";
+    static  final String subject = "Leave application notification";
+    static final String message = "You have received a leave application, please enter the system for the response";
     @Autowired
     private RemainLeaveService remainLeaveService;
     @Autowired
