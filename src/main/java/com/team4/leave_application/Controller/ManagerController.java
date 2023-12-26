@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.team4.leave_application.Service.EmailService;
 import org.hibernate.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +24,10 @@ import jakarta.servlet.http.HttpSession;
 public class ManagerController {
     @Autowired
     private LeaveApplicationService laService;
+    @Autowired
+    private EmailService emailService;
+    static  final String subject = "Application Response";
+    static final String message = "your application has been approved/rejected,please check it in the system.";
 
     @InitBinder
     private void initBinder(WebDataBinder binder) { }
@@ -88,7 +94,15 @@ public class ManagerController {
         var date = new Date();
         la.setResponseDate(date);
         laService.changeLeaveApplication(la);
+        // send email
+        sendEmail(la.getStaff().getEmail(),subject,message);
+
         return "redirect:/manager/view_pending";
+    }
+
+    @Async
+    public void sendEmail(String email,String subject,String message){
+        emailService.sendSimpleMessage(email,subject,message);
     }
 
     // Compensation leave management (TBA)

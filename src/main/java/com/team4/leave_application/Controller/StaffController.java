@@ -10,6 +10,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,10 +19,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 
 @Controller
+@EnableAsync
 @RequestMapping("/staff")
 public class StaffController {
     static  final String subject = "submit notification";
-    static final String message = "you already submit an application, please wait for the response";
+    static final String message = "you have already submited an application, please wait for the response";
     @Autowired
     private RemainLeaveService remainLeaveService;
     @Autowired
@@ -89,10 +92,15 @@ public class StaffController {
             remainLeaveService.updateRemainLeave(remainleave);
 
             // send email to manager
+/*            var managerid = staff.getManagerId();
+            var manager = staffService.findStaffById(managerid);
+            var managerEmail = manager.getEmail();
+            emailService.sendSimpleMessage(managerEmail,subject,message);*/
+
             var managerid = staff.getManagerId();
             var manager = staffService.findStaffById(managerid);
             var managerEmail = manager.getEmail();
-            emailService.sendSimpleMessage(managerEmail,subject,message);
+            sendEmail(managerEmail,subject,message);
 
             return "redirect:/staff/application/history";
 
@@ -101,6 +109,11 @@ public class StaffController {
             model.addAttribute("error","not enough leave");
             return "apply";
         }
+    }
+
+    @Async
+    public void sendEmail(String email,String subject,String message){
+        emailService.sendSimpleMessage(email,subject,message);
     }
 
     @GetMapping("/application/cancel/{id}")
