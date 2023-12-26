@@ -21,7 +21,7 @@ public class HolidayServiceimpl implements HolidayService{
     }
     @Transactional
     public int calLeaveDays(Date start_date, Date end_date){
-        var days = (int) (start_date.getTime() - end_date.getTime())/(1000*60*60*24);
+        var days = (int) (end_date.getTime() - start_date.getTime())/(1000*60*60*24);
         if (days > 14){
             return days;
         }
