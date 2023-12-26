@@ -45,7 +45,7 @@ public class CompensationController {
         overtimeWork.setStaff(staff);
         overtimeWork.setStatus("APPIIED");
         overtimeWorkService.save(overtimeWork);
-        return "redirect:/staff/application/history";
+        return "redirect:/staff/compensation-claim";
     }
 
     @GetMapping("/manager/compensation-pending-process")
